@@ -17,7 +17,7 @@ class RealStatesController extends Controller
      */
     public function index()
     {
-        //
+        return view('realstates.index');
     }
 
     /**

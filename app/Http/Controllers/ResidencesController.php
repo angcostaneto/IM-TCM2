@@ -76,7 +76,7 @@ class ResidencesController extends Controller
      */
     public function index()
     {
-        //
+        return view('residences.index');
     }
 
     /**
