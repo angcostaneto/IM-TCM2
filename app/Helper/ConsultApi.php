@@ -5,6 +5,8 @@ namespace App\Helper;
 class ConsultApi 
 {
     /**
+     * Consult an api
+     * 
      * @param $method
      *  Method for API POST|PUT|GET.
      * 
