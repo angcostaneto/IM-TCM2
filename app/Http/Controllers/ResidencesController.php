@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Residences;
 use Illuminate\Http\Request;
+use App\Helper\ConsultApi;
 use Illuminate\Support\Facades\DB;
+use App\Addresses;
 
 class ResidencesController extends Controller
 {
@@ -17,10 +19,10 @@ class ResidencesController extends Controller
         $return = [];
 
         $residencesTypes = DB::table('residences_types')
-        ->join('residences_types_category', 'residences_types.residences_types_category', '=', 'residences_types_category.id')
-        ->select('residences_types.id', 'residences_types.name as residence_type', 'residences_types_category.name as residences_types_category')
-        ->orderBy('residences_types_category.name', 'asc')
-        ->get();
+            ->join('residences_types_category', 'residences_types.residences_types_category', '=', 'residences_types_category.id')
+            ->select('residences_types.id', 'residences_types.name as residence_type', 'residences_types_category.name as residences_types_category')
+            ->orderBy('residences_types_category.name', 'asc')
+            ->get();
 
         $result = $residencesTypes->toArray();
 
@@ -37,8 +39,34 @@ class ResidencesController extends Controller
         return $return;
     }
 
+    /**
+     * Generate code for residence
+     */
     public function generateCode() {
+        $str = "";
+	    $characters = array_merge(range('A','Z'), range('0','9'));
+	    $max = count($characters) - 1;
         
+        for ($i = 0; $i < 5; $i++) {
+	    	$rand = mt_rand(0, $max);
+	    	$str .= $characters[$rand];
+	    }
+        
+        $codeResidence = DB::table('residences')
+            ->select('code')
+            ->where([
+                ['code', $str]
+            ])
+            ->get();
+        
+        $result = $codeResidence->toArray();
+
+        if (!empty($result)) {
+            $this->generateCode();
+        }
+
+        return $str;
+
     }
 
     /**
@@ -84,7 +112,9 @@ class ResidencesController extends Controller
                 'residences_type' => 'required|numeric',
             ]
         );
-
+        
+        $data['code'] = $this->generateCode();
+        
         $residences = Residences::create($data);
 
         $dataAddressValidate = $this->validate(request(), 
@@ -121,7 +151,7 @@ class ResidencesController extends Controller
 
                 $residencesAddress = Addresses::create($dataAddress)->id;
 
-                $residencesAddress->residences_address = $residencesAddress;
+                $residences->residences_address = $residencesAddress;
             }
         }
         else {

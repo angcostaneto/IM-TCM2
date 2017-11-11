@@ -40,6 +40,10 @@
     <input type="number" name="garage">
     <label>area</label>
     <input type="number" name="area" step="0.01">
+    <label>cep</label>
+    <input type="text" name="cep">
+    <label>numero</label>
+    <input type="text" name="number">
     <input type="submit" value="salvar">
     {{csrf_field()}}
 </form>

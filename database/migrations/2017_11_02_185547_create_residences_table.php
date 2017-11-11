@@ -15,10 +15,10 @@ class CreateResidencesTable extends Migration
     {
         Schema::create('residences', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('code')->comment('Codigo de controle da imobiliaria');
+            $table->string('code')->unique()->comment('Codigo de controle da imobiliaria');
             $table->string('title')->comment('Header do anuncio');
             $table->text('description')->nullable();
-            $table->string('image')->comment('Caminho da imagem no banco de dados');
+            $table->string('image')->nullable()->comment('Caminho da imagem no banco de dados');
             $table->date('negotiation_date')->nullable();
             $table->decimal('negotiation_price')->nullable();
             $table->integer('toilet')->nullable();

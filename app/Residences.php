@@ -8,6 +8,7 @@ class Residences extends Model
 {
 
     protected $fillable = [
+        'code',
         'title',
         'description',
         'negotiation_price',
@@ -16,7 +17,7 @@ class Residences extends Model
         'suite',
         'garage',
         'area',
-        'residence_type'
+        'residences_type'
     ];
 
     public function residence_type() {
