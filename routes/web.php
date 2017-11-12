@@ -17,3 +17,6 @@ Route::get('/', function () {
 
 Route::resource('realstates','RealStatesController');
 Route::resource('residences','ResidencesController');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

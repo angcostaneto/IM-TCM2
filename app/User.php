@@ -14,8 +14,11 @@ class User extends Authenticatable
      *
      * @var array
      */
+    protected $primaryKey = 'id';
+    protected $table = 'users';
+    
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'photo', 'type', 'rg', 'cpf', 'user_address'
     ];
 
     /**
@@ -26,4 +29,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    
+    public function address()
+    {
+        return $this->hasOne(RealStates::class);
+    }
 }
