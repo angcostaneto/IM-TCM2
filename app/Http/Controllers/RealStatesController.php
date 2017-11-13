@@ -17,7 +17,9 @@ class RealStatesController extends Controller
      */
     public function index()
     {
-        return view('realstates.index');
+        $realStates = RealStates::with('address')->get();
+
+        return view('realstates.index', ['realStates' => $realStates]);
     }
 
     /**
@@ -51,7 +53,7 @@ class RealStatesController extends Controller
             ]
         );
 
-        $realstate = RealStates::create($data);
+        $realState = RealStates::create($data);
 
         $dataAddressValidate = $this->validate(request(), 
             [
@@ -62,17 +64,12 @@ class RealStatesController extends Controller
 
         $helper = new ConsultApi();        
         
-        $verifyAddress = DB::table('addresses')
-            ->select('id')
-            ->where([
-                ['number', $dataAddressValidate['number']],
-                ['cep', $dataAddressValidate['cep']],
-            ])
-            ->get();
-        
-        $result = $verifyAddress->toArray();
+        $verifyAddress = Addresses::where([
+            ['number', $dataAddressValidate['number']],
+            ['cep', $dataAddressValidate['cep']],
+        ])->first();
 
-        if (empty($result)) {
+        if (empty($verifyAddress)) {
             $address = $helper->consult_api('GET', 'http://api.postmon.com.br/v1/cep/' . $request->cep, TRUE);
     
             if (!empty($address)) {
@@ -85,17 +82,17 @@ class RealStatesController extends Controller
                     'cep' => $address->cep
                 ];
 
-                $realstateAddress = Addresses::create($dataAddress)->id;
+                $realStateAddress = Addresses::create($dataAddress);
 
-                $realstate->real_states_address = $realstateAddress;
+                $realState->address()->associate($realStateAddress);
             }
         }
         else {
-            $realstate->real_states_address = $result[0]->id;
+            $realState->address()->associate($verifyAddress);
         }
         
-        $realstate->save();
-        
+        $realState->save();
+
         return back()->with('success', 'RealState has been added');
     }
 
@@ -118,7 +115,8 @@ class RealStatesController extends Controller
      */
     public function edit(RealStates $realStates)
     {
-        //
+
+        return view('realstates.edit', compact('realStates'));
     }
 
     /**

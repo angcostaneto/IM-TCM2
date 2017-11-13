@@ -126,17 +126,12 @@ class ResidencesController extends Controller
 
         $helper = new ConsultApi();        
         
-        $verifyAddress = DB::table('addresses')
-            ->select('id')
-            ->where([
-                ['number', $dataAddressValidate['number']],
-                ['cep', $dataAddressValidate['cep']],
-            ])
-            ->get();
-        
-        $result = $verifyAddress->toArray();
+        $verifyAddress = Addresses::where([
+            ['number', $dataAddressValidate['number']],
+            ['cep', $dataAddressValidate['cep']],
+        ])->first();
 
-        if (empty($result)) {
+        if (empty($verifyAddress)) {
             $address = $helper->consult_api('GET', 'http://api.postmon.com.br/v1/cep/' . $request->cep, TRUE);
     
             if (!empty($address)) {
@@ -149,13 +144,13 @@ class ResidencesController extends Controller
                     'cep' => $address->cep
                 ];
 
-                $residencesAddress = Addresses::create($dataAddress)->id;
+                $residencesAddress = Addresses::create($dataAddress);
 
-                $residences->residences_address = $residencesAddress;
+                $residences->residences_address()->associate($residencesAddress);
             }
         }
         else {
-            $residences->residences_address = $result[0]->id;
+            $residences->residences_address->associate($verifyAddress);
         }
         
         $residences->save();

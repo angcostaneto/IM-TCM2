@@ -20,7 +20,13 @@ class Residences extends Model
         'residences_type'
     ];
 
-    public function residence_type() {
-        $this->hasOne('App\ResidencesTypes');
+    public function type() {
+        $this->belongsTo(ResidencesTypes::class);
     }
+
+    public function address()
+    {
+        return $this->belongsTo(Addresses::class);
+    }
+    
 }
