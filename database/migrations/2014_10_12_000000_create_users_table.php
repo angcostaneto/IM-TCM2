@@ -18,9 +18,19 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('type');
+            $table->string('photo')->nullable();
+            $table->string('rg');
+            $table->string('cpf')->unique();
+            $table->integer('user_address')->nullable()->unsigned()->comment('Endereço do usuário');
             $table->rememberToken();
             $table->timestamps();
         });
+        
+        Schema::table('users', function($table) {
+            $table->foreign('user_address')->references('id')->on('addresses');
+        });
+
     }
 
     /**

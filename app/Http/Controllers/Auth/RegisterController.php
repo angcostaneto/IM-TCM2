@@ -6,6 +6,9 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Helper\ConsultApi;
+use Illuminate\Support\Facades\DB;
+use App\Addresses;
 
 class RegisterController extends Controller
 {
@@ -50,7 +53,12 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'type' => 'required',
+            'rg' => 'required',
+            'cpf' => 'required',
+            'cep' => 'required',
+            'number' => 'required|numeric',
+            'password' => 'required|string|min:6|confirmed'
         ]);
     }
 
@@ -62,9 +70,50 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $helper = new ConsultApi();        
+        
+        $verifyAddress = DB::table('addresses')
+            ->select('id')
+            ->where([
+                ['number', $data['number']],
+                ['cep', $data['cep']],
+            ])
+            ->get();
+        
+        $result = $verifyAddress->toArray();
+        if (empty($result)) {
+            $address = $helper->consult_api('GET', 'http://api.postmon.com.br/v1/cep/'.$data['cep'], TRUE);
+    
+            if (!empty($address)) {
+                $dataAddress = [
+                    'street' => $address->logradouro,
+                    'district' => $address->bairro,
+                    'city' => $address->cidade,
+                    'state' => $address->estado,
+                    'number' => $data['number'],
+                    'cep' => $address->cep
+                ];
+                $userAddress = Addresses::create($dataAddress)->id;
+            }
+        }
+        else {
+            $userAddress = $result[0]->id;
+        }
+        
+        if(empty($data['photo'])){
+            $photo = null;
+        }else{
+            $photo = $data['photo'];
+        }
+        
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'type' => $data['type'],
+            'photo' => $photo,
+            'rg' => $data['rg'],
+            'cpf' => $data['cpf'],
+            'user_address' => $userAddress,
             'password' => bcrypt($data['password']),
         ]);
     }
