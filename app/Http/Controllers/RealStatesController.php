@@ -179,6 +179,7 @@ class RealStatesController extends Controller
 
         $realState->save();
 
+        return back()->with('success', 'RealState has been updated');
     }
 
     /**
