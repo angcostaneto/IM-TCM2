@@ -22,7 +22,7 @@
         <td>{{ $realState->address->cep }}</td>
         <td>{{ $realState->address->street }}</td>
         <td>{{ $realState->address->district }}</td>
-        <td><a href="{{ action('RealStatesController@edit', $realState) }}">Edit</a></td>
+        <td><a href="{{ action('RealStatesController@edit', $realState->id) }}">Edit</a></td>
         <td>
             <form action="{{ action('RealStatesController@destroy', $realState) }}" method="POST">
                 {{csrf_field()}}

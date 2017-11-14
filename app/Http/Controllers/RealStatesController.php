@@ -110,25 +110,75 @@ class RealStatesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\RealStates  $realStates
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(RealStates $realStates)
+    public function edit($id)
     {
+        $realState = RealStates::with('address')->where('id', $id)->first();
 
-        return view('realstates.edit', compact('realStates'));
+        return view('realstates.edit', ['realState' => $realState]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\RealStates  $realStates
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RealStates $realStates)
+    public function update(Request $request, $id)
     {
-        //
+        $realState = RealStates::findOrFail($id);
+
+        $data = $this->validate(request(), 
+            [
+                'company' => 'required',
+                'logo' => 'required',
+                'phones' => 'required',
+                'responsable' => 'required',
+                'responsable_email' => 'required'
+            ]
+        );
+
+        $realState->update($data);
+
+        $dataAddressValidate = $this->validate(request(), 
+            [
+                'cep' => 'required',
+                'number' => 'required|numeric'
+            ]
+        );
+
+        $verifyAddress = Addresses::where([
+            ['number', $dataAddressValidate['number']],
+            ['cep', $dataAddressValidate['cep']],
+        ])->first();
+        
+        if (empty($verifyAddress)) {
+            $address = $helper->consult_api('GET', 'http://api.postmon.com.br/v1/cep/' . $request->cep, TRUE);
+    
+            if (!empty($address)) {
+                $dataAddress = [
+                    'street' => $address->logradouro,
+                    'district' => $address->bairro,
+                    'city' => $address->cidade,
+                    'state' => $address->estado,
+                    'number' => $request->number,
+                    'cep' => $address->cep
+                ];
+
+                $realStateAddress = Addresses::create($dataAddress);
+
+                $realState->address()->associate($realStateAddress);
+            }
+        }
+        else {
+            $realState->address()->associate($verifyAddress);
+        }
+
+        $realState->save();
+
     }
 
     /**
