@@ -20,13 +20,14 @@ class Residences extends Model
         'residences_type'
     ];
 
-    public function type() {
-        $this->belongsTo(ResidencesTypes::class);
+    public function type() 
+    {
+        return $this->belongsTo(ResidencesTypes::class, 'residences_type');
     }
 
     public function address()
     {
-        return $this->belongsTo(Addresses::class);
+        return $this->belongsTo(Addresses::class, 'residences_address');
     }
     
 }

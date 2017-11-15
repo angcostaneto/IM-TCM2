@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Helper\ConsultApi;
 use Illuminate\Support\Facades\DB;
 use App\Addresses;
+use App\ResidencesTypes;
 
 class ResidencesController extends Controller
 {
@@ -76,7 +77,9 @@ class ResidencesController extends Controller
      */
     public function index()
     {
-        return view('residences.index');
+        $residences = Residences::with(['address', 'type'])->get();
+
+        return view('residences.index', ['residences' => $residences]);
     }
 
     /**
@@ -113,9 +116,15 @@ class ResidencesController extends Controller
             ]
         );
         
+        $residenceType = ResidencesTypes::where('id', $data['residences_type'])->first();
+        
+        unset($data['residences_type']);
+        
         $data['code'] = $this->generateCode();
         
         $residences = Residences::create($data);
+
+        $residences->type()->associate($residenceType);
 
         $dataAddressValidate = $this->validate(request(), 
             [
@@ -146,12 +155,13 @@ class ResidencesController extends Controller
 
                 $residencesAddress = Addresses::create($dataAddress);
 
-                $residences->residences_address()->associate($residencesAddress);
+                $residences->address()->associate($residencesAddress);
             }
         }
         else {
-            $residences->residences_address->associate($verifyAddress);
+            $residences->address()->associate($verifyAddress);
         }
+        
         
         $residences->save();
         
@@ -172,12 +182,16 @@ class ResidencesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Residences  $residences
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Residences $residences)
+    public function edit($id)
     {
-        //
+        $residencesTypes = $this->getResidencesType();
+
+        $residence = Residences::with(['address', 'type'])->where(['id' => $id])->first();
+
+        return view('residences.edit', ['residencesTypes' => $residencesTypes, 'residence' => $residence]);
     }
 
     /**
@@ -187,9 +201,73 @@ class ResidencesController extends Controller
      * @param  \App\Residences  $residences
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Residences $residences)
+    public function update(Request $request, $id)
     {
-        //
+
+        $residence = Residences::findOrFail($id);
+
+         $data = $this->validate(request(),
+            [
+                'title' => 'required',
+                'description' => 'required',
+                'negotiation_price' => 'required|numeric',
+                'toilet' => 'required|numeric',
+                'bathroom' => 'required|numeric',
+                'suite' => 'required|numeric',
+                'garage' => 'required|numeric',
+                'area' => 'required|numeric',
+                'residences_type' => 'required|numeric',
+            ]
+        );
+        
+        $residenceType = ResidencesTypes::where('id', $data['residences_type'])->first();
+        
+        unset($data['residences_type']);
+        
+        $residence->update($data);
+
+        $residence->type()->associate($residenceType);
+
+        $dataAddressValidate = $this->validate(request(), 
+            [
+                'cep' => 'required',
+                'number' => 'required|numeric'
+            ]
+        );
+
+        $helper = new ConsultApi();        
+        
+        $verifyAddress = Addresses::where([
+            ['number', $dataAddressValidate['number']],
+            ['cep', $dataAddressValidate['cep']],
+        ])->first();
+
+        if (empty($verifyAddress)) {
+            $address = $helper->consult_api('GET', 'http://api.postmon.com.br/v1/cep/' . $request->cep, TRUE);
+    
+            if (!empty($address)) {
+                $dataAddress = [
+                    'street' => $address->logradouro,
+                    'district' => $address->bairro,
+                    'city' => $address->cidade,
+                    'state' => $address->estado,
+                    'number' => $request->number,
+                    'cep' => $address->cep
+                ];
+
+                $residenceAddress = Addresses::create($dataAddress);
+
+                $residence->address()->associate($residenceAddress);
+            }
+        }
+        else {
+            $residence->address()->associate($verifyAddress);
+        }
+        
+        
+        $residence->save();
+        
+        return back()->with('success', 'Residence has been updated');
     }
 
     /**
