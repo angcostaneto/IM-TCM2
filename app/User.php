@@ -32,6 +32,6 @@ class User extends Authenticatable
     
     public function address()
     {
-        return $this->hasOne(RealStates::class);
+        return $this->belongsTo('App\Addresses', 'user_address');
     }
 }
