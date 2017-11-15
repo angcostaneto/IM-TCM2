@@ -17,7 +17,9 @@ class RealStatesController extends Controller
      */
     public function index()
     {
-        return view('realstates.index');
+        $realStates = RealStates::with('address')->get();
+
+        return view('realstates.index', ['realStates' => $realStates]);
     }
 
     /**
@@ -51,7 +53,7 @@ class RealStatesController extends Controller
             ]
         );
 
-        $realstate = RealStates::create($data);
+        $realState = RealStates::create($data);
 
         $dataAddressValidate = $this->validate(request(), 
             [
@@ -62,17 +64,12 @@ class RealStatesController extends Controller
 
         $helper = new ConsultApi();        
         
-        $verifyAddress = DB::table('addresses')
-            ->select('id')
-            ->where([
-                ['number', $dataAddressValidate['number']],
-                ['cep', $dataAddressValidate['cep']],
-            ])
-            ->get();
-        
-        $result = $verifyAddress->toArray();
+        $verifyAddress = Addresses::where([
+            ['number', $dataAddressValidate['number']],
+            ['cep', $dataAddressValidate['cep']],
+        ])->first();
 
-        if (empty($result)) {
+        if (empty($verifyAddress)) {
             $address = $helper->consult_api('GET', 'http://api.postmon.com.br/v1/cep/' . $request->cep, TRUE);
     
             if (!empty($address)) {
@@ -85,17 +82,17 @@ class RealStatesController extends Controller
                     'cep' => $address->cep
                 ];
 
-                $realstateAddress = Addresses::create($dataAddress)->id;
+                $realStateAddress = Addresses::create($dataAddress);
 
-                $realstate->real_states_address = $realstateAddress;
+                $realState->address()->associate($realStateAddress);
             }
         }
         else {
-            $realstate->real_states_address = $result[0]->id;
+            $realState->address()->associate($verifyAddress);
         }
         
-        $realstate->save();
-        
+        $realState->save();
+
         return back()->with('success', 'RealState has been added');
     }
 
@@ -113,24 +110,76 @@ class RealStatesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\RealStates  $realStates
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(RealStates $realStates)
+    public function edit($id)
     {
-        //
+        $realState = RealStates::with('address')->where('id', $id)->first();
+
+        return view('realstates.edit', ['realState' => $realState]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\RealStates  $realStates
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RealStates $realStates)
+    public function update(Request $request, $id)
     {
-        //
+        $realState = RealStates::findOrFail($id);
+
+        $data = $this->validate(request(), 
+            [
+                'company' => 'required',
+                'logo' => 'required',
+                'phones' => 'required',
+                'responsable' => 'required',
+                'responsable_email' => 'required'
+            ]
+        );
+
+        $realState->update($data);
+
+        $dataAddressValidate = $this->validate(request(), 
+            [
+                'cep' => 'required',
+                'number' => 'required|numeric'
+            ]
+        );
+
+        $verifyAddress = Addresses::where([
+            ['number', $dataAddressValidate['number']],
+            ['cep', $dataAddressValidate['cep']],
+        ])->first();
+        
+        if (empty($verifyAddress)) {
+            $address = $helper->consult_api('GET', 'http://api.postmon.com.br/v1/cep/' . $request->cep, TRUE);
+    
+            if (!empty($address)) {
+                $dataAddress = [
+                    'street' => $address->logradouro,
+                    'district' => $address->bairro,
+                    'city' => $address->cidade,
+                    'state' => $address->estado,
+                    'number' => $request->number,
+                    'cep' => $address->cep
+                ];
+
+                $realStateAddress = Addresses::create($dataAddress);
+
+                $realState->address()->associate($realStateAddress);
+            }
+        }
+        else {
+            $realState->address()->associate($verifyAddress);
+        }
+
+        $realState->save();
+
+        return back()->with('success', 'RealState has been updated');
     }
 
     /**
