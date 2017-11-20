@@ -26,13 +26,15 @@
                 <td>{{ $realState->address->cep }}</td>
                 <td>{{ $realState->address->street }}</td>
                 <td>{{ $realState->address->district }}</td>
-                <td><a class="btn btn-info" href="{{ action('RealStatesController@edit', $realState->id) }}">Editar</a></td>
                 <td>
-                    <form action="{{ action('RealStatesController@destroy', $realState) }}" method="POST">
-                        {{csrf_field()}}
-                        <input name="_method" type="hidden" value="DELETE">
-                        <button class="btn btn-danger" type="submit">Deletar</button>
-                    </form>
+                    <div class="inline">
+                        <a class="btn btn-small btn-info" href="{{ action('RealStatesController@edit', $realState->id) }}">Editar</a>
+                        <form action="{{ action('RealStatesController@destroy', $realState) }}" method="POST">
+                            {{csrf_field()}}
+                            <input name="_method" type="hidden" value="DELETE">
+                            <button class="btn btn-small btn-danger" type="submit">Deletar</button>
+                        </form>
+                    </div>
                 </td>
             </tr>
             @endforeach

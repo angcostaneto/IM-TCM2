@@ -187,9 +187,9 @@
         <!-- /page content -->
 
         <!-- footer content -->
-        <footer>
+        <footer class="footer_fixed">
           <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+            Apperitivo Software &copy; {{date('Y')}}</a>
           </div>
           <div class="clearfix"></div>
         </footer>
