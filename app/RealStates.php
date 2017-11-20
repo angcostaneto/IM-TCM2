@@ -26,7 +26,7 @@ class RealStates extends Model
 
     public function address()
     {
-        return $this->hasOne(RealStates::class);
+        return $this->belongsTo(Addresses::class, 'real_states_address');
     }
 
 }

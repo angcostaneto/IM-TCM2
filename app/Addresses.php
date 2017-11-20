@@ -19,9 +19,4 @@ class Addresses extends Model
         'number',
         'cep'
     ];
-
-    public function address()
-    {
-        return $this->belongsTo(RealStates::class);
-    }
 }
