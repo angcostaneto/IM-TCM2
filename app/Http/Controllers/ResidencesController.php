@@ -165,7 +165,7 @@ class ResidencesController extends Controller
         
         $residences->save();
         
-        return back()->with('success', 'Residence has been added');
+        return redirect('residences/')->with('success', sprintf('%s foi inserida com sucesso', $residence->title));
     }
 
     /**
@@ -267,7 +267,7 @@ class ResidencesController extends Controller
         
         $residence->save();
         
-        return back()->with('success', 'Residence has been updated');
+        return redirect('residences/')->with('success', sprintf('%s foi atualizada com sucesso', $residence->title));
     }
 
     /**
@@ -276,8 +276,12 @@ class ResidencesController extends Controller
      * @param  \App\Residences  $residences
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Residences $residences)
+    public function destroy($id)
     {
-        //
+        $residence = Residences::find($id);
+
+        $residence->delete();
+
+        return redirect('residences/')->with('success', sprintf('%s foi deletada com sucesso', $residence->company));
     }
 }

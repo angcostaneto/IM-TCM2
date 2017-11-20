@@ -93,7 +93,7 @@ class RealStatesController extends Controller
         
         $realState->save();
 
-        return back()->with('success', 'RealState has been added');
+        return redirect('realstates/')->with('success', sprintf('%s foi inserida com sucesso', $realState->company));
     }
 
     /**
@@ -179,17 +179,21 @@ class RealStatesController extends Controller
 
         $realState->save();
 
-        return back()->with('success', 'RealState has been updated');
+        return redirect('realstates/')->with('success', sprintf('%s foi atualizada com sucesso', $realState->company));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\RealStates  $realStates
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RealStates $realStates)
+    public function destroy($id)
     {
-        //
+        $realState = RealStates::find($id);
+
+        $realState->delete();
+
+        return redirect('realstates/')->with('success', sprintf('%s foi deletada com sucesso', $realState->company));
     }
 }
