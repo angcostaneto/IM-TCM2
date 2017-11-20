@@ -15,80 +15,94 @@
             <p>{{ \Session::get('success') }}</p>
         </div><br />
     @endif
-    <form method="post" class="form-horizontal form-label-left" action="{{url('realstates')}}">
-        <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Razão Social</label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <input class="form-control col-md-7 col-xs-12" type="text" name="company">
+
+    <form method="post" action="{{url('realstates')}}">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Imobiliária
+                        <small>Cadastre uma nova imobiliária</small>
+                    </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content form-horizontal form-label-left">
+                    <br>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Razão Social</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input class="form-control col-md-7 col-xs-12" type="text" name="company" placeholder="Razão Social">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Nome Fantasia</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input class="form-control col-md-7 col-xs-12" type="text" name="trading_name" placeholder="Nome Fantasia">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Logo da empresa</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input class="form-control col-md-7 col-xs-12" type="text" name="logo">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">CNPJ</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input class="form-control col-md-7 col-xs-12" type="text" name="cnpj" placeholder="CNPJ">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">CRECI</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input class="form-control col-md-7 col-xs-12" type="text" name="creci" placeholder="CRECI">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Telefones</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input class="form-control col-md-7 col-xs-12" type="text" name="phones" placeholder="Telefones">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Responsável</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input class="form-control col-md-7 col-xs-12" type="text" name="responsable" placeholder="Responsável">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Email do Responsável</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input class="form-control col-md-7 col-xs-12" type="text" name="responsable_email" placeholder="Email do Responsável">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         
-        <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Nome Fantasia</label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <input class="form-control col-md-7 col-xs-12" type="text" name="trading_name">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Endereço</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content form-horizontal form-label-left">
+                    <br>
+                    @include('addresses.form')
+                </div>
             </div>
         </div>
 
+        <div class="ln_solid"></div>
         <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Logo da empresa</label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <input class="form-control col-md-7 col-xs-12" type="text" name="logo">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">CNPJ</label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <input class="form-control col-md-7 col-xs-12" type="text" name="cnpj">
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">CRECI</label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <input class="form-control col-md-7 col-xs-12" type="text" name="creci">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Telefones</label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <input class="form-control col-md-7 col-xs-12" type="text" name="phones">
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Responsável</label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <input class="form-control col-md-7 col-xs-12" type="text" name="responsable">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Email do Responsável</label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <input class="form-control col-md-7 col-xs-12" type="text" name="responsable_email">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">CEP</label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <input class="form-control col-md-7 col-xs-12" type="text" name="cep">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Número</label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-            <   input class="form-control col-md-7 col-xs-12" type="text" name="number">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                <button type="submit" class="btn btn-success">Enviar</button>
+            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                <button type="submit" class="btn btn-success">Submit</button>
             </div>
         </div>
 
