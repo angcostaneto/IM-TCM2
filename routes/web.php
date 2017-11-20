@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', 'ClientController@index');
 
 Route::resource('realstates','RealStatesController');
 Route::resource('residences','ResidencesController');
