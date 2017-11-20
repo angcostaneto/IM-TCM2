@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Helper\ConsultApi;
 use Illuminate\Support\Facades\DB;
 use App\Addresses;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -68,6 +69,13 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
+    /*
+    //MUDAR ESSA FUNÇÃO DEPOIS PRA EXIBIR A LISTA E USUÁRIOS
+    public function index()
+    {
+        return view('auth.register');
+    }
+    */
     protected function create(array $data)
     {
         $helper = new ConsultApi();        
@@ -117,4 +125,68 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+    
+    public function edit($id)
+    {
+        $user = User::with('address')->where('id', $id) -> first();
+        if(!empty($user)){
+            return view('auth.register', compact ('user'));
+        }else{
+            return response('User não encontrado', 404);
+        }
+        
+    }
+    
+    public function update(Request $request, $id){
+        
+        $user = User::with('address')->find($id);
+        
+        $helper = new ConsultApi();        
+        
+        $verifyAddress = DB::table('addresses')
+            ->select('id')
+            ->where([
+                ['number', $request->input('number')],
+                ['cep', $request->input('cep')],
+            ])
+            ->get();
+        
+        $result = $verifyAddress->toArray();
+        if (empty($result)) {
+            $address = $helper->consult_api('GET', 'http://api.postmon.com.br/v1/cep/'.$request->input('cep'), TRUE);
+    
+            if (!empty($address)) {
+                $dataAddress = [
+                    'street' => $address->logradouro,
+                    'district' => $address->bairro,
+                    'city' => $address->cidade,
+                    'state' => $address->estado,
+                    'number' => $request->input('number'),
+                    'cep' => $address->cep
+                ];
+                $userAddress = Addresses::create($dataAddress)->id;
+            }
+        }
+        else {
+            $userAddress = $result[0]->id;
+        }
+        
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->type = $request->input('type');
+        $user->photo = $request->input('photo');
+        $user->rg = $request->input('rg');
+        $user->cpf = $request->input('cpf');
+        $user->user_address = $userAddress;
+        
+        if ( ! $request->input('password') == '')
+        {
+            $user->password = bcrypt($request->input('password'));
+        }
+
+        $user->save();
+
+        return back()->with('success', 'Usuário '.$user->name.' atualizado!');
+    }
+    
 }
