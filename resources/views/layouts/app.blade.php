@@ -41,7 +41,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-bank"></i> <span>Apperitivo</span></a>
+              <a href="{{ url('home') }}" class="site_title"><i class="fa fa-bank"></i> <span>Apperitivo</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -49,11 +49,19 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src="images/img.jpg" alt="..." class="img-circle profile_img">
+                <img src="
+                    @isset(Auth::user()->photo)
+                        {{Auth::user()->photo}}
+                    @endisset" 
+                    alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
-                <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <span>Bem vindo,</span>
+                <h2>
+                    @isset(Auth::user()->name)
+                        {{Auth::user()->name}}
+                    @endisset
+                </h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -75,9 +83,14 @@
               <a data-toggle="tooltip" data-placement="top" title="Lock">
                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
-                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-              </a>
+                <a href="{{route('logout')}}" data-toggle="tooltip" data-placement="top" title="Logout"
+                onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">
+                    <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: one;">
+                    {{ csrf_field() }}
+                </form>
             </div>
             <!-- /menu footer buttons -->
           </div>
@@ -94,7 +107,13 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="images/img.jpg" alt="">John Doe
+                    <img src="
+                        @isset(Auth::user()->photo)
+                            {{Auth::user()->photo}}
+                        @endisset" alt="">
+                        @isset(Auth::user()->name)
+                            {{Auth::user()->name}}
+                        @endisset
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -106,7 +125,16 @@
                       </a>
                     </li>
                     <li><a href="javascript:;">Help</a></li>
-                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                    <li>
+                        <a href="{{route('logout')}}"
+                        onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+                            <i class="fa fa-sign-out pull-right"></i> Logout
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: one;">
+                            {{ csrf_field() }}
+                        </form>
+                    </li>
                   </ul>
                 </li>
 

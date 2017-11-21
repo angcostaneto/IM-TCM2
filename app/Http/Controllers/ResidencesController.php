@@ -12,6 +12,11 @@ use App\ResidencesTypes;
 class ResidencesController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Get all residences types.
      */

@@ -40,7 +40,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('auth');
     }
 
     /**
@@ -69,13 +69,13 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    /*
-    //MUDAR ESSA FUNÇÃO DEPOIS PRA EXIBIR A LISTA E USUÁRIOS
+
     public function index()
     {
-        return view('auth.register');
+        $users = User::with('address')->get();
+        return view('users.index', compact ('users'));
     }
-    */
+    
     protected function create(array $data)
     {
         $helper = new ConsultApi();        
@@ -187,6 +187,11 @@ class RegisterController extends Controller
         $user->save();
 
         return back()->with('success', 'Usuário '.$user->name.' atualizado!');
+    }
+    
+    public function destroy(User $user)
+    {
+        //
     }
     
 }
