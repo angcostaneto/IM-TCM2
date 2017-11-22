@@ -10,6 +10,7 @@ use App\Helper\ConsultApi;
 use Illuminate\Support\Facades\DB;
 use App\Addresses;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -74,6 +75,17 @@ class RegisterController extends Controller
     {
         $users = User::with('address')->get();
         return view('users.index', compact ('users'));
+    }
+    
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        //$this->guard()->login($user);
+
+        return redirect('users/')->with('success', sprintf('%s cadastrado com sucesso', $user->name));
     }
     
     protected function create(array $data)

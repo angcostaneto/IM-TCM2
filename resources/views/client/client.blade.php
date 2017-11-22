@@ -62,7 +62,7 @@
                 <div id="residences">
                     <img class="foto-imovel" alt="Foto da residência" src="{{$residence->image}}">
                     <h3 class="card-title">{{$residence->title}}</h3>
-                    <span class="badge badge-success">{{$residence->type->residences_types_category}}</span>
+                    <span class="badge badge-success">{{$residence->type->name}}</span>
                     <p class="card-text">{{$residence->description}}</p>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><strong>Valor:&nbsp;</strong>R${{$residence->negotiation_price}}</li>
