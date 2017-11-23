@@ -16,7 +16,7 @@
                 <p>{{ \Session::get('success') }}</p>
             </div><br />
         @endif
-        <form method="post" action="{{ action('RealStatesController@update', $realState->id) }}">
+        <form method="post" enctype="multipart/form-data" action="{{ action('RealStatesController@update', $realState->id) }}">
             <input name="_method" type="hidden" value="PUT">
             <div class="col-md-6 col-sm-6 col-xs-12">
                 <div class="x_panel">
@@ -45,7 +45,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Logo da empresa</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="logo" value="{{ $realState->logo }}">
+                                <input class="form-control col-md-7 col-xs-12" type="file" name="logo" value="{{ $realState->logo }}">
                             </div>
                         </div>
 

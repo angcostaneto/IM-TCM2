@@ -50,9 +50,11 @@
             <div class="profile clearfix">
               <div class="profile_pic">
                 <img src="
-                    @isset(Auth::user()->photo)
+                    @if(!empty(Auth::user()->photo))
                         {{Auth::user()->photo}}
-                    @endisset" 
+                    @else
+                        {{url('img/user.png')}}
+                    @endif" 
                     alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
@@ -74,16 +76,16 @@
 
             <!-- /menu footer buttons -->
             <div class="sidebar-footer hidden-small">
-              <a data-toggle="tooltip" data-placement="top" title="Settings">
+              <a data-toggle="tooltip" data-placement="top" title="Configurações">
                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+              <a data-toggle="tooltip" data-placement="top" title="Tela cheia">
                 <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="Lock">
+              <a data-toggle="tooltip" data-placement="top" title="Bloquear">
                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
               </a>
-                <a href="{{route('logout')}}" data-toggle="tooltip" data-placement="top" title="Logout"
+                <a href="{{route('logout')}}" data-toggle="tooltip" data-placement="top" title="Sair"
                 onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">
                     <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
@@ -108,28 +110,24 @@
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <img src="
-                        @isset(Auth::user()->photo)
+                        @if(!empty(Auth::user()->photo))
                             {{Auth::user()->photo}}
-                        @endisset" alt="">
+                        @else
+                            {{url('img/user.png')}}
+                        @endif">
                         @isset(Auth::user()->name)
                             {{Auth::user()->name}}
                         @endisset
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <li><a href="javascript:;"> Profile</a></li>
-                    <li>
-                      <a href="javascript:;">
-                        <span class="badge bg-red pull-right">50%</span>
-                        <span>Settings</span>
-                      </a>
-                    </li>
-                    <li><a href="javascript:;">Help</a></li>
+                    <li><a href="javascript:;"> Perfil</a></li>
+                    <li><a href="javascript:;">Ajuda</a></li>
                     <li>
                         <a href="{{route('logout')}}"
                         onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
-                            <i class="fa fa-sign-out pull-right"></i> Logout
+                            <i class="fa fa-sign-out pull-right"></i> Sair
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: one;">
                             {{ csrf_field() }}
@@ -141,61 +139,25 @@
                 <li role="presentation" class="dropdown">
                   <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                     <i class="fa fa-envelope-o"></i>
-                    <span class="badge bg-green">6</span>
+                    <span class="badge bg-green">1</span>
                   </a>
                   <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                     <li>
                       <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                        <span class="image"><img src="{{url('img/user.png')}}" alt="Profile Image" /></span>
                         <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
+                          <span>Admin</span>
+                          <span class="time">3 horas atrás</span>
                         </span>
                         <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                          Teste de notificação...
                         </span>
                       </a>
                     </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
+                    
                       <div class="text-center">
                         <a>
-                          <strong>See All Alerts</strong>
+                          <strong>Ver todas</strong>
                           <i class="fa fa-angle-right"></i>
                         </a>
                       </div>

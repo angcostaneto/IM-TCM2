@@ -118,6 +118,8 @@ class ResidencesController extends Controller
                 'garage' => 'required|numeric',
                 'area' => 'required|numeric',
                 'residences_type' => 'required|numeric',
+                'bedroom' => 'required|numeric',
+                'image' => 'mimes:jpeg,bmp,png,jpg'
             ]
         );
         
@@ -222,6 +224,7 @@ class ResidencesController extends Controller
                 'garage' => 'required|numeric',
                 'area' => 'required|numeric',
                 'residences_type' => 'required|numeric',
+                'bedroom' => 'required|numeric'
             ]
         );
         
