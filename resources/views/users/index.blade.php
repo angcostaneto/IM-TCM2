@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+    @if (\Session::has('success'))
+        <div class="alert alert-success">
+            <p>{{ \Session::get('success') }}</p>
+        </div><br />
+    @endif
     <table class="table table-hover">
         <thead>
             <tr>

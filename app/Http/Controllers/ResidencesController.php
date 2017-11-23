@@ -170,7 +170,7 @@ class ResidencesController extends Controller
         
         $residences->save();
         
-        return redirect('residences/')->with('success', sprintf('%s foi inserida com sucesso', $residence->title));
+        return redirect('residences/')->with('success', sprintf('%s foi inserida com sucesso', $residences->title));
     }
 
     /**
