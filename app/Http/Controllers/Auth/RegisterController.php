@@ -198,7 +198,7 @@ class RegisterController extends Controller
 
         $user->save();
 
-        return back()->with('success', 'Usuário '.$user->name.' atualizado!');
+        return redirect('users/')->with('success', sprintf('%s atualizado!', $user->name));
     }
     
     public function destroy(User $user)

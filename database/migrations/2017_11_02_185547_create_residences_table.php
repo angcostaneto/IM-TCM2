@@ -21,6 +21,7 @@ class CreateResidencesTable extends Migration
             $table->string('image')->nullable()->comment('Caminho da imagem no banco de dados');
             $table->date('negotiation_date')->nullable();
             $table->decimal('negotiation_price')->nullable();
+            $table->integer('bedroom')->nullable();
             $table->integer('toilet')->nullable();
             $table->integer('bathroom')->nullable();
             $table->integer('suite')->nullable();

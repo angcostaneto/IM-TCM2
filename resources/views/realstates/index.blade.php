@@ -23,8 +23,9 @@
                             <th>CRECI</th>
                             <th>CEP</th>
                             <th>Logradouro</th>
-                            <th>Bairro</th>
                             <th>Número</th>
+                            <th>Bairro</th>
+                            <th>Cidade/Estado</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -38,8 +39,9 @@
                             <td>{{ $realState->creci }}</td>
                             <td>{{ $realState->address->cep }}</td>
                             <td>{{ $realState->address->street }}</td>
-                            <td>{{ $realState->address->district }}</td>
                             <td>{{ $realState->address->number }}</td>
+                            <td>{{ $realState->address->district }}</td>
+                            <td>{{ $realState->address->city }} - {{ $realState->address->state }}</td>
                             <td>
                                 <div class="inline">
                                     <a class="btn btn-small btn-info" href="{{ action('RealStatesController@edit', $realState->id) }}">Editar</a>

@@ -17,7 +17,9 @@ class Residences extends Model
         'suite',
         'garage',
         'area',
-        'residences_type'
+        'residences_type',
+        'bedroom',
+        'image'
     ];
 
     public function type() 

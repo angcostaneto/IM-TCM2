@@ -16,7 +16,7 @@
         </div><br />
     @endif
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <form method="post" action="{{ action('ResidencesController@update', $residence->id) }}">
+        <form method="post" enctype="multipart/form-data" action="{{ action('ResidencesController@update', $residence->id) }}">
             <input name="_method" type="hidden" value="PATCH">
             <div class="col-md-6 col-sm-6 col-xs-12">
                 <div class="x_panel">
@@ -65,6 +65,13 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Preço</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input class="form-control col-md-7 col-xs-12" type="text" name="negotiation_price" value="{{$residence->negotiation_price}}">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Quartos</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="form-control col-md-7 col-xs-12" type="number" name="bedroom" value="{{$residence->bedroom}}">
                             </div>
                         </div>
 

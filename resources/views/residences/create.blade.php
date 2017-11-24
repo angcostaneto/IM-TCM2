@@ -16,7 +16,7 @@
         </div><br />
     @endif
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <form method="post" action="{{url('residences')}}">
+        <form method="post" enctype="multipart/form-data" action="{{url('residences')}}">
             <div class="col-md-6 col-sm-6 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
@@ -64,7 +64,14 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Toilet</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Quartos</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="form-control col-md-7 col-xs-12" type="number" name="bedroom">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Toilets</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input class="form-control col-md-7 col-xs-12" type="number" name="toilet">
                             </div>
@@ -95,6 +102,13 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Área</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input class="form-control col-md-7 col-xs-12" type="number" name="area" step="0.01">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Fotos</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="form-control col-md-7 col-xs-12" type="file" name="image">
                             </div>
                         </div>
                     </div>
