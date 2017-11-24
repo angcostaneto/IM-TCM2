@@ -201,9 +201,13 @@ class RegisterController extends Controller
         return redirect('users/')->with('success', sprintf('%s atualizado!', $user->name));
     }
     
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        
+        $user->delete();
+        
+         return redirect('users/')->with('success', sprintf('%s deletado!', $user->name));
     }
     
 }
