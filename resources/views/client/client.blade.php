@@ -68,8 +68,8 @@
                         <li class="list-group-item"><strong>Valor:&nbsp;</strong>R${{$residence->negotiation_price}}</li>
                         <li class="list-group-item small text-left">
                             <strong>Área:&nbsp;</strong>{{$residence->area}} m² | 
-                            <strong>&nbsp;Quartos:&nbsp;</strong>{{$residence->bathroom}} | 
-                            <strong>&nbsp;Banheiros:&nbsp;</strong>{{$residence->toilet}} | 
+                            <strong>&nbsp;Quartos:&nbsp;</strong>{{$residence->bedroom}} | 
+                            <strong>&nbsp;Banheiros:&nbsp;</strong>{{$residence->bathroom}} | 
                             <strong>&nbsp;Suites:&nbsp;</strong>
                                 @if(!empty($residence->suites))
                                     {{$residence->suites}}
