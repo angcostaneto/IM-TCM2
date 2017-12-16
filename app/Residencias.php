@@ -4,22 +4,22 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Residences extends Model
+class Residencias extends Model
 {
 
     protected $fillable = [
-        'code',
-        'title',
-        'description',
-        'negotiation_price',
-        'toilet',
-        'bathroom',
-        'suite',
-        'garage',
+        'codigo',
+        'header_anuncio',
+        'descricao',
+        'imagem',
+        'data_negociacao',
+        'preco',
+        'quartos',
+        'salas',
+        'banheiros',
+        'suites',
+        'garagens',
         'area',
-        'residences_type',
-        'bedroom',
-        'image'
     ];
 
     public function type() 

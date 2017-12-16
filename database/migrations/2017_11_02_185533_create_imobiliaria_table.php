@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRealStatesTable extends Migration
+class CreateImobiliariaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateRealStatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('real_states', function (Blueprint $table) {
+        Schema::create('imobiliaria', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('company', 1000)->comment('Razão Social');
-            $table->string('trading_name', 1000)->comment('Nome Fantasia');
+            $table->string('razao_social');
+            $table->string('nome_fantasia');
             $table->string('logo')->nullable()->comment('Logo da empresa');
             $table->string('cnpj')->unique();
             $table->string('creci')->unique();
-            $table->string('phones');
-            $table->string('responsable');
-            $table->string('responsable_email');
+            $table->string('telefones');
+            $table->string('responsavel');
+            $table->string('responsavel_email');
             $table->index(['cnpj','creci']);
             $table->timestamps();
         });
@@ -35,6 +35,6 @@ class CreateRealStatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('real_states');
+        Schema::dropIfExists('imobiliaria');
     }
 }

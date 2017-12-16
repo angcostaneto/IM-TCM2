@@ -20,7 +20,7 @@ class ResidencesController extends Controller
     /**
      * Get all residences types.
      */
-    public function getResidencesType() {
+    public function getTipoResidencias() {
         $category = NULL;
         $return = [];
 
@@ -94,7 +94,7 @@ class ResidencesController extends Controller
      */
     public function create()
     {   
-        $residencesTypes = $this->getResidencesType();
+        $residencesTypes = $this->getTipoResidencias();
 
         return view('residences.create', ['residencesTypes' => $residencesTypes]);
     }
@@ -194,7 +194,7 @@ class ResidencesController extends Controller
      */
     public function edit($id)
     {
-        $residencesTypes = $this->getResidencesType();
+        $residencesTypes = $this->getTipoResidencias();
 
         $residence = Residences::with(['address', 'type'])->where(['id' => $id])->first();
 

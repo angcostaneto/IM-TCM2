@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ResidencesTypesAndResidencesTypesCategory extends Migration
+class TipoResidenciaCategoria extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class ResidencesTypesAndResidencesTypesCategory extends Migration
      */
     public function up()
     {
-         Schema::table('residences_types', function($table) {
-            $table->integer('residences_types_category')->nullable()->unsigned()->comment('Categoria do tipo de imóvel');
-            $table->foreign('residences_types_category')->references('id')->on('residences_types_category');
+         Schema::table('tipo_residencia', function($table) {
+            $table->integer('tipo_residencia_categoria')->nullable()->unsigned()->comment('Categoria do tipo de imóvel');
+            $table->foreign('tipo_residencia_categoria')->references('id')->on('categoria_tipo_residencia');
         });
     }
 
