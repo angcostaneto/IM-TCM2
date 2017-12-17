@@ -16,7 +16,7 @@
         </div><br />
     @endif
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <form method="post" enctype="multipart/form-data" action="{{ action('ResidencesController@update', $residence->id) }}">
+        <form method="post" enctype="multipart/form-data" action="{{ action('ResidenciasController@update', $residencia->id) }}">
             <input name="_method" type="hidden" value="PATCH">
             <div class="col-md-6 col-sm-6 col-xs-12">
                 <div class="x_panel">
@@ -30,19 +30,19 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Titulo</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="title" value="{{$residence->title}}">
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="header_anuncio" value="{{$residencia->header_anuncio}}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Tipo da residencia</label>
                              <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control col-md-7 col-xs-12" name="residences_type">
+                                <select class="form-control col-md-7 col-xs-12" name="tipo_residencia">
                                     <option>Selecione um tipo</option>
-                                    @foreach ($residencesTypes as $key => $residencesType)
+                                    @foreach ($tipoResidencias as $key => $tipoResidencia)
                                         <optgroup label="{{$key}}">
-                                            @foreach ($residencesType as $rT)
-                                                @if ($rT['id'] == $residence->type->id) {
+                                            @foreach ($tipoResidencia as $rT)
+                                                @if ($rT['id'] == $residencia->tipo->id) {
                                                     <option value="{{$rT['id']}}" selected>{{$rT['name']}}</option>
                                                 @else
                                                     <option value="{{$rT['id']}}">{{$rT['name']}}</option>
@@ -57,56 +57,56 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Descrição</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="description" value="{{$residence->description}}">
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="descricao" value="{{$residencia->descricao}}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Preço</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="negotiation_price" value="{{$residence->negotiation_price}}">
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="preco" value="{{$residencia->preco}}">
                             </div>
                         </div>
                         
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Quartos</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="number" name="bedroom" value="{{$residence->bedroom}}">
+                                <input class="form-control col-md-7 col-xs-12" type="number" name="quartos" value="{{$residencia->quartos}}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Toilet</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="number" name="toilet" value="{{$residence->toilet}}">
+                                <input class="form-control col-md-7 col-xs-12" type="number" name="toilets" value="{{$residencia->toilets}}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Banheiros</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="number" name="bathroom" value="{{$residence->bathroom}}">
+                                <input class="form-control col-md-7 col-xs-12" type="number" name="banheiros" value="{{$residencia->banheiros}}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Suites</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="number" name="suite" value="{{$residence->suite}}">
+                                <input class="form-control col-md-7 col-xs-12" type="number" name="suites" value="{{$residencia->suites}}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Garagem</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="number" name="garage" value="{{$residence->garage}}">
+                                <input class="form-control col-md-7 col-xs-12" type="number" name="garagens" value="{{$residencia->garagens}}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Área</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="number" name="area" step="0.01" value="{{$residence->area}}">
+                                <input class="form-control col-md-7 col-xs-12" type="number" name="area" step="0.01" value="{{$residencia->area}}">
                             </div>
                         </div>
                     </div>
@@ -121,7 +121,7 @@
                     </div>
                     <div class="x_content form-horizontal form-label-left">
                         <br>
-                        @include('addresses.form', ['address' => $residence->address])
+                        @include('enderecos.form', ['endereco' => $residencia->endereco])
                     </div>
                 </div>
             </div>

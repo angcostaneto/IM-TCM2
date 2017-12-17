@@ -15,21 +15,21 @@ class Residencias extends Model
         'data_negociacao',
         'preco',
         'quartos',
-        'salas',
+        'toilets',
         'banheiros',
         'suites',
         'garagens',
         'area',
     ];
 
-    public function type() 
+    public function tipo() 
     {
-        return $this->belongsTo(ResidencesTypes::class, 'residences_type');
+        return $this->belongsTo(TipoResidencias::class, 'tipo_residencia');
     }
 
-    public function address()
+    public function endereco()
     {
-        return $this->belongsTo(Addresses::class, 'residences_address');
+        return $this->belongsTo(Enderecos::class, 'residencia_endereco');
     }
     
 }

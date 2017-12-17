@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Residencias;
 use Illuminate\Http\Request;
-use App\Helper\ConsultApi;
+use App\Helper\ConsultaApi;
 use Illuminate\Support\Facades\DB;
-use App\Addresses;
-use App\ResidencesTypes;
+use App\Enderecos;
+use App\TipoResidencias;
 
 class ResidenciasController extends Controller
 {
@@ -16,30 +16,58 @@ class ResidenciasController extends Controller
     {
         $this->middleware('auth');
     }
+
+    //!TODO: Isolar essa função em uma classe comun para todas
+    public function verificaEndereco($numero, $cep) {
+
+        $verificaEndereco = Enderecos::where([
+            ['numero', $numero],
+            ['cep', $cep],
+        ])->first();
+
+        if (empty($verificaEndereco)) {
+            $endereco = ConsultaApi::consultaApi('GET', 'http://api.postmon.com.br/v1/cep/' . $cep, TRUE);
+    
+            if (!empty($endereco)) {
+                $dataEndereco = [
+                    'rua' => $endereco->logradouro,
+                    'bairro' => $endereco->bairro,
+                    'cidade' => $endereco->cidade,
+                    'estado' => $endereco->estado,
+                    'numero' => $numero,
+                    'cep' => $endereco->cep
+                ];
+
+                $endereco = Enderecos::create($dataEndereco);
+
+                return $endereco;
+            }
+        }
+        else {
+            return $verificaEndereco;
+        }
+    }
     
     /**
      * Get all residences types.
      */
     public function getTipoResidencias() {
-        $category = NULL;
         $return = [];
 
-        $residencesTypes = DB::table('residences_types')
-            ->join('residences_types_category', 'residences_types.residences_types_category', '=', 'residences_types_category.id')
-            ->select('residences_types.id', 'residences_types.name as residence_type', 'residences_types_category.name as residences_types_category')
-            ->orderBy('residences_types_category.name', 'asc')
+        $tipoResidencias = DB::table('tipo_residencias')
+            ->join('categoria_tipo_residencia', 'tipo_residencias.tipo_residencia_categoria', '=', 'categoria_tipo_residencia.id')
+            ->select('tipo_residencias.id', 'tipo_residencias.nome as tipo_residencia', 'categoria_tipo_residencia.nome as categoria_tipo_residencia')
+            ->orderBy('categoria_tipo_residencia.nome', 'asc')
             ->get();
 
-        $result = $residencesTypes->toArray();
+        $result = $tipoResidencias->toArray();
 
-        foreach ($result as $residencesType) {
+        foreach ($result as $tipoResidencia) {
             
-            $return[$residencesType->residences_types_category][] = [
-                'id' => $residencesType->id,
-                'name' => $residencesType->residence_type
-            ];
-
-            $category = $residencesType->residences_types_category;
+            $return[$tipoResidencia->categoria_tipo_residencia][] = [
+                'id' => $tipoResidencia->id,
+                'name' => $tipoResidencia->tipo_residencia
+            ];;
         }
 
         return $return;
@@ -49,29 +77,29 @@ class ResidenciasController extends Controller
      * Generate code for residence
      */
     public function generateCode() {
-        $str = "";
-	    $characters = array_merge(range('A','Z'), range('0','9'));
-	    $max = count($characters) - 1;
+        $codigo = "";
+	    $caracteres = array_merge(range('A','Z'), range('0','9'));
+	    $max = count($caracteres) - 1;
         
         for ($i = 0; $i < 5; $i++) {
 	    	$rand = mt_rand(0, $max);
-	    	$str .= $characters[$rand];
+	    	$codigo .= $caracteres[$rand];
 	    }
         
-        $codeResidence = DB::table('residences')
-            ->select('code')
+        $codigoResidencia = DB::table('residencias')
+            ->select('codigo')
             ->where([
-                ['code', $str]
+                ['codigo', $codigo]
             ])
             ->get();
         
-        $result = $codeResidence->toArray();
+        $resultado = $codigoResidencia->toArray();
 
-        if (!empty($result)) {
+        if (!empty($resultado)) {
             $this->generateCode();
         }
 
-        return $str;
+        return $codigo;
 
     }
 
@@ -82,9 +110,9 @@ class ResidenciasController extends Controller
      */
     public function index()
     {
-        $residences = Residences::with(['address', 'type'])->get();
+        $residencias = Residencias::with(['endereco', 'tipo'])->get();
 
-        return view('residences.index', ['residences' => $residences]);
+        return view('residencias.index', ['residencias' => $residencias]);
     }
 
     /**
@@ -94,9 +122,9 @@ class ResidenciasController extends Controller
      */
     public function create()
     {   
-        $residencesTypes = $this->getTipoResidencias();
+        $tipoResidencias = $this->getTipoResidencias();
 
-        return view('residences.create', ['residencesTypes' => $residencesTypes]);
+        return view('residencias.create', ['tipoResidencias' => $tipoResidencias]);
     }
 
     /**
@@ -109,70 +137,44 @@ class ResidenciasController extends Controller
     {
         $data = $this->validate(request(),
             [
-                'title' => 'required',
-                'description' => 'required',
-                'negotiation_price' => 'required|numeric',
-                'toilet' => 'required|numeric',
-                'bathroom' => 'required|numeric',
-                'suite' => 'required|numeric',
-                'garage' => 'required|numeric',
+                'header_anuncio' => 'required',
+                'descricao' => 'required',
+                'preco' => 'required|numeric',
+                'quartos' => 'required|numeric',
+                'banheiros' => 'required|numeric',
+                'suites' => 'required|numeric',
+                'garagens' => 'required|numeric',
                 'area' => 'required|numeric',
-                'residences_type' => 'required|numeric',
-                'bedroom' => 'required|numeric',
-                'image' => 'mimes:jpeg,bmp,png,jpg'
+                'tipo_residencia' => 'required|numeric',
+                'toilets' => 'required|numeric',
+                'imagen' => 'mimes:jpeg,bmp,png,jpg'
             ]
         );
         
-        $residenceType = ResidencesTypes::where('id', $data['residences_type'])->first();
+        $tipoResidencia = TipoResidencias::where('id', $data['tipo_residencia'])->first();
         
-        unset($data['residences_type']);
+        unset($data['tipo_residencia']);
         
-        $data['code'] = $this->generateCode();
+        $data['codigo'] = $this->generateCode();
         
-        $residences = Residences::create($data);
+        $residencia = Residencias::create($data);
 
-        $residences->type()->associate($residenceType);
+        $residencia->tipo()->associate($tipoResidencia);
 
-        $dataAddressValidate = $this->validate(request(), 
+        $dataEnderecoValidate = $this->validate(request(), 
             [
                 'cep' => 'required',
-                'number' => 'required|numeric'
+                'numero' => 'required|numeric'
             ]
         );
 
-        $helper = new ConsultApi();        
-        
-        $verifyAddress = Addresses::where([
-            ['number', $dataAddressValidate['number']],
-            ['cep', $dataAddressValidate['cep']],
-        ])->first();
+        $endereco = $this->verificaEndereco($request->numero, $request->cep);
 
-        if (empty($verifyAddress)) {
-            $address = $helper->consult_api('GET', 'http://api.postmon.com.br/v1/cep/' . $request->cep, TRUE);
-    
-            if (!empty($address)) {
-                $dataAddress = [
-                    'street' => $address->logradouro,
-                    'district' => $address->bairro,
-                    'city' => $address->cidade,
-                    'state' => $address->estado,
-                    'number' => $request->number,
-                    'cep' => $address->cep
-                ];
-
-                $residencesAddress = Addresses::create($dataAddress);
-
-                $residences->address()->associate($residencesAddress);
-            }
-        }
-        else {
-            $residences->address()->associate($verifyAddress);
-        }
+        $residencia->endereco()->associate($endereco);
         
+        $residencia->save();
         
-        $residences->save();
-        
-        return redirect('residences/')->with('success', sprintf('%s foi inserida com sucesso', $residences->title));
+        return redirect('residencias/')->with('success', sprintf('%s foi inserida com sucesso', $residencia->header_anuncio));
     }
 
     /**
@@ -194,11 +196,11 @@ class ResidenciasController extends Controller
      */
     public function edit($id)
     {
-        $residencesTypes = $this->getTipoResidencias();
+        $tipoResidencias = $this->getTipoResidencias();
 
-        $residence = Residences::with(['address', 'type'])->where(['id' => $id])->first();
+        $residencia = Residencias::with(['endereco', 'tipo'])->where(['id' => $id])->first();
 
-        return view('residences.edit', ['residencesTypes' => $residencesTypes, 'residence' => $residence]);
+        return view('residencias.edit', ['tipoResidencias' => $tipoResidencias, 'residencia' => $residencia]);
     }
 
     /**
@@ -211,85 +213,59 @@ class ResidenciasController extends Controller
     public function update(Request $request, $id)
     {
 
-        $residence = Residences::findOrFail($id);
+        $residencia = Residencias::findOrFail($id);
 
          $data = $this->validate(request(),
             [
-                'title' => 'required',
-                'description' => 'required',
-                'negotiation_price' => 'required|numeric',
-                'toilet' => 'required|numeric',
-                'bathroom' => 'required|numeric',
-                'suite' => 'required|numeric',
-                'garage' => 'required|numeric',
+                'header_anuncio' => 'required',
+                'descricao' => 'required',
+                'preco' => 'required|numeric',
+                'quartos' => 'required|numeric',
+                'banheiros' => 'required|numeric',
+                'suites' => 'required|numeric',
+                'garagens' => 'required|numeric',
                 'area' => 'required|numeric',
-                'residences_type' => 'required|numeric',
-                'bedroom' => 'required|numeric'
+                'tipo_residencia' => 'required|numeric',
+                'toilets' => 'required|numeric'
             ]
         );
         
-        $residenceType = ResidencesTypes::where('id', $data['residences_type'])->first();
+        $tipoResidencia = TipoResidencias::where('id', $data['tipo_residencia'])->first();
         
-        unset($data['residences_type']);
+        unset($data['tipo_residencia']);
         
-        $residence->update($data);
+        $residencia->update($data);
 
-        $residence->type()->associate($residenceType);
+        $residencia->tipo()->associate($tipoResidencia);
 
-        $dataAddressValidate = $this->validate(request(), 
+        $dataEnderecoValidate = $this->validate(request(), 
             [
                 'cep' => 'required',
-                'number' => 'required|numeric'
+                'numero' => 'required|numeric'
             ]
         );
 
-        $helper = new ConsultApi();        
-        
-        $verifyAddress = Addresses::where([
-            ['number', $dataAddressValidate['number']],
-            ['cep', $dataAddressValidate['cep']],
-        ])->first();
+        $endereco = $this->verificaEndereco($request->numero, $request->cep);
 
-        if (empty($verifyAddress)) {
-            $address = $helper->consult_api('GET', 'http://api.postmon.com.br/v1/cep/' . $request->cep, TRUE);
-    
-            if (!empty($address)) {
-                $dataAddress = [
-                    'street' => $address->logradouro,
-                    'district' => $address->bairro,
-                    'city' => $address->cidade,
-                    'state' => $address->estado,
-                    'number' => $request->number,
-                    'cep' => $address->cep
-                ];
-
-                $residenceAddress = Addresses::create($dataAddress);
-
-                $residence->address()->associate($residenceAddress);
-            }
-        }
-        else {
-            $residence->address()->associate($verifyAddress);
-        }
+        $residencia->endereco()->associate($endereco);
         
+        $residencia->save();
         
-        $residence->save();
-        
-        return redirect('residences/')->with('success', sprintf('%s foi atualizada com sucesso', $residence->title));
+        return redirect('residencias/')->with('success', sprintf('%s foi atualizada com sucesso', $residencia->header_anuncio));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Residences  $residences
+     * @param  integer $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $residence = Residences::find($id);
+        $residencia = Residencias::find($id);
 
-        $residence->delete();
+        $residencia->delete();
 
-        return redirect('residences/')->with('success', sprintf('%s foi deletada com sucesso', $residence->company));
+        return redirect('residencias/')->with('success', sprintf('%s foi deletada com sucesso', $residencia->header_anuncio));
     }
 }

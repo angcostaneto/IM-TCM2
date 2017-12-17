@@ -22,7 +22,7 @@ class CreateResidenciasTable extends Migration
             $table->date('data_negociacao')->nullable();
             $table->decimal('preco')->nullable();
             $table->integer('quartos')->nullable();
-            $table->integer('salas')->nullable();
+            $table->integer('toilets')->nullable();
             $table->integer('banheiros')->nullable();
             $table->integer('suites')->nullable();
             $table->integer('garagens')->nullable();
