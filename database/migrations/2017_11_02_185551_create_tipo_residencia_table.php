@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateResidencesTypesTable extends Migration
+class CreateTipoResidenciaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateResidencesTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('residences_types', function (Blueprint $table) {
+        Schema::create('tipo_residencias', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->comment('Tipo de imóvel');
+            $table->string('nome');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateResidencesTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('residences_types');
+        Schema::dropIfExists('tipo_residencias');
     }
 }

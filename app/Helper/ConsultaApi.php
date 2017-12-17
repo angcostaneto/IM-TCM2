@@ -2,10 +2,10 @@
 
 namespace App\Helper;
 
-class ConsultApi 
+class ConsultaApi 
 {
     /**
-     * Consult an api
+     * Consulta uma api
      * 
      * @param $method
      *  Method for API POST|PUT|GET.
@@ -22,7 +22,7 @@ class ConsultApi
      * @param $authPass
      *  The password for authentication.
      */
-    public function consult_api($method, $url, $responseIsJson = FALSE, $data = FALSE, $authName = FALSE, $authPass = FALSE) {
+    public static function consultaApi($method, $url, $responseIsJson = FALSE, $data = FALSE, $authName = FALSE, $authPass = FALSE) {
         $curl = curl_init();
 
         if (!empty($authName) && !empty($authPass)) {

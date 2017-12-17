@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Addresses;
+use App\Enderecos;
 use Illuminate\Http\Request;
 
-class AddressesController extends Controller
+class EnderecosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class AddressesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Addresses  $addresses
+     * @param  \App\Enderecos  $enderecos
      * @return \Illuminate\Http\Response
      */
-    public function show(Addresses $addresses)
+    public function show(Enderecos $enderecos)
     {
         //
     }
@@ -52,10 +52,10 @@ class AddressesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Addresses  $addresses
+     * @param  \App\Enderecos  $enderecos
      * @return \Illuminate\Http\Response
      */
-    public function edit(Addresses $addresses)
+    public function edit(Enderecos $enderecos)
     {
         //
     }
@@ -64,10 +64,10 @@ class AddressesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Addresses  $addresses
+     * @param  \App\Enderecos  $enderecos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Addresses $addresses)
+    public function update(Request $request, Enderecos $enderecos)
     {
         //
     }
@@ -75,10 +75,10 @@ class AddressesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Addresses  $addresses
+     * @param  \App\Enderecos  $enderecos
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Addresses $addresses)
+    public function destroy(Enderecos $enderecos)
     {
         //
     }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ResidencesTypesCategory extends Migration
+class CreateEnderecosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,15 @@ class ResidencesTypesCategory extends Migration
      */
     public function up()
     {
-        Schema::create('residences_types_category', function (Blueprint $table) {
+        Schema::create('enderecos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->comment('Categoria do tipo de imóvel');
+            $table->string('rua');
+            $table->string('bairro');
+            $table->string('cidade');
+            $table->string('estado');
+            $table->string('numero');
+            $table->string('cep');
+            $table->index(['cep', 'numero', 'estado']);
             $table->timestamps();
         });
     }
@@ -27,6 +33,6 @@ class ResidencesTypesCategory extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('enderecos');
     }
 }

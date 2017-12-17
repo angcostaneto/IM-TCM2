@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersResidencesTable extends Migration
+class CategoriaTipoResidencia extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateUsersResidencesTable extends Migration
      */
     public function up()
     {
-        Schema::create('users_residences', function (Blueprint $table) {
+        Schema::create('categoria_tipo_residencia', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_user')->comment('Id do Usuario');
-            $table->integer('id_residencia')->comment('Id da residência');
+            $table->string('nome')->comment('Categoria do tipo de imóvel');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateUsersResidencesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_residences');
+        //
     }
 }

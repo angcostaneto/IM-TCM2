@@ -28,7 +28,7 @@ class CreateUsersTable extends Migration
         });
         
         Schema::table('users', function($table) {
-            $table->foreign('user_address')->references('id')->on('addresses');
+            $table->foreign('user_address')->references('id')->on('enderecos');
         });
 
     }
