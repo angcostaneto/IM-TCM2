@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\RealStates;
+use App\Imobiliaria;
 use Illuminate\Http\Request;
 use App\Helper\ConsultApi;
 use Illuminate\Support\Facades\DB;
 use App\Addresses;
 
-class RealStatesController extends Controller
+class ImobiliariaController extends Controller
 {
     
     public function __construct()
@@ -23,7 +23,7 @@ class RealStatesController extends Controller
      */
     public function index()
     {
-        $realStates = RealStates::with('address')->get();
+        $realStates = Imobiliaria::with('endereco')->get();
 
         return view('realstates.index', ['realStates' => $realStates]);
     }
@@ -59,7 +59,7 @@ class RealStatesController extends Controller
             ]
         );
 
-        $realState = RealStates::create($data);
+        $realState = Imobiliaria::create($data);
 
         $dataAddressValidate = $this->validate(request(), 
             [
@@ -70,8 +70,8 @@ class RealStatesController extends Controller
 
         $helper = new ConsultApi();        
         
-        $verifyAddress = Addresses::where([
-            ['number', $dataAddressValidate['number']],
+        $verifyAddress = Enderecos::where([
+            ['numero', $dataAddressValidate['number']],
             ['cep', $dataAddressValidate['cep']],
         ])->first();
 
@@ -80,21 +80,21 @@ class RealStatesController extends Controller
     
             if (!empty($address)) {
                 $dataAddress = [
-                    'street' => $address->logradouro,
-                    'district' => $address->bairro,
-                    'city' => $address->cidade,
-                    'state' => $address->estado,
-                    'number' => $request->number,
+                    'rua' => $address->logradouro,
+                    'bairro' => $address->bairro,
+                    'cidade' => $address->cidade,
+                    'estado' => $address->estado,
+                    'numero' => $request->number,
                     'cep' => $address->cep
                 ];
 
-                $realStateAddress = Addresses::create($dataAddress);
+                $realStateAddress = Enderecos::create($dataAddress);
 
-                $realState->address()->associate($realStateAddress);
+                $realState->endereco()->associate($realStateAddress);
             }
         }
         else {
-            $realState->address()->associate($verifyAddress);
+            $realState->endereco()->associate($verifyAddress);
         }
         
         $realState->save();
@@ -105,10 +105,10 @@ class RealStatesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\RealStates  $realStates
+     * @param  \App\Imobiliaria  $realStates
      * @return \Illuminate\Http\Response
      */
-    public function show(RealStates $realStates)
+    public function show(Imobiliaria $realStates)
     {
         //
     }
@@ -121,7 +121,7 @@ class RealStatesController extends Controller
      */
     public function edit($id)
     {
-        $realState = RealStates::with('address')->where('id', $id)->first();
+        $realState = Imobiliaria::with('endereco')->where('id', $id)->first();
 
         return view('realstates.edit', ['realState' => $realState]);
     }
@@ -135,7 +135,7 @@ class RealStatesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $realState = RealStates::findOrFail($id);
+        $realState = Imobiliaria::findOrFail($id);
 
         $data = $this->validate(request(), 
             [
@@ -156,7 +156,7 @@ class RealStatesController extends Controller
             ]
         );
 
-        $verifyAddress = Addresses::where([
+        $verifyAddress = Enderecos::where([
             ['number', $dataAddressValidate['number']],
             ['cep', $dataAddressValidate['cep']],
         ])->first();
@@ -174,13 +174,13 @@ class RealStatesController extends Controller
                     'cep' => $address->cep
                 ];
 
-                $realStateAddress = Addresses::create($dataAddress);
+                $realStateAddress = Enderecos::create($dataAddress);
 
-                $realState->address()->associate($realStateAddress);
+                $realState->endereco()->associate($realStateAddress);
             }
         }
         else {
-            $realState->address()->associate($verifyAddress);
+            $realState->endereco()->associate($verifyAddress);
         }
 
         $realState->save();
@@ -196,7 +196,7 @@ class RealStatesController extends Controller
      */
     public function destroy($id)
     {
-        $realState = RealStates::find($id);
+        $realState = Imobiliaria::find($id);
 
         $realState->delete();
 
