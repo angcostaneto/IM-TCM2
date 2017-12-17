@@ -30,22 +30,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($realStates as $realState)
+                        @foreach ($imobiliarias as $imobiliaria)
                         <tr>
-                            <td>{{ $realState->id }}</td>
-                            <td>{{ $realState->company }}</td>
-                            <td>{{ $realState->trading_name }}</td>
-                            <td>{{ $realState->cnpj }}</td>
-                            <td>{{ $realState->creci }}</td>
-                            <td>{{ $realState->address->cep }}</td>
-                            <td>{{ $realState->address->street }}</td>
-                            <td>{{ $realState->address->number }}</td>
-                            <td>{{ $realState->address->district }}</td>
-                            <td>{{ $realState->address->city }} - {{ $realState->address->state }}</td>
+                            <td>{{ $imobiliaria->id }}</td>
+                            <td>{{ $imobiliaria->company }}</td>
+                            <td>{{ $imobiliaria->trading_name }}</td>
+                            <td>{{ $imobiliaria->cnpj }}</td>
+                            <td>{{ $imobiliaria->creci }}</td>
+                            <td>{{ $imobiliaria->endereco->cep }}</td>
+                            <td>{{ $imobiliaria->endereco->street }}</td>
+                            <td>{{ $imobiliaria->endereco->number }}</td>
+                            <td>{{ $imobiliaria->endereco->district }}</td>
+                            <td>{{ $imobiliaria->endereco->city }} - {{ $imobiliaria->endereco->state }}</td>
                             <td>
                                 <div class="inline">
-                                    <a class="btn btn-small btn-info" href="{{ action('RealStatesController@edit', $realState->id) }}">Editar</a>
-                                    <form action="{{ action('RealStatesController@destroy', $realState) }}" method="POST">
+                                    <a class="btn btn-small btn-info" href="{{ action('ImobiliariaController@edit', $imobiliaria->id) }}">Editar</a>
+                                    <form action="{{ action('ImobiliariaController@destroy', $imobiliaria) }}" method="POST">
                                         {{csrf_field()}}
                                         <input name="_method" type="hidden" value="DELETE">
                                         <button class="btn btn-small btn-danger" type="submit">Deletar</button>

@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Imobiliaria;
 use Illuminate\Http\Request;
-use App\Helper\ConsultApi;
+use App\Helper\ConsultaApi;
 use Illuminate\Support\Facades\DB;
-use App\Addresses;
+use App\Enderecos;
 
 class ImobiliariaController extends Controller
 {
@@ -16,6 +16,37 @@ class ImobiliariaController extends Controller
         $this->middleware('auth');
     }
     
+    //!TODO: Isolar essa função em uma classe comun para todas
+    public function verificaEndereco($numero, $cep) {
+
+        $verificaEndereco = Enderecos::where([
+            ['numero', $numero],
+            ['cep', $cep],
+        ])->first();
+
+        if (empty($verificaEndereco)) {
+            $endereco = ConsultaApi::consultaApi('GET', 'http://api.postmon.com.br/v1/cep/' . $cep, TRUE);
+    
+            if (!empty($endereco)) {
+                $dataEndereco = [
+                    'rua' => $endereco->logradouro,
+                    'bairro' => $endereco->bairro,
+                    'cidade' => $endereco->cidade,
+                    'estado' => $endereco->estado,
+                    'numero' => $numero,
+                    'cep' => $endereco->cep
+                ];
+
+                $endereco = Enderecos::create($dataEndereco);
+
+                return $endereco;
+            }
+        }
+        else {
+            return $verificaEndereco;
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,9 +54,9 @@ class ImobiliariaController extends Controller
      */
     public function index()
     {
-        $realStates = Imobiliaria::with('endereco')->get();
+        $imobiliarias = Imobiliaria::with('endereco')->get();
 
-        return view('realstates.index', ['realStates' => $realStates]);
+        return view('imobiliaria.index', ['imobiliarias' => $imobiliarias]);
     }
 
     /**
@@ -35,7 +66,7 @@ class ImobiliariaController extends Controller
      */
     public function create()
     {
-        return view('realstates.create');
+        return view('imobiliaria.create');
     }
 
     /**
@@ -48,58 +79,33 @@ class ImobiliariaController extends Controller
     {
         $data = $this->validate(request(), 
             [
-                'company' => 'required',
-                'trading_name' => 'required',
+                'razao_social' => 'required',
+                'nome_fantasia' => 'required',
                 'logo' => 'required',
                 'cnpj' => 'required',
                 'creci' => 'required',
-                'phones' => 'required',
-                'responsable' => 'required',
-                'responsable_email' => 'required'
+                'telefones' => 'required',
+                'responsavel' => 'required',
+                'responsavel_email' => 'required'
             ]
         );
 
-        $realState = Imobiliaria::create($data);
+        $imobiliaria = Imobiliaria::create($data);
 
-        $dataAddressValidate = $this->validate(request(), 
+        $dataEnderecoValidate = $this->validate(request(), 
             [
                 'cep' => 'required',
-                'number' => 'required|numeric'
+                'numero' => 'required|numeric'
             ]
         );
-
-        $helper = new ConsultApi();        
         
-        $verifyAddress = Enderecos::where([
-            ['numero', $dataAddressValidate['number']],
-            ['cep', $dataAddressValidate['cep']],
-        ])->first();
-
-        if (empty($verifyAddress)) {
-            $address = $helper->consult_api('GET', 'http://api.postmon.com.br/v1/cep/' . $request->cep, TRUE);
-    
-            if (!empty($address)) {
-                $dataAddress = [
-                    'rua' => $address->logradouro,
-                    'bairro' => $address->bairro,
-                    'cidade' => $address->cidade,
-                    'estado' => $address->estado,
-                    'numero' => $request->number,
-                    'cep' => $address->cep
-                ];
-
-                $realStateAddress = Enderecos::create($dataAddress);
-
-                $realState->endereco()->associate($realStateAddress);
-            }
-        }
-        else {
-            $realState->endereco()->associate($verifyAddress);
-        }
+        $endereco = $this->verificaEndereco($request->numero, $request->cep);
+            
+        $imobiliaria->endereco()->associate($endereco);
         
-        $realState->save();
+        $imobiliaria->save();
 
-        return redirect('realstates/')->with('success', sprintf('%s foi inserida com sucesso', $realState->company));
+        return redirect('imobiliaria/')->with('success', sprintf('%s foi inserida com sucesso', $imobiliaria->razao_social));
     }
 
     /**
@@ -123,7 +129,7 @@ class ImobiliariaController extends Controller
     {
         $realState = Imobiliaria::with('endereco')->where('id', $id)->first();
 
-        return view('realstates.edit', ['realState' => $realState]);
+        return view('imobiliaria.edit', ['realState' => $realState]);
     }
 
     /**

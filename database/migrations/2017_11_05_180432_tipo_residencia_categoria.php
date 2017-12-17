@@ -13,7 +13,7 @@ class TipoResidenciaCategoria extends Migration
      */
     public function up()
     {
-         Schema::table('tipo_residencia', function($table) {
+         Schema::table('tipo_residencias', function($table) {
             $table->integer('tipo_residencia_categoria')->nullable()->unsigned()->comment('Categoria do tipo de imóvel');
             $table->foreign('tipo_residencia_categoria')->references('id')->on('categoria_tipo_residencia');
         });

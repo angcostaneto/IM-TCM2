@@ -13,8 +13,8 @@
 
 Route::get('/', 'ClientController@index');
 
-Route::resource('realstates','RealStatesController');
-Route::resource('residences','ResidencesController');
+Route::resource('imobiliaria','ImobiliariaController');
+Route::resource('residencias','ResidenciasController');
 Route::resource('users','Auth\RegisterController');
 
 Auth::routes();

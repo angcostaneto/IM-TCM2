@@ -16,7 +16,7 @@
                 <p>{{ \Session::get('success') }}</p>
             </div><br />
         @endif
-        <form method="post" enctype="multipart/form-data" action="{{url('realstates')}}">
+        <form method="post" enctype="multipart/form-data" action="{{url('imobiliaria')}}">
             <div class="col-md-6 col-sm-6 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
@@ -30,14 +30,14 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Razão Social</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="company" placeholder="Razão Social">
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="razao_social" placeholder="Razão Social">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Nome Fantasia</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="trading_name" placeholder="Nome Fantasia">
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="nome_fantasia" placeholder="Nome Fantasia">
                             </div>
                         </div>
 
@@ -65,21 +65,21 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Telefones</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="phones" placeholder="Telefones">
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="telefones" placeholder="Telefones">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Responsável</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="responsable" placeholder="Responsável">
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="responsavel" placeholder="Responsável">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Email do Responsável</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="responsable_email" placeholder="Email do Responsável">
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="responsavel_email" placeholder="Email do Responsável">
                             </div>
                         </div>
                     </div>
@@ -94,7 +94,7 @@
                     </div>
                     <div class="x_content form-horizontal form-label-left">
                         <br>
-                        @include('addresses.form')
+                        @include('enderecos.form')
                     </div>
                 </div>
             </div>

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTipoResidenciasTable extends Migration
+class CreateTipoResidenciaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class CreateTipoResidenciasTable extends Migration
     {
         Schema::create('tipo_residencias', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('tipo_imovel')->comment('Tipo de imóvel');
+            $table->string('nome');
             $table->timestamps();
         });
     }

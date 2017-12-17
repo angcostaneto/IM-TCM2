@@ -9,7 +9,7 @@ class Imobiliaria extends Model
 
     protected $primaryKey = 'id';
 
-    protected $table = 'imobialiaria';
+    protected $table = 'imobiliaria';
 
     protected $fillable = [
         'razao_social',
