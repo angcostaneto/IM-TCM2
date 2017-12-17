@@ -66,7 +66,7 @@ class ResidenciasController extends Controller
             
             $return[$tipoResidencia->categoria_tipo_residencia][] = [
                 'id' => $tipoResidencia->id,
-                'name' => $tipoResidencia->tipo_residencia
+                'nome' => $tipoResidencia->tipo_residencia
             ];;
         }
 

@@ -43,9 +43,9 @@
                                         <optgroup label="{{$key}}">
                                             @foreach ($tipoResidencia as $rT)
                                                 @if ($rT['id'] == $residencia->tipo->id) {
-                                                    <option value="{{$rT['id']}}" selected>{{$rT['name']}}</option>
+                                                    <option value="{{$rT['id']}}" selected>{{$rT['nome']}}</option>
                                                 @else
-                                                    <option value="{{$rT['id']}}">{{$rT['name']}}</option>
+                                                    <option value="{{$rT['id']}}">{{$rT['nome']}}</option>
                                                 @endif
                                             @endforeach
                                         </optgroup>

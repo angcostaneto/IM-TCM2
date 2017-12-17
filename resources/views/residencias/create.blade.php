@@ -41,7 +41,7 @@
                                     @foreach ($tipoResidencias as $key => $tipoResidencia)
                                         <optgroup label="{{$key}}">
                                             @foreach ($tipoResidencia as $rT)
-                                                <option value="{{$rT['id']}}">{{$rT['name']}}</option>
+                                                <option value="{{$rT['id']}}">{{$rT['nome']}}</option>
                                             @endforeach
                                         </optgroup>
                                     @endforeach
