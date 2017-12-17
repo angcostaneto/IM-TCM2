@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Residences;
+use App\Residencias;
 use Illuminate\Http\Request;
 use App\Helper\ConsultApi;
 use Illuminate\Support\Facades\DB;
 use App\Addresses;
 use App\ResidencesTypes;
 
-class ResidencesController extends Controller
+class ResidenciasController extends Controller
 {
 
     public function __construct()

@@ -16,7 +16,7 @@
                 <p>{{ \Session::get('success') }}</p>
             </div><br />
         @endif
-        <form method="post" enctype="multipart/form-data" action="{{ action('RealStatesController@update', $realState->id) }}">
+        <form method="post" enctype="multipart/form-data" action="{{ action('ImobiliariaController@update', $imobiliaria->id) }}">
             <input name="_method" type="hidden" value="PUT">
             <div class="col-md-6 col-sm-6 col-xs-12">
                 <div class="x_panel">
@@ -31,56 +31,56 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Razão Social</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="company" placeholder="Razão Social" value="{{ $realState->company }}">
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="razao_social" placeholder="Razão Social" value="{{ $imobiliaria->razao_social }}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Nome Fantasia</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="trading_name" placeholder="Nome Fantasia" value="{{ $realState->trading_name }}">
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="nome_fantasia" placeholder="Nome Fantasia" value="{{ $imobiliaria->nome_fantasia }}" readonly>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Logo da empresa</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="file" name="logo" value="{{ $realState->logo }}">
+                                <input class="form-control col-md-7 col-xs-12" type="file" name="logo" value="{{ $imobiliaria->logo }}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">CNPJ</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="cnpj" placeholder="CNPJ" value="{{ $realState->cnpj }}">
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="cnpj" placeholder="CNPJ" value="{{ $imobiliaria->cnpj }}" readonly>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">CRECI</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="creci" placeholder="CRECI" value="{{ $realState->creci }}">
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="creci" placeholder="CRECI" value="{{ $imobiliaria->creci }}" readonly>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Telefones</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="phones" placeholder="Telefones" value="{{ $realState->phones }}">
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="telefones" placeholder="Telefones" value="{{ $imobiliaria->telefones }}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Responsável</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="responsable" placeholder="Responsável" value="{{ $realState->responsable }}">
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="responsavel" placeholder="Responsável" value="{{ $imobiliaria->responsavel }}" readonly>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Email do Responsável</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="responsable_email" placeholder="Email do Responsável" value="{{ $realState->responsable_email }}">
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="responsavel_email" placeholder="Email do Responsável" value="{{ $imobiliaria->responsavel_email }}" readonly>
                             </div>
                         </div>
                     </div>
@@ -95,7 +95,7 @@
                     </div>
                     <div class="x_content form-horizontal form-label-left">
                         <br>
-                        @include('addresses.form', ['address' => $realState->address])
+                        @include('enderecos.form', ['endereco' => $imobiliaria->endereco])
                     </div>
                 </div>
             </div>
