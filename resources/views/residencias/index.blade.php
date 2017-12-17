@@ -32,25 +32,25 @@
                         <th>Ações</th>
                     </tr>
 
-                    @foreach ($residences as $residence)
+                    @foreach ($residencias as $residencia)
                     <tr>
-                        <td>{{ $residence->code }}</td>
-                        <td>{{ $residence->title }}</td>
-                        <td>{{ $residence->description }}</td>
-                        <td>{{ $residence->type->name }}</td>
-                        <td>{{ $residence->negotiation_price }}</td>
-                        <td>{{ $residence->bedroom }}</td>
-                        <td>{{ $residence->toilet }}</td>
-                        <td>{{ $residence->bathroom }}</td>
-                        <td>{{ $residence->suite }}</td>
-                        <td>{{ $residence->garage }}</td>
-                        <td>{{ $residence->area }}</td>
-                        <td>{{ $residence->address->cep }}</td>
-                        <td>{{ $residence->address->street }}</td>
-                        <td>{{ $residence->address->district }}</td>
+                        <td>{{ $residencia->codigo }}</td>
+                        <td>{{ $residencia->header_anuncio }}</td>
+                        <td>{{ $residencia->descricao }}</td>
+                        <td>{{ $residencia->tipo->nome }}</td>
+                        <td>{{ $residencia->preco }}</td>
+                        <td>{{ $residencia->quartos }}</td>
+                        <td>{{ $residencia->toilets }}</td>
+                        <td>{{ $residencia->banheiros }}</td>
+                        <td>{{ $residencia->suites }}</td>
+                        <td>{{ $residencia->garagens }}</td>
+                        <td>{{ $residencia->area }}</td>
+                        <td>{{ $residencia->endereco->cep }}</td>
+                        <td>{{ $residencia->endereco->rua }}</td>
+                        <td>{{ $residencia->endereco->bairro }}</td>
                         <td>
-                            <a class="btn btn-info" href="{{ action('ResidencesController@edit', $residence->id) }}">Editar</a>
-                            <form action="{{ action('ResidencesController@destroy', $residence) }}" method="POST">
+                            <a class="btn btn-info" href="{{ action('ResidenciasController@edit', $residencia->id) }}">Editar</a>
+                            <form action="{{ action('ResidenciasController@destroy', $residencia) }}" method="POST">
                                 {{csrf_field()}}
                                 <input name="_method" type="hidden" value="DELETE">
                                 <button class="btn btn-danger" type="submit">Deletar</button>

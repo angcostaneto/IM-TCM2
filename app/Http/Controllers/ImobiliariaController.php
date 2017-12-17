@@ -127,9 +127,9 @@ class ImobiliariaController extends Controller
      */
     public function edit($id)
     {
-        $realState = Imobiliaria::with('endereco')->where('id', $id)->first();
+        $imobiliaria = Imobiliaria::with('endereco')->where('id', $id)->first();
 
-        return view('imobiliaria.edit', ['realState' => $realState]);
+        return view('imobiliaria.edit', ['imobiliaria' => $imobiliaria]);
     }
 
     /**
@@ -141,57 +141,34 @@ class ImobiliariaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $realState = Imobiliaria::findOrFail($id);
+        $imobiliaria = Imobiliaria::findOrFail($id);
 
         $data = $this->validate(request(), 
             [
-                'company' => 'required',
+                'razao_social' => 'required',
                 'logo' => 'required',
-                'phones' => 'required',
-                'responsable' => 'required',
-                'responsable_email' => 'required'
+                'telefones' => 'required',
+                'responsavel' => 'required',
+                'responsavel_email' => 'required'
             ]
         );
 
-        $realState->update($data);
+        $imobiliaria->update($data);
 
-        $dataAddressValidate = $this->validate(request(), 
+        $dataEnderecoValidate = $this->validate(request(), 
             [
                 'cep' => 'required',
-                'number' => 'required|numeric'
+                'numero' => 'required|numeric'
             ]
         );
 
-        $verifyAddress = Enderecos::where([
-            ['number', $dataAddressValidate['number']],
-            ['cep', $dataAddressValidate['cep']],
-        ])->first();
-        
-        if (empty($verifyAddress)) {
-            $address = $helper->consult_api('GET', 'http://api.postmon.com.br/v1/cep/' . $request->cep, TRUE);
-    
-            if (!empty($address)) {
-                $dataAddress = [
-                    'street' => $address->logradouro,
-                    'district' => $address->bairro,
-                    'city' => $address->cidade,
-                    'state' => $address->estado,
-                    'number' => $request->number,
-                    'cep' => $address->cep
-                ];
+        $endereco = $this->verificaEndereco($request->numero, $request->cep);
+            
+        $imobiliaria->endereco()->associate($endereco);
 
-                $realStateAddress = Enderecos::create($dataAddress);
+        $imobiliaria->save();
 
-                $realState->endereco()->associate($realStateAddress);
-            }
-        }
-        else {
-            $realState->endereco()->associate($verifyAddress);
-        }
-
-        $realState->save();
-
-        return redirect('realstates/')->with('success', sprintf('%s foi atualizada com sucesso', $realState->company));
+        return redirect('imobiliaria/')->with('success', sprintf('%s foi atualizada com sucesso', $imobiliaria->company));
     }
 
     /**
@@ -202,10 +179,10 @@ class ImobiliariaController extends Controller
      */
     public function destroy($id)
     {
-        $realState = Imobiliaria::find($id);
+        $imobiliaria = Imobiliaria::find($id);
 
-        $realState->delete();
+        $imobiliaria->delete();
 
-        return redirect('realstates/')->with('success', sprintf('%s foi deletada com sucesso', $realState->company));
+        return redirect('imobiliaria/')->with('success', sprintf('%s foi deletada com sucesso', $imobiliaria->razao_social));
     }
 }

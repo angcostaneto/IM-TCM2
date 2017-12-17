@@ -33,15 +33,15 @@
                         @foreach ($imobiliarias as $imobiliaria)
                         <tr>
                             <td>{{ $imobiliaria->id }}</td>
-                            <td>{{ $imobiliaria->company }}</td>
-                            <td>{{ $imobiliaria->trading_name }}</td>
+                            <td>{{ $imobiliaria->razao_social }}</td>
+                            <td>{{ $imobiliaria->nome_fantasia }}</td>
                             <td>{{ $imobiliaria->cnpj }}</td>
                             <td>{{ $imobiliaria->creci }}</td>
                             <td>{{ $imobiliaria->endereco->cep }}</td>
-                            <td>{{ $imobiliaria->endereco->street }}</td>
-                            <td>{{ $imobiliaria->endereco->number }}</td>
-                            <td>{{ $imobiliaria->endereco->district }}</td>
-                            <td>{{ $imobiliaria->endereco->city }} - {{ $imobiliaria->endereco->state }}</td>
+                            <td>{{ $imobiliaria->endereco->rua }}</td>
+                            <td>{{ $imobiliaria->endereco->numero }}</td>
+                            <td>{{ $imobiliaria->endereco->bairro }}</td>
+                            <td>{{ $imobiliaria->endereco->cidade }} - {{ $imobiliaria->endereco->estado }}</td>
                             <td>
                                 <div class="inline">
                                     <a class="btn btn-small btn-info" href="{{ action('ImobiliariaController@edit', $imobiliaria->id) }}">Editar</a>

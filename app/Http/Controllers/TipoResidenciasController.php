@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\ResidencesTypes;
+use App\TipoResidencias;
 use Illuminate\Http\Request;
 
-class ResidencesTypesController extends Controller
+class TipoResidenciasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class ResidencesTypesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\ResidencesTypes  $residencesTypes
+     * @param  \App\TipoResidencias  $tipoResidencias
      * @return \Illuminate\Http\Response
      */
-    public function show(ResidencesTypes $residencesTypes)
+    public function show(TipoResidencias $tipoResidencias)
     {
         //
     }
@@ -52,10 +52,10 @@ class ResidencesTypesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\ResidencesTypes  $residencesTypes
+     * @param  \App\TipoResidencias  $tipoResidencias
      * @return \Illuminate\Http\Response
      */
-    public function edit(ResidencesTypes $residencesTypes)
+    public function edit(TipoResidencias $tipoResidencias)
     {
         //
     }
@@ -64,10 +64,10 @@ class ResidencesTypesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ResidencesTypes  $residencesTypes
+     * @param  \App\TipoResidencias  $tipoResidencias
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ResidencesTypes $residencesTypes)
+    public function update(Request $request, TipoResidencias $tipoResidencias)
     {
         //
     }
@@ -75,10 +75,10 @@ class ResidencesTypesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\ResidencesTypes  $residencesTypes
+     * @param  \App\TipoResidencias  $tipoResidencias
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ResidencesTypes $residencesTypes)
+    public function destroy(TipoResidencias $tipoResidencias)
     {
         //
     }

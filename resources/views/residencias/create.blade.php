@@ -16,7 +16,7 @@
         </div><br />
     @endif
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <form method="post" enctype="multipart/form-data" action="{{url('residences')}}">
+        <form method="post" enctype="multipart/form-data" action="{{url('residencias')}}">
             <div class="col-md-6 col-sm-6 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
@@ -29,19 +29,19 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Titulo</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="title">
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="header_anuncio">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Tipo da residencia</label>
                              <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control col-md-7 col-xs-12" name="residences_type">
+                                <select class="form-control col-md-7 col-xs-12" name="tipo_residencia">
                                     <option>Selecione um tipo</option>
-                                    @foreach ($residencesTypes as $key => $residencesType)
+                                    @foreach ($tipoResidencias as $key => $tipoResidencia)
                                         <optgroup label="{{$key}}">
-                                            @foreach ($residencesType as $rT)
-                                                <option value="{{$rT['id']}}">{{$rT['name']}}</option>
+                                            @foreach ($tipoResidencia as $rT)
+                                                <option value="{{$rT['id']}}">{{$rT['nome']}}</option>
                                             @endforeach
                                         </optgroup>
                                     @endforeach
@@ -52,49 +52,49 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Descrição</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="description">
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="descricao">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Preço</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="negotiation_price">
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="preco">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Quartos</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="number" name="bedroom">
+                                <input class="form-control col-md-7 col-xs-12" type="number" name="quartos">
                             </div>
                         </div>
                         
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Toilets</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="number" name="toilet">
+                                <input class="form-control col-md-7 col-xs-12" type="number" name="toilets">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Banheiros</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="number" name="bathroom">
+                                <input class="form-control col-md-7 col-xs-12" type="number" name="banheiros">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Suites</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="number" name="suite">
+                                <input class="form-control col-md-7 col-xs-12" type="number" name="suites">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Garagem</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="number" name="garage">
+                                <input class="form-control col-md-7 col-xs-12" type="number" name="garagens">
                             </div>
                         </div>
 
@@ -108,7 +108,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Fotos</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="file" name="image">
+                                <input class="form-control col-md-7 col-xs-12" type="file" name="imagen">
                             </div>
                         </div>
                     </div>
@@ -123,7 +123,7 @@
                     </div>
                     <div class="x_content form-horizontal form-label-left">
                         <br>
-                        @include('addresses.form')
+                        @include('enderecos.form')
                     </div>
                 </div>
             </div>

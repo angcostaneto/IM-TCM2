@@ -1,0 +1,271 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Residencias;
+use Illuminate\Http\Request;
+use App\Helper\ConsultaApi;
+use Illuminate\Support\Facades\DB;
+use App\Enderecos;
+use App\TipoResidencias;
+
+class ResidenciasController extends Controller
+{
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    //!TODO: Isolar essa função em uma classe comun para todas
+    public function verificaEndereco($numero, $cep) {
+
+        $verificaEndereco = Enderecos::where([
+            ['numero', $numero],
+            ['cep', $cep],
+        ])->first();
+
+        if (empty($verificaEndereco)) {
+            $endereco = ConsultaApi::consultaApi('GET', 'http://api.postmon.com.br/v1/cep/' . $cep, TRUE);
+    
+            if (!empty($endereco)) {
+                $dataEndereco = [
+                    'rua' => $endereco->logradouro,
+                    'bairro' => $endereco->bairro,
+                    'cidade' => $endereco->cidade,
+                    'estado' => $endereco->estado,
+                    'numero' => $numero,
+                    'cep' => $endereco->cep
+                ];
+
+                $endereco = Enderecos::create($dataEndereco);
+
+                return $endereco;
+            }
+        }
+        else {
+            return $verificaEndereco;
+        }
+    }
+    
+    /**
+     * Get all residences types.
+     */
+    public function getTipoResidencias() {
+        $return = [];
+
+        $tipoResidencias = DB::table('tipo_residencias')
+            ->join('categoria_tipo_residencia', 'tipo_residencias.tipo_residencia_categoria', '=', 'categoria_tipo_residencia.id')
+            ->select('tipo_residencias.id', 'tipo_residencias.nome as tipo_residencia', 'categoria_tipo_residencia.nome as categoria_tipo_residencia')
+            ->orderBy('categoria_tipo_residencia.nome', 'asc')
+            ->get();
+
+        $result = $tipoResidencias->toArray();
+
+        foreach ($result as $tipoResidencia) {
+            
+            $return[$tipoResidencia->categoria_tipo_residencia][] = [
+                'id' => $tipoResidencia->id,
+                'nome' => $tipoResidencia->tipo_residencia
+            ];;
+        }
+
+        return $return;
+    }
+
+    /**
+     * Generate code for residence
+     */
+    public function generateCode() {
+        $codigo = "";
+	    $caracteres = array_merge(range('A','Z'), range('0','9'));
+	    $max = count($caracteres) - 1;
+        
+        for ($i = 0; $i < 5; $i++) {
+	    	$rand = mt_rand(0, $max);
+	    	$codigo .= $caracteres[$rand];
+	    }
+        
+        $codigoResidencia = DB::table('residencias')
+            ->select('codigo')
+            ->where([
+                ['codigo', $codigo]
+            ])
+            ->get();
+        
+        $resultado = $codigoResidencia->toArray();
+
+        if (!empty($resultado)) {
+            $this->generateCode();
+        }
+
+        return $codigo;
+
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $residencias = Residencias::with(['endereco', 'tipo'])->get();
+
+        return view('residencias.index', ['residencias' => $residencias]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {   
+        $tipoResidencias = $this->getTipoResidencias();
+
+        return view('residencias.create', ['tipoResidencias' => $tipoResidencias]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $data = $this->validate(request(),
+            [
+                'header_anuncio' => 'required',
+                'descricao' => 'required',
+                'preco' => 'required|numeric',
+                'quartos' => 'required|numeric',
+                'banheiros' => 'required|numeric',
+                'suites' => 'required|numeric',
+                'garagens' => 'required|numeric',
+                'area' => 'required|numeric',
+                'tipo_residencia' => 'required|numeric',
+                'toilets' => 'required|numeric',
+                'imagen' => 'mimes:jpeg,bmp,png,jpg'
+            ]
+        );
+        
+        $tipoResidencia = TipoResidencias::where('id', $data['tipo_residencia'])->first();
+        
+        unset($data['tipo_residencia']);
+        
+        $data['codigo'] = $this->generateCode();
+        
+        $residencia = Residencias::create($data);
+
+        $residencia->tipo()->associate($tipoResidencia);
+
+        $dataEnderecoValidate = $this->validate(request(), 
+            [
+                'cep' => 'required',
+                'numero' => 'required|numeric'
+            ]
+        );
+
+        $endereco = $this->verificaEndereco($request->numero, $request->cep);
+
+        $residencia->endereco()->associate($endereco);
+        
+        $residencia->save();
+        
+        return redirect('residencias/')->with('success', sprintf('%s foi inserida com sucesso', $residencia->header_anuncio));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Residences  $residences
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Residences $residences)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $tipoResidencias = $this->getTipoResidencias();
+
+        $residencia = Residencias::with(['endereco', 'tipo'])->where(['id' => $id])->first();
+
+        return view('residencias.edit', ['tipoResidencias' => $tipoResidencias, 'residencia' => $residencia]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Residences  $residences
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+
+        $residencia = Residencias::findOrFail($id);
+
+         $data = $this->validate(request(),
+            [
+                'header_anuncio' => 'required',
+                'descricao' => 'required',
+                'preco' => 'required|numeric',
+                'quartos' => 'required|numeric',
+                'banheiros' => 'required|numeric',
+                'suites' => 'required|numeric',
+                'garagens' => 'required|numeric',
+                'area' => 'required|numeric',
+                'tipo_residencia' => 'required|numeric',
+                'toilets' => 'required|numeric'
+            ]
+        );
+        
+        $tipoResidencia = TipoResidencias::where('id', $data['tipo_residencia'])->first();
+        
+        unset($data['tipo_residencia']);
+        
+        $residencia->update($data);
+
+        $residencia->tipo()->associate($tipoResidencia);
+
+        $dataEnderecoValidate = $this->validate(request(), 
+            [
+                'cep' => 'required',
+                'numero' => 'required|numeric'
+            ]
+        );
+
+        $endereco = $this->verificaEndereco($request->numero, $request->cep);
+
+        $residencia->endereco()->associate($endereco);
+        
+        $residencia->save();
+        
+        return redirect('residencias/')->with('success', sprintf('%s foi atualizada com sucesso', $residencia->header_anuncio));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  integer $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $residencia = Residencias::find($id);
+
+        $residencia->delete();
+
+        return redirect('residencias/')->with('success', sprintf('%s foi deletada com sucesso', $residencia->header_anuncio));
+    }
+}
