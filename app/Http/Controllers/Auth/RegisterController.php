@@ -6,9 +6,9 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use App\Helper\ConsultApi;
+use App\Helper\ConsultaApi;
 use Illuminate\Support\Facades\DB;
-use App\Addresses;
+use App\Enderecos;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 
@@ -55,11 +55,11 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'type' => 'required',
+            'tipo' => 'required',
             'rg' => 'required',
             'cpf' => 'required',
             'cep' => 'required',
-            'number' => 'required|numeric',
+            'numero' => 'required|numeric',
             'password' => 'required|string|min:6|confirmed'
         ]);
     }
@@ -73,7 +73,7 @@ class RegisterController extends Controller
 
     public function index()
     {
-        $users = User::with('address')->get();
+        $users = User::with('endereco')->get();
         return view('users.index', compact ('users'));
     }
     
@@ -90,57 +90,57 @@ class RegisterController extends Controller
     
     protected function create(array $data)
     {
-        $helper = new ConsultApi();        
+        $helper = new ConsultaApi();        
         
-        $verifyAddress = DB::table('addresses')
+        $verifyAddress = DB::table('enderecos')
             ->select('id')
             ->where([
-                ['number', $data['number']],
+                ['numero', $data['numero']],
                 ['cep', $data['cep']],
             ])
             ->get();
         
         $result = $verifyAddress->toArray();
         if (empty($result)) {
-            $address = $helper->consult_api('GET', 'http://api.postmon.com.br/v1/cep/'.$data['cep'], TRUE);
+            $address = $helper->consultaApi('GET', 'http://api.postmon.com.br/v1/cep/'.$data['cep'], TRUE);
     
             if (!empty($address)) {
                 $dataAddress = [
-                    'street' => $address->logradouro,
-                    'district' => $address->bairro,
-                    'city' => $address->cidade,
-                    'state' => $address->estado,
-                    'number' => $data['number'],
+                    'rua' => $address->logradouro,
+                    'bairro' => $address->bairro,
+                    'cidade' => $address->cidade,
+                    'estado' => $address->estado,
+                    'numero' => $data['numero'],
                     'cep' => $address->cep
                 ];
-                $userAddress = Addresses::create($dataAddress)->id;
+                $userAddress = Enderecos::create($dataAddress)->id;
             }
         }
         else {
             $userAddress = $result[0]->id;
         }
         
-        if(empty($data['photo'])){
-            $photo = null;
+        if(empty($data['foto'])){
+            $foto = null;
         }else{
-            $photo = $data['photo'];
+            $foto = $data['foto'];
         }
         
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'type' => $data['type'],
-            'photo' => $photo,
+            'tipo' => $data['tipo'],
+            'foto' => $foto,
             'rg' => $data['rg'],
             'cpf' => $data['cpf'],
-            'user_address' => $userAddress,
+            'user_endereco' => $userAddress,
             'password' => bcrypt($data['password']),
         ]);
     }
     
     public function edit($id)
     {
-        $user = User::with('address')->where('id', $id) -> first();
+        $user = User::with('endereco')->where('id', $id) -> first();
         if(!empty($user)){
             return view('auth.register', compact ('user'));
         }else{
@@ -151,32 +151,32 @@ class RegisterController extends Controller
     
     public function update(Request $request, $id){
         
-        $user = User::with('address')->find($id);
+        $user = User::with('endereco')->find($id);
         
-        $helper = new ConsultApi();        
+        $helper = new ConsultaApi();        
         
-        $verifyAddress = DB::table('addresses')
+        $verifyAddress = DB::table('enderecos')
             ->select('id')
             ->where([
-                ['number', $request->input('number')],
+                ['numero', $request->input('numero')],
                 ['cep', $request->input('cep')],
             ])
             ->get();
         
         $result = $verifyAddress->toArray();
         if (empty($result)) {
-            $address = $helper->consult_api('GET', 'http://api.postmon.com.br/v1/cep/'.$request->input('cep'), TRUE);
+            $address = $helper->consultaApi('GET', 'http://api.postmon.com.br/v1/cep/'.$request->input('cep'), TRUE);
     
             if (!empty($address)) {
                 $dataAddress = [
-                    'street' => $address->logradouro,
-                    'district' => $address->bairro,
-                    'city' => $address->cidade,
-                    'state' => $address->estado,
-                    'number' => $request->input('number'),
+                    'rua' => $address->logradouro,
+                    'bairro' => $address->bairro,
+                    'cidade' => $address->cidade,
+                    'estado' => $address->estado,
+                    'numero' => $request->input('numero'),
                     'cep' => $address->cep
                 ];
-                $userAddress = Addresses::create($dataAddress)->id;
+                $userAddress = Enderecos::create($dataAddress)->id;
             }
         }
         else {
@@ -185,11 +185,11 @@ class RegisterController extends Controller
         
         $user->name = $request->input('name');
         $user->email = $request->input('email');
-        $user->type = $request->input('type');
-        $user->photo = $request->input('photo');
+        $user->tipo = $request->input('tipo');
+        $user->foto = $request->input('foto');
         $user->rg = $request->input('rg');
         $user->cpf = $request->input('cpf');
-        $user->user_address = $userAddress;
+        $user->user_endereco = $userAddress;
         
         if ( ! $request->input('password') == '')
         {

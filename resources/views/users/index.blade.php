@@ -34,14 +34,17 @@
                         <td>{{ $user->id }}</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
-                        <td>{{ $user->type }}</td>
+                        <td>{{ $user->tipo }}</td>
                         <td>{{ $user->rg }}</td>
                         <td>{{ $user->cpf }}</td>
-                        <td>{{ $user->address->cep }}</td>
-                        <td>{{ $user->address->street }}</td>
-                        <td>{{ $user->address->number }}</td>
-                        <td>{{ $user->address->district }}</td>
-                        <td>{{ $user->address->city }} - {{ $user->address->state }}</td>
+                        <td>@if (!empty($user->endereco->cep)){{$user->endereco->cep}} @endif</td>
+                        <td>@if (!empty($user->endereco->rua)){{$user->endereco->rua}} @endif</td>
+                        <td>@if (!empty($user->endereco->numero)){{$user->endereco->numero}} @endif</td>
+                        <td>@if (!empty($user->endereco->bairro)){{$user->endereco->bairro}} @endif</td>
+                        <td>
+                            @if (!empty($user->endereco->cidade)){{$user->endereco->cidade}} @endif
+                            @if (!empty($user->endereco->estado)){{$user->endereco->estado}} @endif
+                        </td>
                         <td>
                             <div class="inline">
                                 <a class="btn btn-small btn-info" href="{{ action('Auth\RegisterController@edit', $user->id) }}">Editar</a>

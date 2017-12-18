@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'ClientController@index');
+Route::get('/', 'ClienteController@index');
 
 Route::resource('imobiliaria','ImobiliariaController');
 Route::resource('residencias','ResidenciasController');
