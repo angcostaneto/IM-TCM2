@@ -18,7 +18,7 @@ class User extends Authenticatable
     protected $table = 'users';
     
     protected $fillable = [
-        'name', 'email', 'password', 'photo', 'type', 'rg', 'cpf', 'user_address'
+        'name', 'email', 'password', 'foto', 'tipo', 'rg', 'cpf', 'user_endereco'
     ];
 
     /**
@@ -30,8 +30,8 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
     
-    public function address()
+    public function endereco()
     {
-        return $this->belongsTo('App\Addresses', 'user_address');
+        return $this->belongsTo('App\Enderecos', 'user_endereco');
     }
 }

@@ -1,6 +1,6 @@
-@extends ('client.template')
+@extends ('cliente.template')
 
-@section('title', 'Apperitivo')
+@section('titulo', 'Apperitivo')
 
 @section('content')
 
@@ -57,30 +57,30 @@
 
         <div class="row">
             
-            @foreach($residences as $residence)
+            @foreach($residencias as $residencia)
             <div class="col-md-4">
                 <div id="residences">
-                    <img class="foto-imovel" alt="Foto da residência" src="{{$residence->image}}">
-                    <h3 class="card-title">{{$residence->title}}</h3>
-                    <span class="badge badge-success">{{$residence->type->name}}</span>
-                    <p class="card-text">{{$residence->description}}</p>
+                    <img class="foto-imovel" alt="Foto da residência" src="{{$residencia->imagem}}">
+                    <h3 class="card-title">{{$residencia->header_anuncio}}</h3>
+                    <span class="badge badge-success">{{$residencia->tipo->nome}}</span>
+                    <p class="card-text">{{$residencia->descricao}}</p>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><strong>Valor:&nbsp;</strong>R${{$residence->negotiation_price}}</li>
+                        <li class="list-group-item"><strong>Valor:&nbsp;</strong>R${{$residencia->preco}}</li>
                         <li class="list-group-item small text-left">
-                            <strong>Área:&nbsp;</strong>{{$residence->area}} m² | 
-                            <strong>&nbsp;Quartos:&nbsp;</strong>{{$residence->bedroom}} | 
-                            <strong>&nbsp;Banheiros:&nbsp;</strong>{{$residence->bathroom}} | 
+                            <strong>Área:&nbsp;</strong>{{$residencia->area}} m² | 
+                            <strong>&nbsp;Quartos:&nbsp;</strong>{{$residencia->quartos}} | 
+                            <strong>&nbsp;Banheiros:&nbsp;</strong>{{$residencia->banheiros}} | 
                             <strong>&nbsp;Suites:&nbsp;</strong>
-                                @if(!empty($residence->suites))
-                                    {{$residence->suites}}
+                                @if(!empty($residencia->suites))
+                                    {{$residencia->suites}}
                                 @else 
                                     0
                                 @endif | 
-                            <strong>&nbsp;Vagas na garagem:&nbsp;</strong>{{$residence->garage}}
+                            <strong>&nbsp;Vagas na garagem:&nbsp;</strong>{{$residencia->garagens}}
                         </li>
                         <li class="list-group-item"><strong>Endereço:&nbsp;</strong>
-                            {{ $residence->address->street }}, {{ $residence->address->number }}, 
-                            {{ $residence->address->district }}, {{ $residence->address->city }}.
+                            {{ $residencia->endereco->rua }}, {{ $residencia->endereco->numero }}, 
+                            {{ $residencia->endereco->bairro }}, {{ $residencia->endereco->cidade }}.
                         </li>
                     </ul>
                     <a href="#" class="btninfo btn btn-primary">Mais informações</a>
@@ -89,5 +89,5 @@
             @endforeach
             
         </div>
-    {!! $residences->links() !!}
+    {!! $residencias->links() !!}
 @stop

@@ -56,13 +56,13 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Tipo de usuário</label>
                              <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control col-md-7 col-xs-12" name="type">
+                                <select class="form-control col-md-7 col-xs-12" name="tipo">
                                     <option>Selecione um tipo</option>
-                                    <option value="Super Admin" @if(isset($user) && $user->type=='Super Admin') selected @endif>Super Admin</option>
-                                    <option value="Admin" @if(isset($user) && $user->type=='Admin') selected @endif>Admin</option>
-                                    <option value="Vistoriador" @if(isset($user) && $user->type=='Vistoriador') selected @endif>Vistoriador</option>
-                                    <option value="Corretor" @if(isset($user) && $user->type=='Corretor') selected @endif>Corretor</option>
-                                    <option value="Cliente" @if(isset($user) && $user->type=='Cliente') selected @endif>Cliente</option>
+                                    <option value="Super Admin" @if(isset($user) && $user->tipo=='Super Admin') selected @endif>Super Admin</option>
+                                    <option value="Admin" @if(isset($user) && $user->tipo=='Admin') selected @endif>Admin</option>
+                                    <option value="Vistoriador" @if(isset($user) && $user->tipo=='Vistoriador') selected @endif>Vistoriador</option>
+                                    <option value="Corretor" @if(isset($user) && $user->tipo=='Corretor') selected @endif>Corretor</option>
+                                    <option value="Cliente" @if(isset($user) && $user->tipo=='Cliente') selected @endif>Cliente</option>
                                 </select>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Foto</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="photo" type="file" class="form-control col-md-7 col-xs-12" name="photo">
+                                <input id="foto" type="file" class="form-control col-md-7 col-xs-12" name="foto">
                             </div>
                         </div>
 
@@ -114,7 +114,7 @@
                     </div>
                     <div class="x_content form-horizontal form-label-left">
                         <br>
-                        @include('addresses.form-user')
+                        @include('enderecos.form-user')
                     </div>
                 </div>
             </div>
