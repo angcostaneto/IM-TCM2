@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Residencias;
 use Illuminate\Http\Request;
-use App\Helper\ConsultaApi;
 use Illuminate\Support\Facades\DB;
-use App\Enderecos;
 use App\TipoResidencias;
+use App\Http\Controllers\EnderecosController;
 
 class ResidenciasController extends Controller
 {
@@ -15,37 +14,6 @@ class ResidenciasController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-    }
-
-    //!TODO: Isolar essa função em uma classe comun para todas
-    public function verificaEndereco($numero, $cep) {
-
-        $verificaEndereco = Enderecos::where([
-            ['numero', $numero],
-            ['cep', $cep],
-        ])->first();
-
-        if (empty($verificaEndereco)) {
-            $endereco = ConsultaApi::consultaApi('GET', 'http://api.postmon.com.br/v1/cep/' . $cep, TRUE);
-    
-            if (!empty($endereco)) {
-                $dataEndereco = [
-                    'rua' => $endereco->logradouro,
-                    'bairro' => $endereco->bairro,
-                    'cidade' => $endereco->cidade,
-                    'estado' => $endereco->estado,
-                    'numero' => $numero,
-                    'cep' => $endereco->cep
-                ];
-
-                $endereco = Enderecos::create($dataEndereco);
-
-                return $endereco;
-            }
-        }
-        else {
-            return $verificaEndereco;
-        }
     }
     
     /**
@@ -168,7 +136,7 @@ class ResidenciasController extends Controller
             ]
         );
 
-        $endereco = $this->verificaEndereco($request->numero, $request->cep);
+        $endereco = EnderecosController::verificaEndereco($request->numero, $request->cep);
 
         $residencia->endereco()->associate($endereco);
         
@@ -245,7 +213,7 @@ class ResidenciasController extends Controller
             ]
         );
 
-        $endereco = $this->verificaEndereco($request->numero, $request->cep);
+        $endereco = EnderecosController::verificaEndereco($request->numero, $request->cep);
 
         $residencia->endereco()->associate($endereco);
         
