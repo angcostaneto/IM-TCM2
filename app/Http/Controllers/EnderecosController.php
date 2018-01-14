@@ -4,9 +4,47 @@ namespace App\Http\Controllers;
 
 use App\Enderecos;
 use Illuminate\Http\Request;
+use App\Helper\ConsultaApi;
 
 class EnderecosController extends Controller
 {
+    /**
+     * Verifica e atribui o endereço
+     * 
+     * @var int numero
+     *  Numero do endereço
+     * @var string cep
+     *  Cep do endereço
+     */
+    static function verificaEndereco($numero, $cep) 
+    {
+        $verificaEndereco = Enderecos::where([
+            ['numero', $numero],
+            ['cep', $cep],
+        ])->first();
+
+        if (empty($verificaEndereco)) {
+            $endereco = ConsultaApi::consultaApi('GET', 'http://api.postmon.com.br/v1/cep/' . $cep, TRUE);
+    
+            if (!empty($endereco)) {
+                $dataEndereco = [
+                    'rua' => $endereco->logradouro,
+                    'bairro' => $endereco->bairro,
+                    'cidade' => $endereco->cidade,
+                    'estado' => $endereco->estado,
+                    'numero' => $numero,
+                    'cep' => $endereco->cep
+                ];
+
+                $endereco = Enderecos::create($dataEndereco);
+
+                return $endereco;
+            }
+        }
+        else {
+            return $verificaEndereco;
+        }
+    }
     /**
      * Display a listing of the resource.
      *
