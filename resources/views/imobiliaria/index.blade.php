@@ -9,9 +9,12 @@
          @endif
         <div class="x_panel">
             <div class="x_title">
-                <h2>Imobiliária</h2>
+                <h2>Imobiliária</h2><br>
                 <div class="clearfix"></div>
             </div>
+            <a href="/imobiliaria/create" class="btn btn-success">
+                <i class="fa fa-plus"></i> Nova Imobiliária
+            </a>
             <div class="x_content">
                 <table class="table table-hover">
                     <thead>
