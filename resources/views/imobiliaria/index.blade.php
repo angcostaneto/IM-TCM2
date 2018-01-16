@@ -9,7 +9,7 @@
          @endif
         <div class="x_panel">
             <div class="x_title">
-                <h2>Imobiliaria</h2>
+                <h2>Imobiliária</h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
