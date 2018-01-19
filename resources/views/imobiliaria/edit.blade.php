@@ -22,7 +22,7 @@
                 <div class="x_panel">
                     <div class="x_title">
                         <h2>Imobiliária
-                            <small>Cadastre uma nova imobiliária</small>
+                            <small>Faça Alterações na Imobiliária</small>
                         </h2>
                         <div class="clearfix"></div>
                     </div>
@@ -38,7 +38,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Nome Fantasia</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="nome_fantasia" placeholder="Nome Fantasia" value="{{ $imobiliaria->nome_fantasia }}" readonly>
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="nome_fantasia" placeholder="Nome Fantasia" value="{{ $imobiliaria->nome_fantasia }}">
                             </div>
                         </div>
 
@@ -73,14 +73,14 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Responsável</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="responsavel" placeholder="Responsável" value="{{ $imobiliaria->responsavel }}" readonly>
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="responsavel" placeholder="Responsável" value="{{ $imobiliaria->responsavel }}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Email do Responsável</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="responsavel_email" placeholder="Email do Responsável" value="{{ $imobiliaria->responsavel_email }}" readonly>
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="responsavel_email" placeholder="Email do Responsável" value="{{ $imobiliaria->responsavel_email }}">
                             </div>
                         </div>
                     </div>
@@ -103,7 +103,8 @@
             <div class="ln_solid"></div>
             <div class="form-group">
                 <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                    <button type="submit" class="btn btn-success">Cadastrar</button>
+                    <button type="submit" class="btn btn-success">Confirmar</button>
+                    <a href="{{route('imobiliaria.index')}}" class="btn btn-danger">Cancelar</a>
                 </div>
             </div>
 

@@ -10,7 +10,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Apperitivo Imóveis') }}</title>
 
     <!-- Bootstrap -->
     <link href="{{ asset('vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -90,7 +90,7 @@
                 document.getElementById('logout-form').submit();">
                     <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                 </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: one;">
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     {{ csrf_field() }}
                 </form>
             </div>
@@ -129,7 +129,7 @@
                         document.getElementById('logout-form').submit();">
                             <i class="fa fa-sign-out pull-right"></i> Sair
                         </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: one;">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             {{ csrf_field() }}
                         </form>
                     </li>
