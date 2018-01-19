@@ -26,8 +26,10 @@
                         </h2>
                         <div class="clearfix"></div>
                     </div>
+                    <span style="color: red">Campos em cinza não podem ser alterados.</span>
                     <div class="x_content form-horizontal form-label-left">
                         <br>
+
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Razão Social</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
