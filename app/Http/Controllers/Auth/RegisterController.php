@@ -6,9 +6,8 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use App\Helper\ConsultaApi;
+use App\Http\Controllers\EnderecosController;
 use Illuminate\Support\Facades\DB;
-use App\Enderecos;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 
@@ -57,10 +56,12 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'tipo' => 'required',
             'rg' => 'required',
-            'cpf' => 'required',
+            'cpf' => 'required|unique:users',
             'cep' => 'required',
             'numero' => 'required|numeric',
-            'password' => 'required|string|min:6|confirmed'
+            'password' => 'required|string|min:6|confirmed',
+            'cep' => 'required',
+            'numero' => 'required|numeric'
         ]);
     }
 
@@ -90,35 +91,7 @@ class RegisterController extends Controller
     
     protected function create(array $data)
     {
-        $helper = new ConsultaApi();        
-        
-        $verifyAddress = DB::table('enderecos')
-            ->select('id')
-            ->where([
-                ['numero', $data['numero']],
-                ['cep', $data['cep']],
-            ])
-            ->get();
-        
-        $result = $verifyAddress->toArray();
-        if (empty($result)) {
-            $address = $helper->consultaApi('GET', 'http://api.postmon.com.br/v1/cep/'.$data['cep'], TRUE);
-    
-            if (!empty($address)) {
-                $dataAddress = [
-                    'rua' => $address->logradouro,
-                    'bairro' => $address->bairro,
-                    'cidade' => $address->cidade,
-                    'estado' => $address->estado,
-                    'numero' => $data['numero'],
-                    'cep' => $address->cep
-                ];
-                $userAddress = Enderecos::create($dataAddress)->id;
-            }
-        }
-        else {
-            $userAddress = $result[0]->id;
-        }
+        $endereco = EnderecosController::verificaEndereco($data['numero'], $data['cep']);
         
         if(empty($data['foto'])){
             $foto = null;
@@ -133,7 +106,7 @@ class RegisterController extends Controller
             'foto' => $foto,
             'rg' => $data['rg'],
             'cpf' => $data['cpf'],
-            'user_endereco' => $userAddress,
+            'user_endereco' => $endereco->id,
             'password' => bcrypt($data['password']),
         ]);
     }
@@ -152,53 +125,43 @@ class RegisterController extends Controller
     public function update(Request $request, $id){
         
         $user = User::with('endereco')->find($id);
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'tipo' => 'required',
+            'rg' => 'required',
+            'cpf' => 'required',
+            'cep' => 'required',
+            'numero' => 'required|numeric',
+            'cep' => 'required',
+            'numero' => 'required|numeric'
+        ]);
         
-        $helper = new ConsultaApi();        
-        
-        $verifyAddress = DB::table('enderecos')
-            ->select('id')
-            ->where([
-                ['numero', $request->input('numero')],
-                ['cep', $request->input('cep')],
-            ])
-            ->get();
-        
-        $result = $verifyAddress->toArray();
-        if (empty($result)) {
-            $address = $helper->consultaApi('GET', 'http://api.postmon.com.br/v1/cep/'.$request->input('cep'), TRUE);
-    
-            if (!empty($address)) {
-                $dataAddress = [
-                    'rua' => $address->logradouro,
-                    'bairro' => $address->bairro,
-                    'cidade' => $address->cidade,
-                    'estado' => $address->estado,
-                    'numero' => $request->input('numero'),
-                    'cep' => $address->cep
-                ];
-                $userAddress = Enderecos::create($dataAddress)->id;
+        $endereco = EnderecosController::verificaEndereco($request->numero, $request->cep);
+
+        if ($validator->fails()) {
+            
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }else{
+            $user->name = $request->input('name');
+            $user->email = $request->input('email');
+            $user->tipo = $request->input('tipo');
+            $user->foto = $request->input('foto');
+            $user->rg = $request->input('rg');
+            $user->cpf = $request->input('cpf');
+            $user->user_endereco = $endereco->id;
+
+            if (!$request->input('password') == ''){
+                $user->password = bcrypt($request->input('password'));
             }
-        }
-        else {
-            $userAddress = $result[0]->id;
-        }
-        
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->tipo = $request->input('tipo');
-        $user->foto = $request->input('foto');
-        $user->rg = $request->input('rg');
-        $user->cpf = $request->input('cpf');
-        $user->user_endereco = $userAddress;
-        
-        if ( ! $request->input('password') == '')
-        {
-            $user->password = bcrypt($request->input('password'));
-        }
 
-        $user->save();
+            $user->save();
 
-        return redirect('users/')->with('success', sprintf('%s atualizado!', $user->name));
+            return redirect('users/')->with('success', sprintf('%s atualizado!', $user->name));
+        }       
     }
     
     public function destroy($id)

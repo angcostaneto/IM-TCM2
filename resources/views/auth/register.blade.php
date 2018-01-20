@@ -91,14 +91,14 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Senha</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="password" type="password" class="form-control col-md-7 col-xs-12" name="password" required>
+                                <input id="password" type="password" class="form-control col-md-7 col-xs-12" name="password" @if (!isset($user)) required @endif>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Confirme a senha</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="password-confirm" type="password" class="form-control col-md-7 col-xs-12" name="password_confirmation" required>
+                                <input id="password-confirm" type="password" class="form-control col-md-7 col-xs-12" name="password_confirmation" @if (!isset($user)) required @endif>
                             </div>
                         </div>
                         
