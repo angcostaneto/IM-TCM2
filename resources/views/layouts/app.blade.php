@@ -38,133 +38,28 @@
   <body class="nav-md">
     <div class="container body">
       <div class="main_container">
-        <div class="col-md-3 left_col">
-          <div class="left_col scroll-view">
-            <div class="navbar nav_title" style="border: 0;">
-              <a href="{{ url('home') }}" class="site_title"><i class="fa fa-bank"></i> <span>Apperitivo</span></a>
-            </div>
-
-            <div class="clearfix"></div>
-
-            <!-- menu profile quick info -->
-            <div class="profile clearfix">
-              <div class="profile_pic">
-                <img src="
-                    @if(!empty(Auth::user()->photo))
-                        {{Auth::user()->photo}}
-                    @else
-                        {{url('img/user.png')}}
-                    @endif" 
-                    alt="..." class="img-circle profile_img">
-              </div>
-              <div class="profile_info">
-                <span>Bem vindo,</span>
-                <h2>
-                    @isset(Auth::user()->name)
-                        {{Auth::user()->name}}
-                    @endisset
-                </h2>
-              </div>
-            </div>
-            <!-- /menu profile quick info -->
-
-            <br />
-
-            <!-- sidebar menu -->
-            @include('sidebar.menu')
-            <!-- /sidebar menu -->
-
-            <!-- /menu footer buttons -->
-            <div class="sidebar-footer hidden-small">
-              <a data-toggle="tooltip" data-placement="top" title="Configurações">
-                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Tela cheia">
-                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Bloquear">
-                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-              </a>
-                <a href="{{route('logout')}}" data-toggle="tooltip" data-placement="top" title="Sair"
-                onclick="event.preventDefault();
-                document.getElementById('logout-form').submit();">
-                    <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: one;">
-                    {{ csrf_field() }}
-                </form>
-            </div>
-            <!-- /menu footer buttons -->
-          </div>
-        </div>
+      @if(Auth::check())  
+        <!-- sidebar menu -->
+        @include('parts.menu')
+        <!-- /sidebar menu -->
+      @endif
 
         <!-- top navigation -->
         <div class="top_nav">
           <div class="nav_menu">
             <nav>
-              <div class="nav toggle">
-                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-              </div>
+              @if(Auth::check()) 
+                <div class="nav toggle">
+                  <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                </div>
+              @endif
 
-              <ul class="nav navbar-nav navbar-right">
-                <li class="">
-                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="
-                        @if(!empty(Auth::user()->photo))
-                            {{Auth::user()->photo}}
-                        @else
-                            {{url('img/user.png')}}
-                        @endif">
-                        @isset(Auth::user()->name)
-                            {{Auth::user()->name}}
-                        @endisset
-                    <span class=" fa fa-angle-down"></span>
-                  </a>
-                  <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <li><a href="javascript:;"> Perfil</a></li>
-                    <li><a href="javascript:;">Ajuda</a></li>
-                    <li>
-                        <a href="{{route('logout')}}"
-                        onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">
-                            <i class="fa fa-sign-out pull-right"></i> Sair
-                        </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: one;">
-                            {{ csrf_field() }}
-                        </form>
-                    </li>
-                  </ul>
-                </li>
+              @if(Auth::check()) 
+                @include('parts.logged_menu')
+              @else
+                @include('parts.logout_menu')
+              @endif
 
-                <li role="presentation" class="dropdown">
-                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-envelope-o"></i>
-                    <span class="badge bg-green">1</span>
-                  </a>
-                  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                    <li>
-                      <a>
-                        <span class="image"><img src="{{url('img/user.png')}}" alt="Profile Image" /></span>
-                        <span>
-                          <span>Admin</span>
-                          <span class="time">3 horas atrás</span>
-                        </span>
-                        <span class="message">
-                          Teste de notificação...
-                        </span>
-                      </a>
-                    </li>
-                    
-                      <div class="text-center">
-                        <a>
-                          <strong>Ver todas</strong>
-                          <i class="fa fa-angle-right"></i>
-                        </a>
-                      </div>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
             </nav>
           </div>
         </div>
