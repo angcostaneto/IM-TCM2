@@ -42,4 +42,4 @@
 <!-- Babel polyfill -->
 <script src="{{ asset('plugins/babel-polyfill/browser-polyfill.js') }}"></script>
 
-@yield('scripts')
+@stack('scripts')

@@ -1,3 +1,5 @@
+console.log('aqui');
+
 var mymap = L.map('mapa').setView([51.505, -0.09], 13);
 
 mapboxgl.accessToken = 'sk.eyJ1IjoiYW5nY29zdGEiLCJhIjoiY2pkOTNxbnBlNXBieTJ4bjJvNTU0ZnV3eCJ9.IYgPUQv-LQvpnqiBB1hoLw';

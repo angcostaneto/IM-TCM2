@@ -17,4 +17,4 @@
 <!-- jQuery -->
 <script src="{{ asset('plugins/gentella/vendors/jquery/dist/jquery.min.js') }}"></script>
 
-@yield('styles')
+@stack('styles')
