@@ -18,6 +18,7 @@
                         <tr>
                             <th>Codigo</th>
                             <th>Titulo</th>
+                            <th>Negociação</th>
                             <th>Descrição</th>
                             <th>Tipo</th>
                             <th>Preço</th>
@@ -38,6 +39,7 @@
                         <tr>
                             <td>{{ $residencia->codigo }}</td>
                             <td>{{ $residencia->header_anuncio }}</td>
+                            <td>{{ $residencia->tipo_negociacao }}</td>
                             <td>{{ $residencia->descricao }}</td>
                             <td>{{ $residencia->tipo->nome }}</td>
                             <td>{{ $residencia->preco }}</td>

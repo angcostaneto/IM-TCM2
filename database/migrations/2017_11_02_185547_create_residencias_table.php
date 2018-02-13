@@ -27,6 +27,7 @@ class CreateResidenciasTable extends Migration
             $table->integer('suites')->nullable();
             $table->integer('garagens')->nullable();
             $table->integer('area')->nullable()->comment('Tamanho do terreno');
+            $table->enum('tipo_negociacao', ['Alugar', 'Comprar', 'Vender']);
             $table->index(['codigo', 'header_anuncio', 'data_negociacao']);
             $table->timestamps();
         });
