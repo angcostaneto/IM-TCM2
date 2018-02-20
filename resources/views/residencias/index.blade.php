@@ -9,15 +9,18 @@
          @endif
         <div class="x_panel">
             <div class="x_title">
-                <h2>Residencias</h2>
+                <h2>Residências</h2><br>
                 <div class="clearfix"></div>
             </div>
+            <a href="/residencia/create" class="btn btn-success">
+                <i class="fa fa-plus"></i> Nova Residência
+            </a>
             <div class="x_content">
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Codigo</th>
-                            <th>Titulo</th>
+                            <th>Código</th>
+                            <th>Título</th>
                             <th>Descrição</th>
                             <th>Tipo</th>
                             <th>Preço</th>
