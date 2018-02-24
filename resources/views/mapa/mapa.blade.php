@@ -10,9 +10,7 @@
 </div>
 
 @push('scripts')
-    <!-- Map box -->
-    <script src='https://api.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.js'></script>
-    <!-- Leaflet -->
-    <script src="{{ asset('plugins/leaflet/leaflet.js') }}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD87XLDAzmq-4LhBJI36gfhf637fGS_wFw&callback=initMap" async defer></script>
+    <script src="{{ asset('js/initMap.js') }}"></script>
     <script src="{{ asset('js/geosearch.js') }}"></script>
 @endpush
