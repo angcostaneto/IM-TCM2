@@ -117,6 +117,11 @@ class ResidenciasController extends Controller
                 'toilets' => 'required|numeric',
                 'imagen' => 'mimes:jpeg,bmp,png,jpg',
                 'tipo_negociacao' => 'required',
+                'ar' => 'nullable|boolean',
+                'piscina' => 'nullable|boolean',
+                'churrasqueira' => 'nullable|boolean',
+                'closet' => 'nullable|boolean',
+                'outros' => 'nullable|string|max:300',
             ]
         );
         

@@ -116,6 +116,24 @@
                                 <input class="form-control col-md-7 col-xs-12" type="number" name="area" step="0.01" value="{{$residencia->area}}">
                             </div>
                         </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Extras</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="checkbox" name="ar" value="1" @if($residencia->ar)checked @endif> Ar condicionado<br>
+                                <input type="checkbox" name="piscina" value="1" @if($residencia->piscina)checked @endif> Piscina<br>
+                                <input type="checkbox" name="churrasqueira" value="1" @if($residencia->churrasqueira)checked @endif> Churrasqueira<br>
+                                <input type="checkbox" name="closet" value="1" @if($residencia->closet)checked @endif> Closet<br>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Outros</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="outros" value="{{$residencia->outros}}">
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
