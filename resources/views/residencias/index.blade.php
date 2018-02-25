@@ -33,33 +33,38 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($residencias as $residencia)
-                        <tr>
-                            <td>{{ $residencia->codigo }}</td>
-                            <td>{{ $residencia->header_anuncio }}</td>
-                            <td>{{ $residencia->tipo_negociacao }}</td>
-                            <td>{{ $residencia->descricao }}</td>
-                            <td>{{ $residencia->tipo->nome }}</td>
-                            <td>{{ $residencia->preco }}</td>
-                            <td>{{ $residencia->quartos }}</td>
-                            <td>{{ $residencia->toilets }}</td>
-                            <td>{{ $residencia->banheiros }}</td>
-                            <td>{{ $residencia->suites }}</td>
-                            <td>{{ $residencia->garagens }}</td>
-                            <td>{{ $residencia->area }}</td>
-                            <td>{{ $residencia->endereco->cidade }} - {{ $residencia->endereco->cep }}</td>
-                            <td>
-                                <div class="inline">
-                                    <a class="btn btn-info" href="{{ action('ResidenciasController@edit', $residencia->id) }}">Editar</a>
-                                    <form action="{{ action('ResidenciasController@destroy', $residencia) }}" method="POST">
-                                        {{csrf_field()}}
-                                        <input name="_method" type="hidden" value="DELETE">
-                                        <button class="btn btn-danger" type="submit">Deletar</button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforeach
+                        @if(count($residencias)>0)
+                        
+                            @foreach ($residencias as $residencia)
+                            <tr>
+                                <td>{{ $residencia->codigo }}</td>
+                                <td>{{ $residencia->header_anuncio }}</td>
+                                <td>{{ $residencia->tipo_negociacao }}</td>
+                                <td>{{ $residencia->descricao }}</td>
+                                <td>{{ $residencia->tipo->nome }}</td>
+                                <td>{{ $residencia->preco }}</td>
+                                <td>{{ $residencia->quartos }}</td>
+                                <td>{{ $residencia->toilets }}</td>
+                                <td>{{ $residencia->banheiros }}</td>
+                                <td>{{ $residencia->suites }}</td>
+                                <td>{{ $residencia->garagens }}</td>
+                                <td>{{ $residencia->area }}</td>
+                                <td>{{ $residencia->endereco->cidade }} - {{ $residencia->endereco->cep }}</td>
+                                <td>
+                                    <div class="inline">
+                                        <a class="btn btn-info" href="{{ action('ResidenciasController@edit', $residencia->id) }}">Editar</a>
+                                        <form action="{{ action('ResidenciasController@destroy', $residencia) }}" method="POST">
+                                            {{csrf_field()}}
+                                            <input name="_method" type="hidden" value="DELETE">
+                                            <button class="btn btn-danger" type="submit">Deletar</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        
+                        @endif
+                        
                     </tbody>
                 </table>
             </div>
