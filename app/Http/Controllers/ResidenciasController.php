@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\TipoResidencias;
 use App\Http\Controllers\EnderecosController;
+use Illuminate\Support\Facades\Auth;
 
 class ResidenciasController extends Controller
 {
@@ -147,6 +148,10 @@ class ResidenciasController extends Controller
         $residencia->endereco()->associate($endereco);
         
         $residencia->save();
+        
+        DB::table('relacaoresidenciasrsers')->insert(
+            ['residencia_id' => $residencia->id, 'user_id' => Auth::user()->id]
+        );
         
         return redirect('residencias/')->with('success', sprintf('%s foi inserida com sucesso', $residencia->header_anuncio));
     }
