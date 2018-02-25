@@ -115,7 +115,13 @@ class ResidenciasController extends Controller
                 'area' => 'required|numeric',
                 'tipo_residencia' => 'required|numeric',
                 'toilets' => 'required|numeric',
-                'imagen' => 'mimes:jpeg,bmp,png,jpg'
+                'imagen' => 'mimes:jpeg,bmp,png,jpg',
+                'tipo_negociacao' => 'required',
+                'ar' => 'nullable|boolean',
+                'piscina' => 'nullable|boolean',
+                'churrasqueira' => 'nullable|boolean',
+                'closet' => 'nullable|boolean',
+                'outros' => 'nullable|string|max:300',
             ]
         );
         
@@ -194,7 +200,8 @@ class ResidenciasController extends Controller
                 'garagens' => 'required|numeric',
                 'area' => 'required|numeric',
                 'tipo_residencia' => 'required|numeric',
-                'toilets' => 'required|numeric'
+                'toilets' => 'required|numeric',
+                'tipo_negociacao' => 'required',
             ]
         );
         

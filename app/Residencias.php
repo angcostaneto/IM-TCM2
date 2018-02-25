@@ -20,6 +20,11 @@ class Residencias extends Model
         'suites',
         'garagens',
         'area',
+        'ar',
+        'piscina',
+        'churrasqueira',
+        'closet',
+        'outros',
     ];
 
     public function tipo() 

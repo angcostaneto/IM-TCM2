@@ -55,6 +55,18 @@
                                 <input class="form-control col-md-7 col-xs-12" type="text" name="descricao">
                             </div>
                         </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Negociação</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select class="form-control col-md-7 col-xs-12" name="tipo_negociacao">
+                                    <option>Selecione um tipo</option>
+                                    <option value="Alugar">Alugar</option>
+                                    <option value="Comprar">Comprar</option>
+                                    <option value="Vender">Vender</option>
+                                </select>
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Preço</label>
@@ -102,6 +114,23 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Área</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input class="form-control col-md-7 col-xs-12" type="number" name="area" step="0.01">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Extras</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="checkbox" name="ar" value="1"> Ar condicionado<br>
+                                <input type="checkbox" name="piscina" value="1"> Piscina<br>
+                                <input type="checkbox" name="churrasqueira" value="1"> Churrasqueira<br>
+                                <input type="checkbox" name="closet" value="1"> Closet<br>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Outros</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="outros">
                             </div>
                         </div>
                         

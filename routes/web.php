@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'ClienteController@index');
+Route::post('/procurar', 'ClienteController@procurar');
 
 Route::resource('imobiliaria','ImobiliariaController');
 Route::resource('residencias','ResidenciasController');

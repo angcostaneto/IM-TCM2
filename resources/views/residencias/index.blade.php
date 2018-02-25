@@ -18,6 +18,7 @@
                         <tr>
                             <th>Codigo</th>
                             <th>Titulo</th>
+                            <th>Negociação</th>
                             <th>Descrição</th>
                             <th>Tipo</th>
                             <th>Preço</th>
@@ -27,9 +28,7 @@
                             <th>Suite</th>
                             <th>Garagem</th>
                             <th>Área (m²)</th>
-                            <th>CEP</th>
-                            <th>Logradouro</th>
-                            <th>Bairro</th>
+                            <th>Cidade / CEP</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -38,6 +37,7 @@
                         <tr>
                             <td>{{ $residencia->codigo }}</td>
                             <td>{{ $residencia->header_anuncio }}</td>
+                            <td>{{ $residencia->tipo_negociacao }}</td>
                             <td>{{ $residencia->descricao }}</td>
                             <td>{{ $residencia->tipo->nome }}</td>
                             <td>{{ $residencia->preco }}</td>
@@ -47,9 +47,7 @@
                             <td>{{ $residencia->suites }}</td>
                             <td>{{ $residencia->garagens }}</td>
                             <td>{{ $residencia->area }}</td>
-                            <td>{{ $residencia->endereco->cep }}</td>
-                            <td>{{ $residencia->endereco->rua }}</td>
-                            <td>{{ $residencia->endereco->bairro }}</td>
+                            <td>{{ $residencia->endereco->cidade }} - {{ $residencia->endereco->cep }}</td>
                             <td>
                                 <div class="inline">
                                     <a class="btn btn-info" href="{{ action('ResidenciasController@edit', $residencia->id) }}">Editar</a>
