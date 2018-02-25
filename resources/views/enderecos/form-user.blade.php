@@ -40,4 +40,6 @@
     </div>
 </div>
 
-<script src="{{ asset('js/cep.js') }}"></script>
+@section('script')
+    <script src="{{ asset('js/cep.js') }}"></script>
+@endsection
