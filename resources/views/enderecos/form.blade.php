@@ -8,7 +8,7 @@
 <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Número</label>
     <div class="col-md-6 col-sm-6 col-xs-12">
-        <input class="form-control col-md-7 col-xs-12" type="numero" name="numero" id="number" placeholder="Número" value="{{ !empty($endereco) ? $endereco->numero : '' }}">
+        <input class="form-control col-md-7 col-xs-12" type="numero" name="numero" id="numero" placeholder="Número" value="{{ !empty($endereco) ? $endereco->numero : '' }}">
     </div>
 </div>
 
@@ -40,4 +40,6 @@
     </div>
 </div>
 
-<script src="{{ asset('js/cep.js') }}"></script>
+@push('scripts')
+    <script src="{{ asset('js/cep.js') }}"></script>
+@endpush

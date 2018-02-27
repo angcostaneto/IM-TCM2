@@ -20,6 +20,7 @@
     },
     "dependencies": {
         "bootstrap": "^4.0.0-beta.2",
+        "mapbox-gl": "^0.44.0",
         "popper.js": "^1.12.3"
     }
 }
