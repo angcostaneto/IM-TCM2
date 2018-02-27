@@ -58,7 +58,7 @@
                              <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select class="form-control col-md-7 col-xs-12" name="tipo">
                                     <option>Selecione um tipo</option>
-                                    <option value="Super Admin" @if(isset($user) && $user->tipo=='Super Admin') selected @endif>Super Admin</option>
+                                    <option value="SuperAdmin" @if(isset($user) && $user->tipo=='SuperAdmin') selected @endif>Super Admin</option>
                                     <option value="Admin" @if(isset($user) && $user->tipo=='Admin') selected @endif>Admin</option>
                                     <option value="Vistoriador" @if(isset($user) && $user->tipo=='Vistoriador') selected @endif>Vistoriador</option>
                                     <option value="Corretor" @if(isset($user) && $user->tipo=='Corretor') selected @endif>Corretor</option>

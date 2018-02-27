@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->enum('tipo', ['admin', 'superadmin', 'corretor', 'vistoriador', 'cliente', 'corretor']);
+            $table->enum('tipo', ['Admin', 'SuperAdmin', 'Corretor', 'Vistoriador', 'Cliente', 'Corretor']);
             $table->string('foto')->nullable();
             $table->string('rg');
             $table->string('cpf')->unique();
