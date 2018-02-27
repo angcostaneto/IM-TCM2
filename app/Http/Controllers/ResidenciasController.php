@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\TipoResidencias;
 use App\Http\Controllers\EnderecosController;
+use Illuminate\Support\Facades\Auth;
 
 class ResidenciasController extends Controller
 {
@@ -78,8 +79,19 @@ class ResidenciasController extends Controller
      */
     public function index()
     {
-        $residencias = Residencias::with(['endereco', 'tipo'])->get();
-
+        if(Auth::user()->tipo == "SuperAdmin"){
+            $residencias = Residencias::with(['endereco', 'tipo'])->paginate(20);
+        }else{
+            $ids = DB::table('relacaoresidenciasrsers')
+                    ->where('user_id', Auth::user()->id)
+                    ->pluck('id')
+                    ->toArray();
+            
+            $residencias = Residencias::with(['endereco', 'tipo'])
+                    ->whereIn('id', array_values($ids))
+                    ->paginate(20);
+        }
+            
         return view('residencias.index', ['residencias' => $residencias]);
     }
 
@@ -115,7 +127,13 @@ class ResidenciasController extends Controller
                 'area' => 'required|numeric',
                 'tipo_residencia' => 'required|numeric',
                 'toilets' => 'required|numeric',
-                'imagen' => 'mimes:jpeg,bmp,png,jpg'
+                'imagen' => 'mimes:jpeg,bmp,png,jpg',
+                'tipo_negociacao' => 'required',
+                'ar' => 'nullable|boolean',
+                'piscina' => 'nullable|boolean',
+                'churrasqueira' => 'nullable|boolean',
+                'closet' => 'nullable|boolean',
+                'outros' => 'nullable|string|max:300',
             ]
         );
         
@@ -141,6 +159,10 @@ class ResidenciasController extends Controller
         $residencia->endereco()->associate($endereco);
         
         $residencia->save();
+        
+        DB::table('relacaoresidenciasrsers')->insert(
+            ['residencia_id' => $residencia->id, 'user_id' => Auth::user()->id]
+        );
         
         return redirect('residencias/')->with('success', sprintf('%s foi inserida com sucesso', $residencia->header_anuncio));
     }
@@ -194,7 +216,8 @@ class ResidenciasController extends Controller
                 'garagens' => 'required|numeric',
                 'area' => 'required|numeric',
                 'tipo_residencia' => 'required|numeric',
-                'toilets' => 'required|numeric'
+                'toilets' => 'required|numeric',
+                'tipo_negociacao' => 'required',
             ]
         );
         
