@@ -20,7 +20,7 @@ class CreateResidenciasTable extends Migration
             $table->text('descricao')->nullable();
             $table->string('imagem')->nullable()->comment('Caminho da imagem no banco de dados');
             $table->date('data_negociacao')->nullable();
-            $table->decimal('preco')->nullable();
+            $table->double('preco', 10, 2)->nullable();
             $table->integer('quartos')->nullable();
             $table->integer('toilets')->nullable();
             $table->integer('banheiros')->nullable();

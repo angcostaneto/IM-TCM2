@@ -82,7 +82,7 @@ class ResidenciasController extends Controller
         if(Auth::user()->tipo == "SuperAdmin"){
             $residencias = Residencias::with(['endereco', 'tipo'])->paginate(20);
         }else{
-            $ids = DB::table('relacaoresidenciasrsers')
+            $ids = DB::table('relacaoresidenciasusers')
                     ->where('user_id', Auth::user()->id)
                     ->pluck('id')
                     ->toArray();
@@ -160,7 +160,7 @@ class ResidenciasController extends Controller
         
         $residencia->save();
         
-        DB::table('relacaoresidenciasrsers')->insert(
+        DB::table('relacaoresidenciasusers')->insert(
             ['residencia_id' => $residencia->id, 'user_id' => Auth::user()->id]
         );
         
@@ -170,25 +170,23 @@ class ResidenciasController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Residences  $residences
+     * @param  \App\Residences  $residencia
      * @return \Illuminate\Http\Response
      */
-    public function show(Residences $residences)
+    public function show(Residencias $residencia)
     {
-        //
+        return view('residencias.show', ['residencia' => $residencia]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  App\Residences  $residencia
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Residencias $residencia)
     {
         $tipoResidencias = $this->getTipoResidencias();
-
-        $residencia = Residencias::with(['endereco', 'tipo'])->where(['id' => $id])->first();
 
         return view('residencias.edit', ['tipoResidencias' => $tipoResidencias, 'residencia' => $residencia]);
     }

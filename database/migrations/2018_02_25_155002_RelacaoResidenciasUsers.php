@@ -13,7 +13,7 @@ class RelacaoResidenciasUsers extends Migration
      */
     public function up()
     {
-        Schema::create('relacaoresidenciasrsers', function (Blueprint $table) {
+        Schema::create('relacaoresidenciasusers', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('residencia_id')->nullable()->unsigned();
             $table->foreign('residencia_id')->references('id')->on('residencias');
@@ -30,6 +30,6 @@ class RelacaoResidenciasUsers extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('relacaoresidenciasrsers');
+        Schema::dropIfExists('relacaoresidenciasusers');
     }
 }

@@ -27,3 +27,7 @@ function geosearch (logradouro, bairro, cidade, estado, numero) {
     });
 
 }
+
+function destacaBairro(bairro) {
+    
+}

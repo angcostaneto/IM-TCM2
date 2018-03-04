@@ -52,11 +52,12 @@
                                 <td>{{ $residencia->endereco->cidade }} - {{ $residencia->endereco->cep }}</td>
                                 <td>
                                     <div class="inline">
-                                        <a class="btn btn-info" href="{{ action('ResidenciasController@edit', $residencia->id) }}">Editar</a>
+                                        <a class="btn btn-info" href="{{ action('ResidenciasController@edit', $residencia) }}" data-toggle="tooltip" title="Editar"><i class="fa fa-edit"></i></a>
+                                        <a class="btn btn-success" href="{{ action('ResidenciasController@show', $residencia) }}" data-toggle="tooltip" title="Visualizar"><i class="fa fa-eye"></i></a>
                                         <form action="{{ action('ResidenciasController@destroy', $residencia) }}" method="POST">
                                             {{csrf_field()}}
                                             <input name="_method" type="hidden" value="DELETE">
-                                            <button class="btn btn-danger" type="submit">Deletar</button>
+                                            <button class="btn btn-danger" type="submit" data-toggle="tooltip" title="Deletar"><i class="fa fa-trash"></i></button>
                                         </form>
                                     </div>
                                 </td>
