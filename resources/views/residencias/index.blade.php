@@ -56,7 +56,7 @@
                                         <form action="{{ action('ResidenciasController@destroy', $residencia) }}" method="POST">
                                             {{csrf_field()}}
                                             <input name="_method" type="hidden" value="DELETE">
-                                            <button class="btn btn-danger" type="submit">Deletar</button>
+                                            <button class="btn btn-danger" type="submit"><i class="fa fa-trash"></i></button>
                                         </form>
                                     </div>
                                 </td>
