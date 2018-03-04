@@ -82,7 +82,7 @@ class ResidenciasController extends Controller
         if(Auth::user()->tipo == "SuperAdmin"){
             $residencias = Residencias::with(['endereco', 'tipo'])->paginate(20);
         }else{
-            $ids = DB::table('relacaoresidenciasrsers')
+            $ids = DB::table('relacaoresidenciasusers')
                     ->where('user_id', Auth::user()->id)
                     ->pluck('id')
                     ->toArray();
@@ -160,7 +160,7 @@ class ResidenciasController extends Controller
         
         $residencia->save();
         
-        DB::table('relacaoresidenciasrsers')->insert(
+        DB::table('relacaoresidenciasusers')->insert(
             ['residencia_id' => $residencia->id, 'user_id' => Auth::user()->id]
         );
         
@@ -175,7 +175,7 @@ class ResidenciasController extends Controller
      */
     public function show(Residences $residences)
     {
-        //
+        
     }
 
     /**
