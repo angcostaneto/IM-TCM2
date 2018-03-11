@@ -81,10 +81,20 @@ class ResidenciasController extends Controller
     {
         if(Auth::user()->tipo == "superadmin"){
             $residencias = Residencias::with(['endereco', 'tipo'])->paginate(20);
+        }else if(Auth::user()->tipo == "corretor"){
+            $ids = DB::table('relacao_residencia_user_corretor')
+                    ->where('corretor_id', Auth::user()->id)
+                    //->where('user_id', Auth::user()->id)// PRA MOSTRAR AS RES. QUE O CORRETOR CADASTROU TAMBÉM
+                    ->pluck('residencia_id')
+                    ->toArray();
+
+            $residencias = Residencias::with(['endereco', 'tipo'])
+                    ->whereIn('id', array_values($ids))
+                    ->paginate(20);
         }else{
-            $ids = DB::table('relacaoresidenciasusers')
+            $ids = DB::table('relacao_residencia_user_corretor')
                     ->where('user_id', Auth::user()->id)
-                    ->pluck('id')
+                    ->pluck('residencia_id')
                     ->toArray();
             
             $residencias = Residencias::with(['endereco', 'tipo'])
@@ -160,7 +170,7 @@ class ResidenciasController extends Controller
         
         $residencia->save();
         
-        DB::table('relacaoresidenciasusers')->insert(
+        DB::table('relacao_residencia_user_corretor')->insert(
             ['residencia_id' => $residencia->id, 'user_id' => Auth::user()->id]
         );
         
