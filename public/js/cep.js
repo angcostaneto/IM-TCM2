@@ -2,7 +2,7 @@ let address;
 
 $('#cep').on('change', function () {
     var cep = $('#cep').val();
-    $.get("http://api.postmon.com.br/v1/cep/" + cep, function (data) {
+    $.get("//api.postmon.com.br/v1/cep/" + cep, function (data) {
         if (data) {
             address = data;
             $('#logradouro').val(data.logradouro);
