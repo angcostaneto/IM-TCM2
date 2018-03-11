@@ -58,11 +58,11 @@
                              <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select class="form-control col-md-7 col-xs-12" name="tipo">
                                     <option>Selecione um tipo</option>
-                                    <option value="SuperAdmin" @if(isset($user) && $user->tipo=='SuperAdmin') selected @endif>Super Admin</option>
-                                    <option value="Admin" @if(isset($user) && $user->tipo=='Admin') selected @endif>Admin</option>
-                                    <option value="Vistoriador" @if(isset($user) && $user->tipo=='Vistoriador') selected @endif>Vistoriador</option>
-                                    <option value="Corretor" @if(isset($user) && $user->tipo=='Corretor') selected @endif>Corretor</option>
-                                    <option value="Cliente" @if(isset($user) && $user->tipo=='Cliente') selected @endif>Cliente</option>
+                                    <option value="superadmin" @if(isset($user) && $user->tipo=='superadmin') selected @endif>Super Admin</option>
+                                    <option value="admin" @if(isset($user) && $user->tipo=='admin') selected @endif>Admin</option>
+                                    <option value="vistoriador" @if(isset($user) && $user->tipo=='vistoriador') selected @endif>Vistoriador</option>
+                                    <option value="corretor" @if(isset($user) && $user->tipo=='corretor') selected @endif>Corretor</option>
+                                    <option value="cliente" @if(isset($user) && $user->tipo=='cliente') selected @endif>Cliente</option>
                                 </select>
                             </div>
                         </div>
