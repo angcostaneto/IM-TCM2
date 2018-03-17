@@ -26,8 +26,8 @@ class CreateResidenciasTable extends Migration
             $table->integer('banheiros')->nullable();
             $table->integer('suites')->nullable();
             $table->integer('garagens')->nullable();
-            $table->integer('area')->nullable()->comment('Tamanho do terreno');
-            $table->enum('tipo_negociacao', ['Alugar', 'Comprar', 'Vender']);
+            $table->double('area')->nullable()->comment('Tamanho do terreno');
+            $table->enum('tipo_negociacao', ['alugar', 'comprar', 'vender']);
             $table->boolean('ar')->nullable();
             $table->boolean('piscina')->nullable();
             $table->boolean('churrasqueira')->nullable();
