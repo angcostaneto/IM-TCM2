@@ -18,7 +18,7 @@ class CreateResidenciasTable extends Migration
             $table->string('codigo')->unique()->comment('Codigo de controle da imobiliaria');
             $table->string('header_anuncio')->comment('Header do anuncio');
             $table->text('descricao')->nullable();
-            $table->string('imagem')->nullable()->comment('Caminho da imagem no banco de dados');
+            $table->json('imagem')->nullable()->comment('Caminho das imagens no banco de dados');
             $table->date('data_negociacao')->nullable();
             $table->double('preco', 10, 2)->nullable();
             $table->integer('quartos')->nullable();
@@ -27,12 +27,14 @@ class CreateResidenciasTable extends Migration
             $table->integer('suites')->nullable();
             $table->integer('garagens')->nullable();
             $table->integer('area')->nullable()->comment('Tamanho do terreno');
-            $table->enum('tipo_negociacao', ['Alugar', 'Comprar', 'Vender']);
-            $table->boolean('ar')->nullable();
-            $table->boolean('piscina')->nullable();
-            $table->boolean('churrasqueira')->nullable();
-            $table->boolean('closet')->nullable();
+            $table->enum('tipo_negociacao', ['Alugar', 'Vender']);
+            $table->boolean('ar')->default(0);
+            $table->boolean('piscina')->default(0);
+            $table->boolean('churrasqueira')->default(0);
+            $table->boolean('closet')->default(0);
             $table->string('outros')->nullable();
+            $table->boolean('ativo')->default(1);
+            $table->string('motivo')->nullable();
             $table->index(['codigo', 'header_anuncio', 'data_negociacao']);
             $table->timestamps();
         });

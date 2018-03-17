@@ -169,6 +169,7 @@
     </div>
 
     @include('parts/js')
+    @stack('scripts')
 	
   </body>
 </html>
