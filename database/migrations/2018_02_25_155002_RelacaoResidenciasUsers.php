@@ -16,9 +16,9 @@ class RelacaoResidenciasUsers extends Migration
         Schema::create('relacaoresidenciasusers', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('residencia_id')->nullable()->unsigned();
-            $table->foreign('residencia_id')->references('id')->on('residencias');
+            $table->foreign('residencia_id')->references('id')->on('residencias')->delete('cascade');
             $table->integer('user_id')->nullable()->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->delete('cascade');
             $table->timestamps();
         });
     }
