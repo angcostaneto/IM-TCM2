@@ -29,7 +29,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Titulo</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="header_anuncio">
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="header_anuncio" value="{{old('header_anuncio')}}" required>
                             </div>
                         </div>
 
@@ -41,7 +41,7 @@
                                     @foreach ($tipoResidencias as $key => $tipoResidencia)
                                         <optgroup label="{{$key}}">
                                             @foreach ($tipoResidencia as $rT)
-                                                <option value="{{$rT['id']}}">{{$rT['nome']}}</option>
+                                                <option value="{{$rT['id']}}" @if(old('tipo_residencia')==$rT['id']) selected @endif>{{$rT['nome']}}</option>
                                             @endforeach
                                         </optgroup>
                                     @endforeach
@@ -52,7 +52,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Descrição</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="descricao">
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="descricao" value="{{old('descricao')}}" required>
                             </div>
                         </div>
                         
@@ -61,9 +61,8 @@
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select class="form-control col-md-7 col-xs-12" name="tipo_negociacao">
                                     <option>Selecione um tipo</option>
-                                    <option value="Alugar">Alugar</option>
-                                    <option value="Comprar">Comprar</option>
-                                    <option value="Vender">Vender</option>
+                                    <option value="Alugar" @if(old('tipo_negociacao')=="Alugar") selected @endif>Alugar</option>
+                                    <option value="Vender" @if(old('tipo_negociacao')=="Vender") selected @endif>Vender</option>
                                 </select>
                             </div>
                         </div>
@@ -71,49 +70,49 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Preço</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="preco">
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="preco" value="{{old('preco')}}" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Quartos</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="number" name="quartos">
+                                <input class="form-control col-md-7 col-xs-12" type="number" name="quartos"  value="{{old('quartos')}}" required>
                             </div>
                         </div>
                         
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Toilets</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="number" name="toilets">
+                                <input class="form-control col-md-7 col-xs-12" type="number" name="toilets" value="{{old('toilets')}}" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Banheiros</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="number" name="banheiros">
+                                <input class="form-control col-md-7 col-xs-12" type="number" name="banheiros" value="{{old('banheiros')}}" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Suites</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="number" name="suites">
+                                <input class="form-control col-md-7 col-xs-12" type="number" name="suites" value="{{old('suites')}}" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Garagem</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="number" name="garagens">
+                                <input class="form-control col-md-7 col-xs-12" type="number" name="garagens" value="{{old('garagens')}}" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Área</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="number" name="area" step="0.01">
+                                <input class="form-control col-md-7 col-xs-12" type="number" name="area" step="0.01" value="{{old('area')}}" required>
                             </div>
                         </div>
                         
@@ -130,14 +129,14 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Outros</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="outros">
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="outros" value="{{old('outros')}}">
                             </div>
                         </div>
                         
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Fotos</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="file" name="imagen">
+                                <input class="form-control col-md-7 col-xs-12" type="file" name="imagem[]" multiple>
                             </div>
                         </div>
                     </div>
@@ -181,3 +180,7 @@
         </form>
     </div>
 @endsection
+
+@push('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/dropzone.js"></script>
+@endpush

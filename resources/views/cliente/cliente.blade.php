@@ -81,7 +81,7 @@
                 @foreach($residencias as $residencia)
                 <div class="col-md-4">
                     <div id="residences">
-                        <img class="foto-imovel" alt="Foto da residência" src="{{$residencia->imagem}}">
+                        <img class="foto-imovel" alt="Foto da residência" src="@if(count(json_decode($residencia->imagem))>0){{json_decode($residencia->imagem)[0]}}@else http://support.yumpu.com/en/wp-content/themes/qaengine/img/default-thumbnail.jpg @endif">
                         <h3 class="card-title">{{$residencia->header_anuncio}}</h3>
                         <span class="badge badge-success">{{$residencia->tipo->nome}}</span>
                         <p class="card-text">{{$residencia->descricao}}</p>
