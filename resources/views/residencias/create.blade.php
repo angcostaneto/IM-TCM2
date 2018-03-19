@@ -15,169 +15,155 @@
             <p>{{ \Session::get('success') }}</p>
         </div><br />
     @endif
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <form method="post" enctype="multipart/form-data" action="{{url('residencias')}}">
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2>Residência
-                            <small>Cadastre uma nova residência</small>
-                        </h2>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content form-horizontal form-label-left">
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Titulo</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="header_anuncio">
-                            </div>
+    <div class="row wow fadeIn">
+        <div class="col-md-6 mb-4">
+            <!-- Card -->
+            <div class="card">
+                
+                <div class="card-header text-center">
+                    Cadastrar Residência
+                </div>
+                <!-- Card body -->
+                <div class="card-body">
+                
+                    <!-- Material form register -->
+                    <form>
+
+                        <div class="md-form">
+                            <input id="header_anuncio" class="form-control" type="text" name="header_anuncio" value="{{old('header_anuncio')}}" required>
+                            <label for="header_anuncio" class="font-weight-light">Titulo do anúncio</label>
                         </div>
 
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Tipo da residencia</label>
-                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control col-md-7 col-xs-12" name="tipo_residencia">
-                                    <option>Selecione um tipo</option>
+                        <div class="md-form">
+                            
+                            <select class="select" name="tipo_residencia">
+                                 <option disabled selected>Selecione um tipo</option>
                                     @foreach ($tipoResidencias as $key => $tipoResidencia)
                                         <optgroup label="{{$key}}">
                                             @foreach ($tipoResidencia as $rT)
-                                                <option value="{{$rT['id']}}">{{$rT['nome']}}</option>
+                                                <option value="{{$rT['id']}}" @if(old('tipo_residencia')==$rT['id']) selected @endif>{{$rT['nome']}}</option>
                                             @endforeach
                                         </optgroup>
                                     @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Descrição</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="descricao">
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Negociação</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control col-md-7 col-xs-12" name="tipo_negociacao">
-                                    <option>Selecione um tipo</option>
-                                    <option value="Alugar">Alugar</option>
-                                    <option value="Comprar">Comprar</option>
-                                    <option value="Vender">Vender</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Preço</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="preco">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Quartos</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="number" name="quartos">
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Toilets</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="number" name="toilets">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Banheiros</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="number" name="banheiros">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Suites</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="number" name="suites">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Garagem</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="number" name="garagens">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Área</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="number" name="area" step="0.01">
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Extras</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="checkbox" name="ar" value="1"> Ar condicionado<br>
-                                <input type="checkbox" name="piscina" value="1"> Piscina<br>
-                                <input type="checkbox" name="churrasqueira" value="1"> Churrasqueira<br>
-                                <input type="checkbox" name="closet" value="1"> Closet<br>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Outros</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="outros">
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Fotos</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="file" name="imagen">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2>Endereço</h2>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content form-horizontal form-label-left">
-                        <br>
-                        @include('enderecos.form')
-                    </div>
-                </div>
-            </div>
-
-             <div class="col-md-6 col-sm-6 col-xs-12">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2>Mapa</h2>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content form-horizontal form-label-left">
-                        <br>
-                        @include('mapa.mapa')
-                    </div>
-                </div>
-            </div>
-
-            <div class="ln_solid"></div>
-            <div class="form-group">
-                <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                    <button type="submit" class="btn btn-success">Cadastrar</button>
-                </div>
-            </div>
+                            </select>
+                            <label>Tipo da Residência</label>
             
-        {{csrf_field()}}
-        </form>
+                        </div>
+
+                        <div class="md-form">
+                            <textarea id="descricao" class="form-control md-textarea" type="text" name="descricao" length="120" rows="3" value="{{old('descricao')}}"></textarea>
+                            <label for="descricao" class="font-weight-light">Descrição</label>
+                        </div>
+
+                        <div class="md-form">
+                            <select class="select" name="tipo_negociacao">
+                                <option disabled selected>Selecione um tipo</option>
+                                <option value="Alugar" @if(old('tipo_negociacao')=="Alugar") selected @endif>Alugar</option>
+                                <option value="Vender" @if(old('tipo_negociacao')=="Vender") selected @endif>Vender</option>
+                            </select>
+                            <label>Negociação</label>
+                        </div>
+
+                        <div class="md-form">
+                            <input id="preco" class="form-control money" type="text" name="preco" value="{{old('preco')}}" required>
+                            <label for="preco" class="font-weight-light">Preço</label>
+                        </div>
+
+                        <div class="md-form">
+                            <input id="quartos" class="form-control" type="text" name="quartos" value="{{old('quartos')}}" required>
+                            <label for="quartos" class="font-weight-light">Quartos</label>
+                        </div>
+
+                        <div class="md-form">
+                            <input id="toilets" class="form-control" type="text" name="toilets" value="{{old('toilets')}}" required>
+                            <label for="toilets" class="font-weight-light">Toilets</label>
+                        </div>
+
+                        <div class="md-form">
+                            <input id="banheiros" class="form-control" type="text" name="banheiros" value="{{old('banheiros')}}" required>
+                            <label for="banheiros" class="font-weight-light">Banheiros</label>
+                        </div>
+
+                        <div class="md-form">
+                            <input id="suites" class="form-control" type="text" name="suites" value="{{old('suites')}}" required>
+                            <label for="suites" class="font-weight-light">Suites</label>
+                        </div>
+
+                        <div class="md-form">
+                            <input id="garagens" class="form-control" type="text" name="garagens" value="{{old('garagens')}}" required>
+                            <label for="garagens" class="font-weight-light">Garagem</label>
+                        </div>
+
+                        <div class="md-form">
+                            <input id="area" class="form-control area" type="text" name="area" value="{{old('area')}}" required>
+                            <label for="area" class="font-weight-light">Área (m²)</label>
+                        </div>
+
+                        <div class="md-form">
+                            <label class="font-weight-light">Extras</label>
+                            <br><br>
+                            <div class="form-check">
+                                <input type="checkbox" name="ar" value="1" id="ar">
+                                <label class="form-check-label" for="ar">
+                                    Ar condicionado
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" name="piscina" value="1" id="piscina">
+                                <label class="form-check-label" for="piscina">
+                                    Piscina
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" name="churrasqueira" value="1" id="churrasqueira">
+                                <label class="form-check-label" for="churrasqueira">
+                                    Churrasqueira
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" name="closet" value="1" id="closet">
+                                <label class="form-check-label" for="closet">
+                                    Closet
+                                </label>
+                            </div>
+                            <div class="md-form">
+                                <input id="outros" class="form-control area" type="text" name="outros" value="{{old('outros')}}" required>
+                                <label for="outros" class="font-weight-light">Outros</label>
+                            </div>
+                        </div>
+
+                        <div class="md-form">
+                            <label for="outros" class="font-weight-light">Imagens</label>
+                            <br><br>
+                            <div class="file-field">
+                                <div class="btn btn-primary btn-sm float-left">
+                                    <span>Escolha suas Imgens</span>
+                                    <input type="file" name="imagem[]" multiple>
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text" placeholder="Faça upload de 1 ou mais imgens" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{csrf_field()}}
+                    </form>
+                    <!-- Material form register -->
+                
+                </div>
+                <!-- Card body -->
+            
+            </div>
+            <!-- Card -->
+        </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
+    <script>
+        $('.select').material_select();
+        $('.money').mask('000.000.000.000.000,00', {reverse: true});
+        $('.area').mask('000.000.000.000.000,00', {reverse: true});
+    </script>
+@endpush
