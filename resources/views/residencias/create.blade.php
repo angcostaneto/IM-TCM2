@@ -155,7 +155,15 @@
             
             </div>
             <!-- Card -->
+
         </div>
+        <!-- Endereço -->
+        @include('enderecos.form')
+        <!-- Endereço -->
+
+        <!-- Mapa -->
+        @include('mapa.mapa')
+        <!-- Mapa -->
     </div>
 @endsection
 
