@@ -119,7 +119,7 @@ class ResidenciasController extends Controller
             [
                 'header_anuncio' => 'required',
                 'descricao' => 'required',
-                'preco' => 'required|numeric',
+                'preco' => 'required',
                 'quartos' => 'required|numeric',
                 'banheiros' => 'required|numeric',
                 'suites' => 'required|numeric',
@@ -207,7 +207,7 @@ class ResidenciasController extends Controller
             [
                 'header_anuncio' => 'required',
                 'descricao' => 'required',
-                'preco' => 'required|numeric',
+                'preco' => 'required',
                 'quartos' => 'required|numeric',
                 'banheiros' => 'required|numeric',
                 'suites' => 'required|numeric',

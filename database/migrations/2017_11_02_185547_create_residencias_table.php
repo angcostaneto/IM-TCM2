@@ -20,13 +20,13 @@ class CreateResidenciasTable extends Migration
             $table->text('descricao')->nullable();
             $table->string('imagem')->nullable()->comment('Caminho da imagem no banco de dados');
             $table->date('data_negociacao')->nullable();
-            $table->double('preco', 10, 2)->nullable();
+            $table->string('preco')->nullable();
             $table->integer('quartos')->nullable();
             $table->integer('toilets')->nullable();
             $table->integer('banheiros')->nullable();
             $table->integer('suites')->nullable();
             $table->integer('garagens')->nullable();
-            $table->double('area')->nullable()->comment('Tamanho do terreno');
+            $table->string('area')->nullable()->comment('Tamanho do terreno');
             $table->enum('tipo_negociacao', ['alugar', 'comprar', 'vender']);
             $table->boolean('ar')->nullable();
             $table->boolean('piscina')->nullable();

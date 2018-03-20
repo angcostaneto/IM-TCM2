@@ -17,6 +17,7 @@
     @endif
     <div class="row wow fadeIn">
         <div class="col-md-6 mb-4">
+            <form method="post" enctype="multipart/form-data" action="{{url('residencias')}}">
             <!-- Card -->
             <div class="card">
                 
@@ -27,8 +28,6 @@
                 <div class="card-body">
                 
                     <!-- Material form register -->
-                    <form>
-
                         <div class="md-form">
                             <input id="header_anuncio" class="form-control" type="text" name="header_anuncio" value="{{old('header_anuncio')}}" required>
                             <label for="header_anuncio" class="font-weight-light">Titulo do anúncio</label>
@@ -146,8 +145,10 @@
                             </div>
                         </div>
 
-                        {{csrf_field()}}
-                    </form>
+                    <div class="text-center mt-4">
+                        <button class="btn btn-primary" type="submit">Register</button>
+                    </div>
+
                     <!-- Material form register -->
                 
                 </div>
@@ -155,12 +156,14 @@
             
             </div>
             <!-- Card -->
-
+            
         </div>
         <!-- Endereço -->
         @include('enderecos.form')
         <!-- Endereço -->
-
+        
+        {{csrf_field()}}
+        </form>
         <!-- Mapa -->
         @include('mapa.mapa')
         <!-- Mapa -->

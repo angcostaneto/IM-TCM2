@@ -27,8 +27,8 @@
                 <div class="card-body">
                 
                     <!-- Material form register -->
-                    <form>
-
+                    <form method="post" enctype="multipart/form-data" action="{{ action('ResidenciasController@update', $residencia->id) }}">
+                        <input name="_method" type="hidden" value="PATCH">
                         <div class="md-form">
                             <input id="header_anuncio" class="form-control" type="text" name="header_anuncio" value="{{ $residencia->header_anuncio }}" required>
                             <label for="header_anuncio" class="font-weight-light">Titulo do anúncio</label>
@@ -146,8 +146,10 @@
                             </div>
                         </div>
 
-                        {{csrf_field()}}
-                    </form>
+                        <div class="text-center mt-4">
+                            <button class="btn btn-primary" type="submit">Register</button>
+                        </div>
+
                     <!-- Material form register -->
                 
                 </div>
@@ -157,10 +159,11 @@
             <!-- Card -->
 
         </div>
-        <!-- Endereço -->
-        @include('enderecos.form')
-        <!-- Endereço -->
-
+            <!-- Endereço -->
+            @include('enderecos.form', ['endereco' => $residencia->endereco])
+            <!-- Endereço -->
+            {{csrf_field()}}
+        </form>
         <!-- Mapa -->
         @include('mapa.mapa')
         <!-- Mapa -->
