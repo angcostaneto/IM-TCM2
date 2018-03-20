@@ -27,10 +27,6 @@
                                 <th scope="row">Descrição</th>
                                 <th scope="row">Tipo</th>
                                 <th scope="row">Preço</th>
-                                <th scope="row">Quartos</th>
-                                <th scope="row">Banheiro</th>
-                                <th scope="row">Suite</th>
-                                <th scope="row">Garagem</th>
                                 <th scope="row">Área (m²)</th>
                                 <th scope="row">Cidade / CEP</th>
                                 <th scope="row" colspan="2">Ações</th>
@@ -47,10 +43,6 @@
                                     <td><a href="{{ action('ResidenciasController@edit', $residencia) }}" data-toggle="tooltip" title="Editar">{{ $residencia->descricao }}</a></td>
                                     <td><a href="{{ action('ResidenciasController@edit', $residencia) }}" data-toggle="tooltip" title="Editar">{{ $residencia->tipo->nome }}</a></td>
                                     <td><a href="{{ action('ResidenciasController@edit', $residencia) }}" data-toggle="tooltip" title="Editar">{{ $residencia->preco }}</a></td>
-                                    <td><a href="{{ action('ResidenciasController@edit', $residencia) }}" data-toggle="tooltip" title="Editar">{{ $residencia->quartos }}</a></td>
-                                    <td><a href="{{ action('ResidenciasController@edit', $residencia) }}" data-toggle="tooltip" title="Editar">{{ $residencia->banheiros }}</a></td>
-                                    <td><a href="{{ action('ResidenciasController@edit', $residencia) }}" data-toggle="tooltip" title="Editar">{{ $residencia->suites }}</a></td>
-                                    <td><a href="{{ action('ResidenciasController@edit', $residencia) }}" data-toggle="tooltip" title="Editar">{{ $residencia->garagens }}</a></td>
                                     <td><a href="{{ action('ResidenciasController@edit', $residencia) }}" data-toggle="tooltip" title="Editar">{{ $residencia->area }}</a></td>
                                     <td><a href="{{ action('ResidenciasController@edit', $residencia) }}" data-toggle="tooltip" title="Editar">{{ $residencia->endereco->cidade }} - {{ $residencia->endereco->cep }}</a></td>
                                     <td>
