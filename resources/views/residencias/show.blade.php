@@ -41,6 +41,7 @@
 
 @push('scripts')
     <script src="{{ asset('js/avaliacaoBairro.js') }}"></script>
+    <script src="{{ asset('js/avaliacaoBairro.js') }}"></script>
     <script src="{{ asset('js/geosearch.js') }}"></script>
 @endpush
 
