@@ -1,69 +1,47 @@
-@extends('layouts.login')
+@extends('layouts.app')
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
+@section('content')                      
 
-                <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('login') }}">
-                        {{ csrf_field() }}
+<section class="form-elegant">
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail</label>
+    <!--Form without header-->
+    <div class="card">
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+        <div class="card-body mx-4">
 
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Senha</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Lembrar
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Entrar
-                                </button>
-
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    Esqueceu sua senha?
-                                </a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+            <!--Header-->
+            <div class="text-center">
+                <h3 class="dark-grey-text mb-5"><strong>Logar</strong></h3>
             </div>
+
+            <!--Body-->
+            <form  method="POST" action="{{ route('login') }}">
+                {{ csrf_field() }}
+                <div class="md-form">
+                    <input type="text" id="email" name="email" class="form-control" value="{{ old('email') }}">
+                    <label for="email">E-mail</label>
+                </div>
+
+                <div class="md-form pb-3">
+                    <input type="password" id="password" name="password" class="form-control">
+                    <label for="password">Senha</label>
+                    <p class="font-small blue-text d-flex justify-content-end">Esquece sua <a href="{{ route('password.request') }}" class="blue-text ml-1"> Senha?</a></p>
+                </div>
+
+                <div class="text-center mb-3">
+                    <button type="submit" class="btn blue-gradient btn-block btn-rounded z-depth-1a">Sign in</button>
+                </div>
+            </form>
         </div>
+
+        <!--Footer-->
+        <div class="modal-footer mx-5 pt-3 mb-1">
+            <p class="font-small grey-text d-flex justify-content-end">Not a member? <a href="#" class="blue-text ml-1"> Sign Up</a></p>
+        </div>
+
     </div>
-</div>
+    <!--/Form without header-->
+
+</section>
+            
 @endsection

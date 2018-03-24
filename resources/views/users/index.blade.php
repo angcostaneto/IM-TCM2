@@ -18,7 +18,7 @@
                     </span>
                 </div>
                 <div class="card-body">
-                    <table class="table table-hover table-sm">
+                    <table class="table table-hover table-sm align-middle">
                         <thead class="blue lighten-4 text-center">
                             <tr>
                                 <th scope="row">Id</th>
@@ -40,11 +40,13 @@
                                     <td><a href="{{ action('Auth\RegisterController@edit', $user->id) }}">{{ $user->rg }}</a></td>
                                     <td><a href="{{ action('Auth\RegisterController@edit', $user->id) }}">{{ $user->cpf }}</a></td>
                                     <td>
-                                        <form action="{{ action('Auth\RegisterController@destroy', $user) }}" method="POST">
-                                            {{csrf_field()}}
-                                            <input name="_method" type="hidden" value="DELETE">
-                                            <button class="btn btn-small btn-danger" type="submit">Deletar</button>
-                                        </form>
+                                        <div>
+                                            <form action="{{ action('Auth\RegisterController@destroy', $user) }}" method="POST">
+                                                {{csrf_field()}}
+                                                <input name="_method" type="hidden" value="DELETE">
+                                                <button class="btn btn-outline-red btn-rounded btn-sm px-2" type="submit" title="Deletar"><i class="fa fa-trash mt-0"></i></button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach                            

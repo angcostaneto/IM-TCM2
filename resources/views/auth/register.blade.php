@@ -49,7 +49,7 @@
 
                         <div class="md-form">
                             
-                            <select class="select" name="tipo_residencia">
+                            <select class="select" name="tipo">
                                 <option disabled selected>Selecione um tipo</option>
                                 <option value="superadmin" @if(isset($user) && $user->tipo=='superadmin') selected @endif>Super Admin</option>
                                 <option value="admin" @if(isset($user) && $user->tipo=='admin') selected @endif>Admin</option>

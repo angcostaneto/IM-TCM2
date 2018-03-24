@@ -4,7 +4,10 @@
 <link href="{{ asset( 'css/bootstrap.min.css') }}" rel="stylesheet">
 <!-- Material Design Bootstrap -->
 <link href="{{ asset ('css/mdb.min.css') }}" rel="stylesheet">
-<!-- Your custom styles (optional) -->
-<link href="{{ asset ('css/style.min.css') }}" rel="stylesheet">
+@if (Request::is('/') || Request::is('login'))
+    <link href="{{ asset ('css/style.home.min.css') }}" rel="stylesheet">
+ @else
+    <link href="{{ asset ('css/style.min.css') }}" rel="stylesheet">
+@endif
 
 @stack('styles')
