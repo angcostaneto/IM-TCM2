@@ -29,14 +29,14 @@
                 </div>
 
                 <div class="text-center mb-3">
-                    <button type="submit" class="btn blue-gradient btn-block btn-rounded z-depth-1a">Sign in</button>
+                    <button type="submit" class="btn blue-gradient btn-block btn-rounded z-depth-1a">Logar</button>
                 </div>
             </form>
         </div>
 
         <!--Footer-->
         <div class="modal-footer mx-5 pt-3 mb-1">
-            <p class="font-small grey-text d-flex justify-content-end">Not a member? <a href="#" class="blue-text ml-1"> Sign Up</a></p>
+            <p class="font-small grey-text d-flex justify-content-end">Não está cadastrado? <a href="#" class="blue-text ml-1"> Cadastre-se</a></p>
         </div>
 
     </div>

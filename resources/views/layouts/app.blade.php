@@ -46,20 +46,14 @@
                                 </a>
                             </li>
                         @elseif(!empty(Auth::user()))
-                            <!-- Dropdown -->
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa fa-user"></i>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); $('#logout-form').submit()">
-                                        Logout
-                                        <i class="fa fa-sign-out"></i>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </a>
-                                </div>
+                            <li class="nav-item">
+                                <a class="nav-link" >Minha conta</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); $('#logout-form').submit()">Logout</a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
+                                    {{ csrf_field() }}
+                                </form>
                             </li>
                         @endif
 
@@ -133,6 +127,9 @@
 
     <!-- SCRIPTS -->
     @include('parts/js')
+    <script>
+        $('.dropdown').dropdown();
+    </script>
     <!-- Initializations -->
     <script type="text/javascript">
         // Animations initialization
