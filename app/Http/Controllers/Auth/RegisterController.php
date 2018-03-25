@@ -10,6 +10,7 @@ use App\Http\Controllers\EnderecosController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
+use Auth;
 
 class RegisterController extends Controller
 {
@@ -40,7 +41,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['cadastraUsuarioLogin']]);
     }
 
     /**
@@ -171,6 +172,28 @@ class RegisterController extends Controller
         $user->delete();
         
          return redirect('users/')->with('success', sprintf('%s deletado!', $user->name));
+    }
+
+    /**
+     * Cadastra o usuario a partir da tela de login.
+     */
+    public function cadastraUsuarioLogin(Request $request) {
+        $data = $this->validate(request(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        $user = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'tipo' => 'cliente',
+            'password' => bcrypt($data['password'])
+        ]);
+
+        Auth::login($user, true);
+
+        return redirect()->route('users.edit', ['user' => $user->id]);
     }
     
 }

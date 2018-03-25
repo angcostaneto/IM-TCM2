@@ -20,8 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->enum('tipo', ['admin', 'superadmin', 'corretor', 'vistoriador', 'cliente']);
             $table->string('foto')->nullable();
-            $table->string('rg');
-            $table->string('cpf')->unique();
+            $table->string('rg')->nullable();
+            $table->string('cpf')->nullable()->unique();
             $table->integer('user_endereco')->nullable()->unsigned()->comment('Endereço do usuário');
             $table->rememberToken();
             $table->timestamps();
@@ -40,6 +40,8 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('users');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }
