@@ -27,6 +27,6 @@ class CategoriaTipoResidencia extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('categoria_tipo_residencia');
     }
 }

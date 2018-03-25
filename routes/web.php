@@ -13,8 +13,8 @@
 
 Route::get('/', 'ClienteController@index');
 Route::post('/procurar', 'ClienteController@procurar');
+Route::post('cadastrar', 'Auth\RegisterController@cadastraUsuarioLogin')->name('cadastrar');
 
-Route::resource('imobiliaria','ImobiliariaController');
 Route::resource('residencias','ResidenciasController');
 Route::resource('users','Auth\RegisterController');
 

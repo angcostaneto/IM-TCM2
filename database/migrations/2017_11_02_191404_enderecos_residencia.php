@@ -16,8 +16,8 @@ class EnderecosResidencia extends Migration
         Schema::table('residencias', function($table) {
             $table->integer('residencia_endereco')->nullable()->unsigned()->comment('Endereço da residencia');
             $table->integer('tipo_residencia')->nullable()->unsigned()->comment('Tipo de residencia');
-            $table->foreign('residencia_endereco')->references('id')->on('enderecos')->delete('cascade');
-            $table->foreign('tipo_residencia')->references('id')->on('tipo_residencias')->delete('cascade');
+            $table->foreign('residencia_endereco')->references('id')->on('enderecos')->onDelete('set null');
+            $table->foreign('tipo_residencia')->references('id')->on('tipo_residencias')->onDelete('set null');
         });
     }
 
