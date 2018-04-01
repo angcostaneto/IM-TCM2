@@ -10,6 +10,7 @@ use App\Http\Controllers\EnderecosController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
+use App\Helper\SalvaImagens;
 use Auth;
 
 class RegisterController extends Controller
@@ -62,7 +63,8 @@ class RegisterController extends Controller
             'numero' => 'required|numeric',
             'password' => 'required|string|min:6|confirmed',
             'cep' => 'required',
-            'numero' => 'required|numeric'
+            'numero' => 'required|numeric',
+            'foto' => 'mimes:jpeg,bmp,png,jpg',
         ]);
     }
 
@@ -94,11 +96,7 @@ class RegisterController extends Controller
     {
         $endereco = EnderecosController::verificaEndereco($data['numero'], $data['cep']);
         
-        if(empty($data['foto'])){
-            $foto = null;
-        }else{
-            $foto = $data['foto'];
-        }
+        $foto = SalvaImagens::SalvaImagens($data['foto'], $data['cpf'], "user");
         
         return User::create([
             'name' => $data['name'],
