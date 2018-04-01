@@ -9,6 +9,7 @@ use App\TipoResidencias;
 use App\Http\Controllers\EnderecosController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Helper\SalvaImagens;
 
 class ResidenciasController extends Controller
 {
@@ -128,7 +129,7 @@ class ResidenciasController extends Controller
                 'area' => 'required|numeric',
                 'tipo_residencia' => 'required|numeric',
                 'toilets' => 'required|numeric',
-                'imagem[]' => 'mimes:jpeg,bmp,png,jpg',
+                'imagens[]' => 'mimes:jpeg,bmp,png,jpg',
                 'tipo_negociacao' => 'required',
                 'ar' => 'nullable|boolean',
                 'piscina' => 'nullable|boolean',
@@ -159,31 +160,8 @@ class ResidenciasController extends Controller
 
         $residencia->endereco()->associate($endereco);
         
-        //SALVANDO IMAGENS
-        if ($request->hasFile('imagem')){
+        $residencia->imagem = SalvaImagens::SalvaImagens($request->imagens, $data['codigo'], "residencia");
 
-            $fotos = [];
-            $i=1;
-
-            foreach($request->imagem as $imagem){
-
-                $ext = $imagem->getClientOriginalExtension();
-
-                $imagem->storeAs(null, $data['codigo'].'_foto_'.$i.'.'.$ext, 'fotos');
-
-                $fotos[] = 'img/residenciasImagens/'.$data['codigo'].'_foto_'.$i.'.'.$ext;
-
-                $i++;
-
-            }
-            
-        }else{
-            $fotos = [];
-        }
-        
-        $residencia->imagem = json_encode($fotos);
-        
-        
         $residencia->save();
         
         DB::table('relacaoresidenciasusers')->insert(
