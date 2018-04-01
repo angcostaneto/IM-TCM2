@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Mensagens;
+use App\Residencias;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MensagensController extends Controller
 {
@@ -18,26 +21,17 @@ class MensagensController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(int $idDestinario, int $idRemetente, string $mensagem)
+    public function store(int $idDestinario, int $idRemetente, int $idAnuncio, string $mensagem)
     {
         $data = [
             'id_destinatario' => $idDestinario,
             'id_remetente' => $idRemetente,
+            'id_anuncio' => $idAnuncio,
             'mensagem' => $mensagem
         ];
 
@@ -56,29 +50,6 @@ class MensagensController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Mensagens  $mensagens
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Mensagens $mensagens)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Mensagens  $mensagens
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Mensagens $mensagens)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Mensagens  $mensagens
@@ -93,13 +64,57 @@ class MensagensController extends Controller
      * Verifica as mesagens enviadas.
      */
     public function verificaMensagensEnviadas(int $idRemetente) {
-        $mensagem = Mensagens::where('id_remetente', '=', $idRemetente );
+        $mensagens = DB::table('mensagens')
+            ->select('id_anuncio', 'id_destinatario')
+            ->where('id_remetente', '=', $idRemetente)
+            ->groupBy('id_anuncio')
+            ->groupBy('id_destinatario')
+            ->get();
+
+        $mensagens = $mensagens->toArray();
+
+        $mensagensEnviadas = [];
+
+        foreach ($mensagens as $mensagem) {
+            $destinatario = User::find($mensagem['id_destinatario']);
+            
+            $residencia = Residencia::find($mensagem['id_anuncio']);
+
+            $mensagensEnviadas = [
+                'destinatario' => $destinatario,
+                'residencia' => $residencia
+            ];
+        }
+        
+        return $mensagemEnviadas;
     }
 
     /**
-     * VErifica as mensagens recebidas.
+     * Verifica as mensagens recebidas.
      */
     public function verficaMensagensRecebidas(int $idDestinario) {
-        $mensagem = Mensagens::where('id_destinatario', '=', $idDestinario);
+        $mensagens = DB::table('mensagens')
+            ->select('id_anuncio', 'id_remetente')
+            ->where('id_destinatario', '=', $idDestinario)
+            ->groupBy('id_anuncio')
+            ->groupBy('id_destinatario')
+            ->get();
+
+        $mensagens = $mensagens->toArray();
+
+        $mensagensRecebidas = [];
+
+        foreach ($mensagens as $mensagem) {
+            $remetente = User::find($mensagem['id_remetente']);
+            
+            $residencia = Residencia::find($mensagem['id_anuncio']);
+
+            $mensagensEnviadas = [
+                'remetente' => $remetente,
+                'residencia' => $residencia
+            ];
+        }
+        
+        return $mensagensRecebidas;
     }
 }
