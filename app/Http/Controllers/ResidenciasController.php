@@ -257,7 +257,7 @@ class ResidenciasController extends Controller
     {
         $residencia = Residencias::find($id);
 
-        $residencia->delete();
+        $residencia->forceDelete();
 
         return redirect('residencias/')->with('success', sprintf('%s foi deletada com sucesso', $residencia->header_anuncio));
     }
