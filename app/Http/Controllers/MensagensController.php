@@ -65,10 +65,9 @@ class MensagensController extends Controller
      */
     public function verificaMensagensEnviadas(int $idRemetente) {
         $mensagens = DB::table('mensagens')
+            ->distinct()
             ->select('id_anuncio', 'id_destinatario')
             ->where('id_remetente', '=', $idRemetente)
-            ->groupBy('id_anuncio')
-            ->groupBy('id_destinatario')
             ->get();
 
         $mensagens = $mensagens->toArray();
@@ -94,10 +93,9 @@ class MensagensController extends Controller
      */
     public function verficaMensagensRecebidas(int $idDestinario) {
         $mensagens = DB::table('mensagens')
+            ->distinct()
             ->select('id_anuncio', 'id_remetente')
             ->where('id_destinatario', '=', $idDestinario)
-            ->groupBy('id_anuncio')
-            ->groupBy('id_destinatario')
             ->get();
 
         $mensagens = $mensagens->toArray();
@@ -112,6 +110,72 @@ class MensagensController extends Controller
             $mensagensEnviadas = [
                 'remetente' => $remetente,
                 'residencia' => $residencia
+            ];
+        }
+        
+        return $mensagensRecebidas;
+    }
+
+    /**
+     * Carrega uma conversa.
+     */
+    public function recuperaConversaEnviadas(int $idAnuncio, int $idRemetente) {
+        $mensagens = DB::table('mensagens')
+            ->distinct()
+            ->select('id_anuncio', 'id_destinatario', 'mensagem')
+            ->where([
+                ['id_remetente', '=', $idRemetente],
+                ['id_anuncio', '=', $idAnuncio]
+            ])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $mensagens = $mensagens->toArray();
+
+        $mensagensEnviadas = [];
+
+        foreach ($mensagens as $mensagem) {
+            $destinatario = User::find($mensagem['id_destinatario']);
+            
+            $residencia = Residencia::find($mensagem['id_anuncio']);
+
+            $mensagensEnviadas = [
+                'destinatario' => $destinatario,
+                'residencia' => $residencia,
+                'mensagem' => $mensagens['mensagem']
+            ];
+        }
+        
+        return $mensagemEnviadas;
+    }
+
+    /**
+     * Carrega uma conversa.
+     */
+    public function recuperaConversaRecebidas(int $idAnuncio, int $idDestinario) {
+        $mensagens = DB::table('mensagens')
+            ->distinct()
+            ->select('id_anuncio', 'id_remetente', 'mensagem')
+            ->where([
+                ['id_destinatario', '=', $idDestinario],
+                ['id_anuncio', '=', $idAnuncio]
+            ])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $mensagens = $mensagens->toArray();
+
+        $mensagensRecebidas = [];
+
+        foreach ($mensagens as $mensagem) {
+            $remetente = User::find($mensagem['id_remetente']);
+            
+            $residencia = Residencia::find($mensagem['id_anuncio']);
+
+            $mensagensEnviadas = [
+                'remetente' => $remetente,
+                'residencia' => $residencia,
+                'mensagem' => $mensagens['mensagem']
             ];
         }
         
