@@ -167,7 +167,7 @@ class RegisterController extends Controller
     {
         $user = User::find($id);
         
-        $user->delete();
+        $user->forceDelete();
         
          return redirect('users/')->with('success', sprintf('%s deletado!', $user->name));
     }
