@@ -48,8 +48,8 @@
             "@php artisan package:discover"
         ],
         "post-install-cmd": [
-            "mkdir public/img/residenciasImagens",
-	    "mkdir public/img/usersImagens"
+            "mkdir -p public/img/residenciasImagens",
+	        "mkdir -p public/img/usersImagens"
         ]
     },
     "config": {
