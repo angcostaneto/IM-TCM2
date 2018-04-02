@@ -7,26 +7,22 @@ use App\Residencias;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class MensagensController extends Controller
 {
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Construct.
      */
-    public function index()
-    {
-        //
+    public function __construct() {
+        $this->middleware('auth');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Envia a mensagem.
      */
-    public function store(int $idDestinario, int $idRemetente, int $idAnuncio, string $mensagem)
+    public function enviar(int $idDestinario, int $idRemetente, int $idAnuncio, string $mensagem)
     {
         $data = [
             'id_destinatario' => $idDestinario,
@@ -36,28 +32,6 @@ class MensagensController extends Controller
         ];
 
         Mensagens::create($data);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Mensagens  $mensagens
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Mensagens $mensagens)
-    {
-        
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Mensagens  $mensagens
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Mensagens $mensagens)
-    {
-        //
     }
     
     /**
