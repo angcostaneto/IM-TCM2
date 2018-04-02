@@ -23,4 +23,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 // Rota para mensagens.
-Route::post('enviar_mensagem', 'MensagensController@enviar')->name('enviarMensagem');
+Route::post('/mensagens/enviar', 'MensagensController@enviar')->name('enviarMensagem');
+Route::get('/mensagens/recebidas/{user}', 'MensagensController@verficaMensagensRecebidas')->name('mensagensRecebidas');
+Route::get('/mensagens/enviadas/{user}', 'MensagensController@verificaMensagensEnviadas')->name('mensagensEnviadas');
