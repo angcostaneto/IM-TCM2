@@ -57,7 +57,11 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Negociação</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="tipo_negociacao" value="{{$residencia->tipo_negociacao}}">
+                                <select class="form-control col-md-7 col-xs-12" name="tipo_negociacao">
+                                    <option>Selecione um tipo</option>
+                                    <option value="Alugar" @if($residencia->tipo_negociacao=="Alugar") selected @endif>Alugar</option>
+                                    <option value="Vender" @if($residencia->tipo_negociacao=="Vender") selected @endif>Vender</option>
+                                </select>
                             </div>
                         </div>
 

@@ -138,7 +138,7 @@ class ResidenciasController extends Controller
                 'outros' => 'nullable|string|max:300',
             ]
         );
-        
+
         $tipoResidencia = TipoResidencias::where('id', $data['tipo_residencia'])->first();
         
         unset($data['tipo_residencia']);
