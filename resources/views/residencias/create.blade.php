@@ -70,7 +70,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Preço</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="preco" value="{{old('preco')}}" required>
+                                <input class="form-control col-md-7 col-xs-12" type="text" name="preco" id="preco" value="{{old('preco')}}" required>
                             </div>
                         </div>
 
@@ -182,5 +182,6 @@
 @endsection
 
 @push('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/dropzone.js"></script>
+    <script src="{{ asset('plugins/jquery-mask/jquery.mask.min.js') }}"></script>
+    <script src="{{ asset('plugins/jquery-mask/priceMask.js') }}"></script>
 @endpush
