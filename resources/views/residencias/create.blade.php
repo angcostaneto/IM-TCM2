@@ -61,8 +61,8 @@
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select class="form-control col-md-7 col-xs-12" name="tipo_negociacao">
                                     <option>Selecione um tipo</option>
-                                    <option value="Alugar" @if(old('tipo_negociacao')=="Alugar") selected @endif>Alugar</option>
-                                    <option value="Vender" @if(old('tipo_negociacao')=="Vender") selected @endif>Vender</option>
+                                    <option value="alugar" @if(old('tipo_negociacao')=="alugar") selected @endif>Alugar</option>
+                                    <option value="vender" @if(old('tipo_negociacao')=="vender") selected @endif>Vender</option>
                                 </select>
                             </div>
                         </div>
