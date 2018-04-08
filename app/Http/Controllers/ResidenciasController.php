@@ -160,7 +160,7 @@ class ResidenciasController extends Controller
 
         $residencia->endereco()->associate($endereco);
         
-        $residencia->imagem = SalvaImagens::SalvaImagens($request->imagens, $data['codigo'], "residencia");
+        $residencia->imagem = SalvaImagens::salvaImagens($request->imagens, $data['codigo'], "residencia");
 
         $residencia->save();
         
