@@ -71,7 +71,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Preço</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="text" name="preco" value="{{$residencia->preco}}">
+                                <input class="form-control col-md-7 col-xs-12" type="text" id="preco" name="preco" value="{{$residencia->preco}}">
                             </div>
                         </div>
                         
@@ -162,3 +162,8 @@
         </form>
     </div>
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('plugins/jquery-mask/jquery.mask.min.js') }}"></script>
+    <script src="{{ asset('plugins/jquery-mask/priceMask.js') }}"></script>
+@endpush
