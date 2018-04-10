@@ -6,15 +6,16 @@
         <title>{{$title or 'Home'}}</title>
         <!--Bootstrap -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="{{url('css/client.css')}}"/>
         @stack('styles')
     </head>
 
     <body>
 
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4 box-shadow">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark box-shadow" id="nav">
             <div class="container">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="/">
                     <img src="\img\logo-branco.png" class="img-fluid" alt="logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,40 +28,73 @@
                     </ul>
                     <div class="mt-2 mt-md-0">
                         @if(Auth::guest())
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Contato</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link barra">/</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Sobre</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link barra">/</a>
+                            </li>
                             <a href="/home">
-                                <button type="button" class="btn btn-outline-success btn-lg">ANUNCIE SEU IMÓVEL</button>
+                                <button type="button" class="btn btn-success">ANUNCIE SEU IMÓVEL</button>
                             </a>
+                        </ul>
+                            
                         @else
-                            <a href="/home">Minha conta</a>
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Contato</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link barra">/</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Sobre</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link barra">/</a>
+                            </li>
+                            <a href="/home">
+                                <button type="button" class="btn btn-primary">
+                                    <i class="fa fa-user" aria-hidden="true"></i>  Minha conta
+                                </button>
+                            </a>
+                        </ul>
                         @endif
                     </div>
                 </div>
             </div>
         </nav>
 
-        <div class="container">
-            @yield('content')
-        </div>
-        
-        <hr/>
+        <main role="main">
 
-        <footer class="footer bg-light">
-            <div class="container text-muted">
-                <p class="float-right">
-                    <a href="#"><button type="button" class="btn btn-primary">Contato</button></a>
-                    <a href="#"><button type="button" id="sobrebtn" class="btn btn-primary">Sobre</button></a>
-                    <a href="#">Voltar ao topo <span class='ion-chevron-up'></span></a>
-                </p>
-                <p>Apperitivo Ltda. &copy; Feito com Bootstrap.</p>
+            @yield('main')
+
+            <div class="container">
+                @yield('content')
             </div>
-        </footer>
+            <br/>
+            <footer class="footer bg-light">
+                <div class="container text-center">
+                    <a href="#nav" class="black float-right"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+                    <span class="text-muted">2018 - Apperitivo Ltda. &copy; Feito com Bootstrap.</span>
+                </div>
+            </footer>
 
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
-        <script src="{{url('js/client.js')}}"></script>
-        @stack('scripts')
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+            <script src="{{url('js/client.js')}}"></script>
+            @stack('scripts')
         
+        </main>
+
     </body>
 
 </html>

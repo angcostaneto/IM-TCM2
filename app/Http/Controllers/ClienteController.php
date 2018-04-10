@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Residencias;
+use App\TipoResidencias;
 use Illuminate\Http\Request;
 use Validator;
 use Illuminate\Validation\Rule;
@@ -11,10 +12,25 @@ class ClienteController extends Controller
     public function index(){
         
         $residencias = Residencias::orderBy('id')->paginate(9);
+        $tipos = TipoResidencias::orderBy('nome')->get();
         //LIMITE DO PAGINATE À DEFINIR
 
         $titulo = "Apperitivo Imóveis";
-        return view('cliente.cliente', compact('titulo','residencias'));
+        return view('cliente.cliente', compact('titulo','residencias','tipos'));
+    }
+
+    public function residencia($id){
+        
+        $residencia = Residencias::find($id);
+        $titulo = $residencia->header_anuncio." | Apperitivo Imóveis";
+
+        if(!empty($residencia)){
+            return view('cliente.residencia', compact('titulo','residencia'));
+        }else{
+            return null;
+        }
+        
+        
     }
     
     public function procurar(Request $request){
