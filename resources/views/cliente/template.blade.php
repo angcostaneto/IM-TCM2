@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>{{$title or 'Home'}}</title>
+        <title>{{$titulo or 'Home'}}</title>
         <!--Bootstrap -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -11,66 +11,40 @@
         @stack('styles')
     </head>
 
-    <body>
-
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark box-shadow" id="nav">
-            <div class="container">
-                <a class="navbar-brand" href="/">
-                    <img src="\img\logo-branco.png" class="img-fluid" alt="logo">
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarCollapse">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                        </li>
-                    </ul>
-                    <div class="mt-2 mt-md-0">
-                        @if(Auth::guest())
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Contato</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link barra">/</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Sobre</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link barra">/</a>
-                            </li>
-                            <a href="/home">
-                                <button type="button" class="btn btn-success">ANUNCIE SEU IMÓVEL</button>
-                            </a>
-                        </ul>
-                            
-                        @else
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Contato</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link barra">/</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Sobre</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link barra">/</a>
-                            </li>
-                            <a href="/home">
-                                <button type="button" class="btn btn-primary">
-                                    <i class="fa fa-user" aria-hidden="true"></i>  Minha conta
-                                </button>
-                            </a>
-                        </ul>
-                        @endif
-                    </div>
-                </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark box-shadow" id="nav">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="/">
+                <img src="\img\logo-branco.png" class="img-fluid" alt="logo">
+            </a>
+            
+            <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo03">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contato</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Sobre</a>
+                    </li>
+                    @if(Auth::guest())
+                        <a href="/home">
+                            <button type="button" class="btn btn-success">ANUNCIE SEU IMÓVEL</button>
+                        </a>
+                    @else
+                        <a href="/home">
+                            <button type="button" class="btn btn-primary">
+                                <i class="fa fa-user" aria-hidden="true"></i>  Minha conta
+                            </button>
+                        </a>
+                    @endif
+                </ul>
             </div>
-        </nav>
+        </div>
+    </nav>
+
+    <body>
 
         <main role="main">
 

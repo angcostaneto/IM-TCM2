@@ -40,3 +40,16 @@ body {
 .card{
   margin-bottom: 1em;
 }
+.btn-group.special {
+  display: flex;
+  margin-left: 0.2em;
+  margin-bottom: 0.2em;
+  padding-right: 1em;
+  padding-left: 1em;
+}
+.special .btn {
+  flex: 1;
+}
+.detalhes-res{
+  font-size: 1.3em;
+}

@@ -5,30 +5,55 @@
         <div class="container">
             <div class="row">
 
-                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                    <img src="\img\home.png" class="img-fluid" alt="home">
-                </div>
+                @if($agent->isMobile())
+                    <div class="row">
+                        <h2 class="text-center">Encontre aqui seu próximo imóvel.</h2>
+                        <form class="form-inline" action="/action_page.php">
+                            <div class="btn-group special col-12">
+                                <button class="btn btn-primary box-shadow" type="button">Comprar</button>
+                                <button class="btn btn-success box-shadow" type="button">Alugar</button>
+                            </div>
+                            <div class="col-12">
+                                <input type="text" class="form-control form-home box-shadow" placeholder="Cidade, bairro">
+                            </div>
+                            <div class="btn-group col-12">
+                                <select name="tipo" class="form-control form-home box-shadow">
+                                    <option selected>Tipo de imóvel</option>
+                                    @if($tipos->count() > 0)
+                                        @foreach($tipos as $tipo)
+                                            <option value="{{$tipo->id}}">{{$tipo->nome}}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                                <button type="submit" class="btn btn-primary form-home box-shadow"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                @else
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                        <img src="\img\home.png" class="img-fluid" alt="home">
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                        <h2 class="text-right">Encontre aqui seu próximo imóvel.</h2>
+                        <form class="form-inline float-right" action="/action_page.php">
+                            <div class="btn-group">
+                                <button class="btn btn-primary box-shadow" type="button">Comprar</button>
+                                <button class="btn btn-success box-shadow" type="button">Alugar</button>
+                            </div>
+                            <input type="text" class="form-control form-home box-shadow" placeholder="Cidade, bairro">
+                            <select name="tipo" class="form-control form-home box-shadow">
+                                <option selected>Tipo de imóvel</option>
+                                @if($tipos->count() > 0)
+                                    @foreach($tipos as $tipo)
+                                        <option value="{{$tipo->id}}">{{$tipo->nome}}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                            <button type="submit" class="btn btn-primary form-home box-shadow"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </form>
 
-                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-                    <h2 class="text-right">Encontre aqui seu próximo imóvel.</h2>
-                    <form class="form-inline float-right" action="/action_page.php">
-                        <div class="btn-group">
-                            <button class="btn btn-primary box-shadow" type="button">Comprar</button>
-                            <button class="btn btn-success box-shadow" type="button">Alugar</button>
-                        </div>
-                        <input type="text" class="form-control form-home box-shadow" placeholder="Cidade, bairro">
-                        <select name="tipo" class="form-control form-home box-shadow">
-                            <option selected>Tipo de imóvel</option>
-                            @if($tipos->count() > 0)
-                                @foreach($tipos as $tipo)
-                                    <option value="{{$tipo->id}}">{{$tipo->nome}}</option>
-                                @endforeach
-                            @endif
-                        </select>
-                        <button type="submit" class="btn btn-primary form-home box-shadow"><i class="fa fa-search" aria-hidden="true"></i></button>
-                    </form>
-
-                </div>
+                    </div>
+                @endif
 
             </div>
         </div>
