@@ -121,7 +121,7 @@ class ResidenciasController extends Controller
             [
                 'header_anuncio' => 'required',
                 'descricao' => 'required',
-                'preco' => 'required|numeric',
+                'preco' => 'required',
                 'quartos' => 'required|numeric',
                 'banheiros' => 'required|numeric',
                 'suites' => 'required|numeric',
@@ -138,7 +138,7 @@ class ResidenciasController extends Controller
                 'outros' => 'nullable|string|max:300',
             ]
         );
-        
+
         $tipoResidencia = TipoResidencias::where('id', $data['tipo_residencia'])->first();
         
         unset($data['tipo_residencia']);
@@ -160,7 +160,7 @@ class ResidenciasController extends Controller
 
         $residencia->endereco()->associate($endereco);
         
-        $residencia->imagem = SalvaImagens::SalvaImagens($request->imagens, $data['codigo'], "residencia");
+        $residencia->imagem = SalvaImagens::salvaImagens($request->imagens, $data['codigo'], "residencia");
 
         $residencia->save();
         
@@ -211,7 +211,7 @@ class ResidenciasController extends Controller
             [
                 'header_anuncio' => 'required',
                 'descricao' => 'required',
-                'preco' => 'required|numeric',
+                'preco' => 'required',
                 'quartos' => 'required|numeric',
                 'banheiros' => 'required|numeric',
                 'suites' => 'required|numeric',
@@ -257,7 +257,7 @@ class ResidenciasController extends Controller
     {
         $residencia = Residencias::find($id);
 
-        $residencia->delete();
+        $residencia->forceDelete();
 
         return redirect('residencias/')->with('success', sprintf('%s foi deletada com sucesso', $residencia->header_anuncio));
     }

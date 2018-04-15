@@ -25,6 +25,7 @@ class Residencias extends Model
         'churrasqueira',
         'closet',
         'outros',
+        'tipo_negociacao',
     ];
 
     public function tipo() 

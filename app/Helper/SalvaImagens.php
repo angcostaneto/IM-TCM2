@@ -4,8 +4,8 @@ namespace App\Helper;
 
 class SalvaImagens {
     //NECESSÁRIO PASSAR O PARÂMETRO $TIPO = RESIDENCIA OU USER
-    public static function SalvaImagens($imagens, $codigo, $tipo) {
-        if (!empty($imagens) && $tipo == "residencia"){
+    public static function salvaImagens($imagens, $codigo, $tipo) {
+        if (!empty($imagens) && $tipo == "residencia") {
             $fotos = [];
             $i=1;
             foreach($imagens as $imagem){
@@ -15,14 +15,17 @@ class SalvaImagens {
                 $i++;
             }
             return json_encode($fotos);
-        }elseif (!empty($imagens) && $tipo == "user"){
+        }
+        elseif (!empty($imagens) && $tipo == "user") {
             $ext = $imagens->getClientOriginalExtension();
             $imagens->storeAs(null, $codigo.'_foto.'.$ext, 'users');
             $fotos = "img/usersImagens/".$codigo."_foto.".$ext;
             return $fotos;
-        }else{
+        }
+        else {
             $fotos = [];
         }
+
         return null;
     }
 }

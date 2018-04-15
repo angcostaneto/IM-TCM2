@@ -2,19 +2,37 @@
 
 namespace App\Http\Controllers;
 use App\Residencias;
+use App\TipoResidencias;
 use Illuminate\Http\Request;
 use Validator;
 use Illuminate\Validation\Rule;
+use Jenssegers\Agent\Agent;
 
 class ClienteController extends Controller
 {
     public function index(){
-        
+
+        $agent = new Agent();
         $residencias = Residencias::orderBy('id')->paginate(9);
+        $tipos = TipoResidencias::orderBy('nome')->get();
         //LIMITE DO PAGINATE À DEFINIR
 
         $titulo = "Apperitivo Imóveis";
-        return view('cliente.cliente', compact('titulo','residencias'));
+        return view('cliente.cliente', compact('titulo','residencias','tipos','agent'));
+    }
+
+    public function residencia($id){
+        
+        $agent = new Agent();
+        $residencia = Residencias::find($id);
+        $titulo = $residencia->header_anuncio." | Apperitivo Imóveis";
+
+        if(!empty($residencia)){
+            return view('cliente.residencia', compact('titulo','residencia', 'agent'));
+        }else{
+            return null;
+        }
+        
     }
     
     public function procurar(Request $request){

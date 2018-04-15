@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'ClienteController@index');
+Route::get('/residencia/{id}','ClienteController@residencia');
 Route::post('/procurar', 'ClienteController@procurar');
 Route::post('cadastrar', 'Auth\RegisterController@cadastraUsuarioLogin')->name('cadastrar');
 

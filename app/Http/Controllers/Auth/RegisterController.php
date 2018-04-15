@@ -94,9 +94,10 @@ class RegisterController extends Controller
     
     protected function create(array $data)
     {
+
         $endereco = EnderecosController::verificaEndereco($data['numero'], $data['cep']);
         
-        $foto = SalvaImagens::SalvaImagens($data['foto'], $data['cpf'], "user");
+        $foto = SalvaImagens::salvaImagens($data['foto'], $data['cpf'], "user");
         
         return User::create([
             'name' => $data['name'],
@@ -133,8 +134,6 @@ class RegisterController extends Controller
             'cpf' => 'required',
             'cep' => 'required',
             'numero' => 'required|numeric',
-            'cep' => 'required',
-            'numero' => 'required|numeric'
         ]);
         
         $endereco = EnderecosController::verificaEndereco($request->numero, $request->cep);
@@ -144,11 +143,13 @@ class RegisterController extends Controller
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
-        }else{
+        }
+        else{
+
             $user->name = $request->input('name');
             $user->email = $request->input('email');
             $user->tipo = $request->input('tipo');
-            $user->foto = $request->input('foto');
+            $user->foto = SalvaImagens::salvaImagens($request->foto, $request->input('cpf'), "user");
             $user->rg = $request->input('rg');
             $user->cpf = $request->input('cpf');
             $user->user_endereco = $endereco->id;
@@ -167,7 +168,7 @@ class RegisterController extends Controller
     {
         $user = User::find($id);
         
-        $user->delete();
+        $user->forceDelete();
         
          return redirect('users/')->with('success', sprintf('%s deletado!', $user->name));
     }
