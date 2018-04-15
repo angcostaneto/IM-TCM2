@@ -16,3 +16,4 @@ yarn-error.log
 /bower_components/
 /public/img/residenciasImagens
 /public/img/usersImagens
+composer.lock
