@@ -14,7 +14,7 @@
                         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                     
                             <ol class="carousel-indicators">
-                            @if(count(json_decode($residencia->imagem))>0)
+                            @if(!empty($residencia->imagem) && count(json_decode($residencia->imagem))>0)
                                 @foreach( json_decode($residencia->imagem) as $imagem )
                                     <li data-target="#carouselExampleIndicators" data-slide-to="{{ $loop->index }}" class="{{ $loop->first ? 'active' : '' }}"></li>
                                 @endforeach
@@ -23,7 +23,7 @@
                             @endif
                             </ol>
                             <div class="carousel-inner" role="listbox">
-                                @if(count(json_decode($residencia->imagem))>0)
+                                @if(!empty($residencia->imagem) && count(json_decode($residencia->imagem))>0)
                                     @foreach( json_decode($residencia->imagem) as $imagem )
                                         <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
                                             <img class="d-block img-fluid rounded" src="../{{ $imagem }}" alt="">
