@@ -30,6 +30,10 @@ body {
 }
 .form-home{
   margin: 0.2em;
+  width: 99.9%!important;
+}
+.margin02{
+  margin: 0.2em;
 }
 .barra:hover{
   color: rgba(255,255,255,.5)!important;

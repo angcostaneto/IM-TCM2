@@ -6,8 +6,8 @@
             <div class="row">
 
                 @if($agent->isMobile())
+                    <h2 class="text-center">Encontre aqui seu próximo imóvel.</h2>
                     <div class="row">
-                        <h2 class="text-center">Encontre aqui seu próximo imóvel.</h2>
                         <form class="form-inline" action="/action_page.php">
                             <div class="btn-group special col-12">
                                 <button class="btn btn-primary box-shadow" type="button">Comprar</button>
@@ -25,7 +25,7 @@
                                         @endforeach
                                     @endif
                                 </select>
-                                <button type="submit" class="btn btn-primary form-home box-shadow"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                <button type="submit" class="btn btn-primary box-shadow margin02"><i class="fa fa-search" aria-hidden="true"></i></button>
                             </div>
                         </form>
                     </div>
@@ -40,8 +40,8 @@
                                 <button class="btn btn-primary box-shadow" type="button">Comprar</button>
                                 <button class="btn btn-success box-shadow" type="button">Alugar</button>
                             </div>
-                            <input type="text" class="form-control form-home box-shadow" placeholder="Cidade, bairro">
-                            <select name="tipo" class="form-control form-home box-shadow">
+                            <input type="text" class="form-control margin02 box-shadow" placeholder="Cidade, bairro">
+                            <select name="tipo" class="form-control margin02 box-shadow">
                                 <option selected>Tipo de imóvel</option>
                                 @if($tipos->count() > 0)
                                     @foreach($tipos as $tipo)
@@ -49,7 +49,7 @@
                                     @endforeach
                                 @endif
                             </select>
-                            <button type="submit" class="btn btn-primary form-home box-shadow"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            <button type="submit" class="btn btn-primary margin02 box-shadow"><i class="fa fa-search" aria-hidden="true"></i></button>
                         </form>
 
                     </div>
@@ -75,7 +75,11 @@
                         <img class="card-img-top img-thumbnail rounded" src="@if(!empty($residencia->imagem) && count(json_decode($residencia->imagem))>0){{json_decode($residencia->imagem)[0]}}@else http://support.yumpu.com/en/wp-content/themes/qaengine/img/default-thumbnail.jpg @endif" alt="Foto da residência">
                     </a>
                     <div class="card-body">
-                        <h5 class="card-title">{{$residencia->header_anuncio}} <span style="font-size:0.6em;" class="badge badge-success">{{$residencia->tipo->nome}}</span></h5>
+                        <h5 class="card-title">
+                            {{$residencia->header_anuncio}} 
+                            <span style="font-size:0.6em;" class="badge badge-success">{{$residencia->tipo->nome}}</span>
+                            <span style="font-size:0.6em;" class="badge badge-primary">{{$residencia->tipo_negociacao}}</span>
+                        </h5>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><strong>Valor:&nbsp;</strong>R${{$residencia->preco}}</li>
                             <li class="list-group-item small text-left">
