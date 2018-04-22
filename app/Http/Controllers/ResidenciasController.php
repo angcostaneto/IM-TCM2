@@ -10,6 +10,7 @@ use App\Http\Controllers\EnderecosController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Helper\SalvaImagens;
+use App\Helper\Imgur;
 
 class ResidenciasController extends Controller
 {
@@ -129,7 +130,7 @@ class ResidenciasController extends Controller
                 'area' => 'required|numeric',
                 'tipo_residencia' => 'required|numeric',
                 'toilets' => 'required|numeric',
-                'imagens[]' => 'mimes:jpeg,bmp,png,jpg',
+                'imagens[]' => 'mimes:jpeg,bmp,png,jpg|max:5120',
                 'tipo_negociacao' => 'required',
                 'ar' => 'nullable|boolean',
                 'piscina' => 'nullable|boolean',
@@ -139,7 +140,7 @@ class ResidenciasController extends Controller
             ]
         );
 
-        $tipoResidencia = TipoResidencias::where('id', $data['tipo_residencia'])->first();
+        $tipoResidencia = TipoResidencias::where('id', $data['tipo_residencia'])->first()->id;
         
         unset($data['tipo_residencia']);
         
@@ -159,8 +160,12 @@ class ResidenciasController extends Controller
         $endereco = EnderecosController::verificaEndereco($request->numero, $request->cep);
 
         $residencia->endereco()->associate($endereco);
+
+        $imgur = new Imgur();
+
+        $imagens = $imgur->sobeImagem($request->imagens);
         
-        $residencia->imagem = SalvaImagens::salvaImagens($request->imagens, $data['codigo'], "residencia");
+        $residencia->imagem = $imagens;
 
         $residencia->save();
         
