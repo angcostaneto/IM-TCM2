@@ -177,7 +177,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Redeman\Imgur\ImgurServiceProvider::class,
 
         /**
          * Third party service provider.
