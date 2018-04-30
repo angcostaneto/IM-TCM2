@@ -22,11 +22,11 @@ class MensagensController extends Controller
     /**
      * Envia a mensagem.
      */
-    public function enviar(int $idDestinario, int $idRemetente, int $idAnuncio, string $mensagem)
+    public function enviar(Request $request, int $idAnuncio)
     {
+        $mensagem = '';
+
         $data = [
-            'id_destinatario' => $idDestinario,
-            'id_remetente' => $idRemetente,
             'id_anuncio' => $idAnuncio,
             'mensagem' => $mensagem
         ];

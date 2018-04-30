@@ -60,7 +60,7 @@
                         (19) 99999-9999</p>
                         <hr/>
                         <h4>Entre em contato com o proprietário:</h4>
-                        <form>
+                        <form action="{{ action('MensagensController@enviar') }}">
                             <div class="form-group">
                                 <input type="email" class="form-control" placeholder="seunome@email.com">
                             </div>
