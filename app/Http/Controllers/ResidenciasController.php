@@ -87,6 +87,7 @@ class ResidenciasController extends Controller
         }else{
             $ids = DB::table('relacaoresidenciasusers')
                     ->where('user_id', Auth::user()->id)
+                    ->where('ativo', true)
                     ->pluck('id')
                     ->toArray();
             
@@ -260,10 +261,9 @@ class ResidenciasController extends Controller
      */
     public function destroy($id)
     {
-        $residencia = Residencias::find($id);
+        Residencias::where('id', $id)
+            ->update(['ativo' => 0]);
 
-        $residencia->forceDelete();
-
-        return redirect('residencias/')->with('success', sprintf('%s foi deletada com sucesso', $residencia->header_anuncio));
+        return redirect('residencias/')->with('success', sprintf('Residencia deletada com sucesso'));
     }
 }

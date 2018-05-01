@@ -13,7 +13,7 @@ class ClienteController extends Controller
     public function index(){
 
         $agent = new Agent();
-        $residencias = Residencias::orderBy('id')->paginate(9);
+        $residencias = Residencias::where('ativo', true)->orderBy('id')->paginate(9);
         $tipos = TipoResidencias::orderBy('nome')->get();
         //LIMITE DO PAGINATE À DEFINIR
 

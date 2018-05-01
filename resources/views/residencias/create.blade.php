@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@push('styles')
+    <link href="{{ asset('css/preview.css') }}" rel="stylesheet">
+@endpush
+
 @section('content')
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -135,9 +139,13 @@
                         
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Fotos</label>
+                            </br>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12" type="file" name="imagens[]" multiple>
+                                <input class="form-control col-md-7 col-xs-12" type="file" name="imagens[]" id="imagens" multiple>
+                                <button type="button" class="btn btn-danger form-inline" id="limpar">Limpar</button>
                             </div>
+                            <br/><br/>
+                            <div id="image_preview"></div>
                         </div>
                     </div>
                 </div>
@@ -184,4 +192,5 @@
 @push('scripts')
     <script src="{{ asset('plugins/jquery-mask/jquery.mask.min.js') }}"></script>
     <script src="{{ asset('plugins/jquery-mask/priceMask.js') }}"></script>
+    <script src="{{ asset('js/preview.js') }}"></script>
 @endpush

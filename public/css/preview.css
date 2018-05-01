@@ -1,0 +1,7 @@
+.img-thumbnail{
+    max-width: 120px;
+    max-height: 120px;
+}
+#image_preview{
+    margin-top: 3em;
+}
