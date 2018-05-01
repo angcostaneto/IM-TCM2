@@ -11,6 +11,7 @@ class Mensagens extends Model
     protected $fillable = [
         'mensagem',
         'id_remetente',
-        'id_destinatario'
+        'id_destinatario',
+        'id_residencia'
     ];
 }

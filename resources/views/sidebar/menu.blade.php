@@ -15,6 +15,12 @@
             <li><a href="{{ route('register') }}">Cadastrar</a></li>
           </ul>
         </li>
+        <li><a><i class="fa fa-envelope"></i> Mensagens <span class="fa fa-chevron-down"></span></a>
+          <ul class="nav child_menu">
+            <li><a href="{{ route('mensagensEnviadas', Auth::user()->id) }}">Mensagens Enviadas</a></li>
+            <li><a href="{{ route('mensagensRecebidas', Auth::user()->id ) }}">Mensagens Recebidas</a></li>
+          </ul>
+        </li>
       </ul>
     </div>
 </div>

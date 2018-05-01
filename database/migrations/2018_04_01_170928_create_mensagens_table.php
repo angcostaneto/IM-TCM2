@@ -18,6 +18,7 @@ class CreateMensagensTable extends Migration
             $table->string('mensagem');
             $table->integer('id_remetente');
             $table->integer('id_destinatario');
+            $table->integer('id_residencia');
             $table->timestamps();
         });
     }

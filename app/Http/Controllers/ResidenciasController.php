@@ -163,9 +163,11 @@ class ResidenciasController extends Controller
 
         $imgur = new Imgur();
 
-        $imagens = $imgur->sobeImagem($request->imagens);
+        if (!empty($request->imagens)) {
+            $imagens = $imgur->sobeImagem($request->imagens);
         
-        $residencia->imagem = $imagens;
+            $residencia->imagem = $imagens;
+        }
 
         $residencia->save();
         
