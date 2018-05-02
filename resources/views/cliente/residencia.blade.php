@@ -32,7 +32,7 @@
                                 @if(!empty($residencia->imagem) && count(json_decode($residencia->imagem))>0)
                                     @foreach( json_decode($residencia->imagem) as $imagem )
                                         <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                                            <img class="d-block img-fluid rounded" src="{{ $imagem }}" alt="">
+                                            <img class="d-block img-fluid rounded" src="{{ $imagem->link }}" alt="">
                                         </div>
                                     @endforeach
                                 @else
