@@ -97,8 +97,13 @@ class RegisterController extends Controller
 
         $endereco = EnderecosController::verificaEndereco($data['numero'], $data['cep']);
         
-        $foto = SalvaImagens::salvaImagens($data['foto'], $data['cpf'], "user");
-        
+        if (!empty($data['foto'])) {
+            $foto = SalvaImagens::salvaImagens($data['foto'], $data['cpf'], "user");
+        }
+        else {
+            $foto = '';
+        }
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
