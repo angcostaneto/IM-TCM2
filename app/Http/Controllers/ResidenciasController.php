@@ -159,11 +159,11 @@ class ResidenciasController extends Controller
 
         $endereco = EnderecosController::verificaEndereco($request->numero, $request->cep);
 
-        $residencia->endereco()->associate($endereco);
+        $residencia->endereco()->associate($endereco->id);
 
         $imgur = new Imgur();
 
-        $imagens = $imgur->sobeImagem($request->imagens);
+        $imagens = !empty($request->imagens) ?? $imgur->sobeImagem($request->imagens);
         
         $residencia->imagem = $imagens;
 
