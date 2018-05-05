@@ -36,7 +36,7 @@
                         @if(count($residencias)>0)
                         
                             @foreach ($residencias as $residencia)
-                            <tr>
+                            <tr @if(!$residencia->ativo) style="background-color:#f5c6cb;" @endif>
                                 <td>{{ $residencia->codigo }}</td>
                                 <td>{{ $residencia->header_anuncio }}</td>
                                 <td>{{ $residencia->tipo_negociacao }}</td>

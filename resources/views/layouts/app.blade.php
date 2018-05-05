@@ -13,6 +13,7 @@
     <title>{{ config('app.name', 'Apperitivo Imóveis') }}</title>
 
     @include('parts/style')
+    @stack('styles')
 
   </head>
 
