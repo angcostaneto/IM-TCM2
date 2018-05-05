@@ -151,7 +151,7 @@
                             </div>
                             <br/><br/>
                             <div id="image_preview">
-                                @if(!empty($residencia->imagem) && count(json_decode($residencia->imagem))>0)
+                                @if(!empty($residencia->imagem))
                                     @foreach( json_decode($residencia->imagem) as $imagem )
                                         <img class="img-thumbnail rounded" src="{{$imagem->link}}">
                                     @endforeach
