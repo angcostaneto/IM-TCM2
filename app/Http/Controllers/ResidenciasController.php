@@ -84,14 +84,11 @@ class ResidenciasController extends Controller
     {
         if(Auth::user()->tipo == "superadmin"){
             $residencias = Residencias::with(['endereco', 'tipo'])->paginate(20);
-        }else{
-            $ids = DB::table('relacaoresidenciasusers')
-                    ->where('user_id', Auth::user()->id)
-                    ->pluck('id')
-                    ->toArray();
-            
+        }else{      
             $residencias = Residencias::with(['endereco', 'tipo'])
-                    ->whereIn('id', array_values($ids))
+                    ->join('relacaoresidenciasusers', 'residencias.id', '=', 'relacaoresidenciasusers.residencia_id')
+                    ->where('relacaoresidenciasusers.user_id', Auth::user()->id)
+                    ->where('residencias.ativo', true)
                     ->paginate(20);
         }
             
@@ -159,15 +156,13 @@ class ResidenciasController extends Controller
 
         $endereco = EnderecosController::verificaEndereco($request->numero, $request->cep);
 
-        $residencia->endereco()->associate($endereco);
+        $residencia->endereco()->associate($endereco->id);
 
         $imgur = new Imgur();
 
-        if (!empty($request->imagens)) {
-            $imagens = $imgur->sobeImagem($request->imagens);
+        $imagens = !empty($request->imagens) ? $imgur->sobeImagem($request->imagens) : NULL;
         
-            $residencia->imagem = $imagens;
-        }
+        $residencia->imagem = $imagens;
 
         $residencia->save();
         
@@ -262,10 +257,9 @@ class ResidenciasController extends Controller
      */
     public function destroy($id)
     {
-        $residencia = Residencias::find($id);
+        Residencias::where('id', $id)
+            ->update(['ativo' => 0]);
 
-        $residencia->forceDelete();
-
-        return redirect('residencias/')->with('success', sprintf('%s foi deletada com sucesso', $residencia->header_anuncio));
+        return redirect('residencias/')->with('success', sprintf('Residencia deletada com sucesso'));
     }
 }
