@@ -87,12 +87,12 @@ class ResidenciasController extends Controller
         }else{
             $ids = DB::table('relacaoresidenciasusers')
                     ->where('user_id', Auth::user()->id)
-                    ->where('ativo', true)
                     ->pluck('id')
                     ->toArray();
-            
+                    
             $residencias = Residencias::with(['endereco', 'tipo'])
                     ->whereIn('id', array_values($ids))
+                    ->where('ativo', true)
                     ->paginate(20);
         }
             
