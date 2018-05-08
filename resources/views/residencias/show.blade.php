@@ -4,7 +4,13 @@
 
 <div class="col-md-6">
     <div class="card">
-        <img class="card-img-top"  alt="Foto da residência" src="{{$residencia->imagem}}">
+
+        @if(!empty($residencia->imagem) && count(json_decode($residencia->imagem))>0)
+            <img class="img-thumbnail rounded"  alt="Foto da residência" src="{{json_decode($residencia->imagem)[0]->link}}">
+        @else  
+            <img class="img-thumbnail rounded" src="http://support.yumpu.com/en/wp-content/themes/qaengine/img/default-thumbnail.jpg" alt="Foto da residência">
+        @endif
+
         <div class="card-body">
             <h3 class="card-title">{{$residencia->header_anuncio}}</h3>
             <span class="badge badge-success">{{$residencia->tipo->nome}}</span>
@@ -24,9 +30,9 @@
                         @endif | 
                     <strong>&nbsp;Vagas na garagem:&nbsp;</strong>{{$residencia->garagens}}
                 </li>
-                <li class="list-group-item"><strong>Endereço:&nbsp;</strong>
+                <li class="list-group-item"><strong>Endereço:&nbsp;</strong><span id="endereco">
                     {{ $residencia->endereco->rua }}, {{ $residencia->endereco->numero }}, 
-                    {{ $residencia->endereco->bairro }}, {{ $residencia->endereco->cidade }}.
+                    {{ $residencia->endereco->bairro }}, {{ $residencia->endereco->cidade }}.</span>
                 </li>
             </ul>
         </div>
@@ -44,7 +50,7 @@
 
 @push('scripts')
     <script src="{{ asset('js/avaliacaoBairro.js') }}"></script>
-    <script src="{{ asset('js/geosearch.js') }}"></script>
+    <script src="{{ asset('js/residencia.js') }}"></script>
 @endpush
 
 @endsection
