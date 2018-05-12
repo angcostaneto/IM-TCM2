@@ -12,6 +12,11 @@ class Mensagens extends Model
         'mensagem',
         'id_remetente',
         'id_destinatario',
-        'id_residencia'
+        'id_residencia',
+        'id_conversa',
     ];
+
+    public function conversa() {
+        return $this->belongsTo(Conversa::class, 'id_conversa');
+    }
 }
