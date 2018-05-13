@@ -174,6 +174,21 @@
                         @include('enderecos.form', ['endereco' => $residencia->endereco])
                     </div>
                 </div>
+                <span id="endereco" hidden>{{ $residencia->endereco->rua }}, {{ $residencia->endereco->numero }}, 
+                {{ $residencia->endereco->bairro }}, {{ $residencia->endereco->cidade }}</span>
+            </div>
+
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Mapa</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content form-horizontal form-label-left">
+                        <br>
+                        @include('mapa.mapa')
+                    </div>
+                </div>
             </div>
 
             <div class="ln_solid"></div>
@@ -192,4 +207,5 @@
     <script src="{{ asset('plugins/jquery-mask/jquery.mask.min.js') }}"></script>
     <script src="{{ asset('plugins/jquery-mask/priceMask.js') }}"></script>
     <script src="{{ asset('js/preview.js') }}"></script>
+    <script src="{{ asset('js/residencia.js') }}"></script>
 @endpush
