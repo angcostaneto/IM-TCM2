@@ -122,16 +122,26 @@
                         </li>
                     @endif
                     <li class="list-group-item"><strong>Endereço:&nbsp;</strong>
-                        {{ $residencia->endereco->rua }}, {{ $residencia->endereco->numero }}, 
-                        {{ $residencia->endereco->bairro }}, {{ $residencia->endereco->cidade }}.
+                        <span id="endereco">
+                            {{ $residencia->endereco->rua }}, {{ $residencia->endereco->numero }}, 
+                            {{ $residencia->endereco->bairro }}, {{ $residencia->endereco->cidade }}.
+                        </span>
                     </li>
                 </ul>
 
             </div>
 
         </div>
-        
+        <hr/>
+        <div class="row">
+            @include('mapa.mapa')
+        </div>
+
     </div>
 </div>
     
 @stop
+
+@push('scripts')
+    <script src="{{ asset('js/residencia.js') }}"></script>
+@endpush

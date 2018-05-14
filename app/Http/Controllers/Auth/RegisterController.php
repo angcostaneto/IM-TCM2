@@ -134,7 +134,6 @@ class RegisterController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
-            'tipo' => 'required',
             'rg' => 'required',
             'cpf' => 'required',
             'cep' => 'required',
@@ -153,7 +152,7 @@ class RegisterController extends Controller
 
             $user->name = $request->input('name');
             $user->email = $request->input('email');
-            $user->tipo = $request->input('tipo');
+            $user->tipo = $request->input('tipo') ?? $user->tipo;
             $user->foto = SalvaImagens::salvaImagens($request->foto, $request->input('cpf'), "user");
             $user->rg = $request->input('rg');
             $user->cpf = $request->input('cpf');
@@ -165,7 +164,12 @@ class RegisterController extends Controller
 
             $user->save();
 
-            return redirect('users/')->with('success', sprintf('%s atualizado!', $user->name));
+            if($user->tipo=="superadmin"){
+                return redirect('users/')->with('success', sprintf('%s atualizado!', $user->name));
+            }else{
+                return redirect('home/')->with('success', sprintf('%s atualizado!', $user->name));
+            }
+            
         }       
     }
     

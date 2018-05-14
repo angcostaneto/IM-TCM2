@@ -8,20 +8,22 @@
                 @if($agent->isMobile())
                     <h2 class="text-center">Encontre aqui seu próximo imóvel.</h2>
                     <div class="row">
-                        <form class="form-inline" action="/action_page.php">
-                            <div class="btn-group special col-12">
-                                <button class="btn btn-primary box-shadow" type="button">Comprar</button>
-                                <button class="btn btn-success box-shadow" type="button">Alugar</button>
+                        <form class="form-inline" method="POST" action="/procurar">
+                            {{ csrf_field() }}
+                            <div class="btn-group special col-12" @if($errors->has('tiponegocio')) style="border-color: #d9534f;border-style: solid;border-radius: 0.4em;" @endif>
+                                <button class="btn btn-primary box-shadow tiponegocio" type="button">Comprar</button>
+                                <button class="btn btn-success box-shadow tiponegocio" type="button">Alugar</button>
+                                <input type="hidden" name="tiponegocio" id="tiponegocio" value="@if(isset($tiponegocio)){{$tiponegocio}}@endif">
                             </div>
                             <div class="col-12">
-                                <input type="text" class="form-control form-home box-shadow" placeholder="Cidade, bairro">
+                                <input type="text" name="cidade" class="form-control form-home box-shadow" value="@if(isset($cidade)){{$cidade}}@endif" placeholder="Cidade" @if($errors->has('cidade')) style="border-color: #d9534f;border-style: solid;border-radius: 0.4em;" @endif>
                             </div>
                             <div class="btn-group col-12">
-                                <select name="tipo" class="form-control form-home box-shadow">
-                                    <option selected>Tipo de imóvel</option>
+                                <select name="tipoimovel" class="form-control form-home box-shadow" @if($errors->has('tipoimovel')) style="border-color: #d9534f;border-style: solid;border-radius: 0.4em;" @endif>
+                                    <option value="" selected>Tipo de imóvel</option>
                                     @if($tipos->count() > 0)
                                         @foreach($tipos as $tipo)
-                                            <option value="{{$tipo->id}}">{{$tipo->nome}}</option>
+                                            <option value="{{$tipo->nome}}" @if(isset($tipoimovel) && $tipoimovel==$tipo->nome) selected @endif>{{$tipo->nome}}</option>
                                         @endforeach
                                     @endif
                                 </select>
@@ -35,17 +37,19 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                         <h2 class="text-right">Encontre aqui seu próximo imóvel.</h2>
-                        <form class="form-inline float-right" action="/action_page.php">
-                            <div class="btn-group">
-                                <button class="btn btn-primary box-shadow" type="button">Comprar</button>
-                                <button class="btn btn-success box-shadow" type="button">Alugar</button>
+                        <form class="form-inline float-right" method="POST" action="/procurar">
+                            {{ csrf_field() }}
+                            <div class="btn-group" @if($errors->has('tiponegocio')) style="border-color: #d9534f;border-style: solid;border-radius: 0.4em;" @endif>
+                                <button class="btn btn-primary box-shadow tiponegocio" type="button">Comprar</button>
+                                <button class="btn btn-success box-shadow tiponegocio" type="button">Alugar</button>
+                                <input type="hidden" name="tiponegocio" id="tiponegocio" value="@if(isset($tiponegocio)){{$tiponegocio}}@endif">
                             </div>
-                            <input type="text" class="form-control margin02 box-shadow" placeholder="Cidade, bairro">
-                            <select name="tipo" class="form-control margin02 box-shadow">
-                                <option selected>Tipo de imóvel</option>
+                            <input type="text" name="cidade" class="form-control margin02 box-shadow" value="@if(isset($cidade)){{$cidade}}@endif" placeholder="Cidade" @if($errors->has('cidade')) style="border-color: #d9534f;border-style: solid;border-radius: 0.4em;" @endif>
+                            <select name="tipoimovel" class="form-control margin02 box-shadow" @if($errors->has('tipoimovel')) style="border-color: #d9534f;border-style: solid;border-radius: 0.4em;" @endif>
+                                <option value="" selected>Tipo de imóvel</option>
                                 @if($tipos->count() > 0)
                                     @foreach($tipos as $tipo)
-                                        <option value="{{$tipo->id}}">{{$tipo->nome}}</option>
+                                        <option value="{{$tipo->nome}}" @if(isset($tipoimovel) && $tipoimovel==$tipo->nome) selected @endif>{{$tipo->nome}}</option>
                                     @endforeach
                                 @endif
                             </select>
@@ -64,7 +68,7 @@
 
     <div class="row row-eq-height">
             
-        @if($residencias->count() > 0)
+        @if(isset($residencias) && $residencias->count() > 0)
             
             @foreach($residencias as $residencia)
 
