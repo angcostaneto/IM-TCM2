@@ -17,9 +17,6 @@
                                 </a>
                             </div>
                             <div class="block_content">
-                                <div class="byline">
-                                    <span>13 hours ago</span> by <a>Jane Smith</a>
-                                </div>
                                 <p class="excerpt">{{ $mensagem['mensagem'] }}</p>
                             </div>
                         </div>
@@ -82,13 +79,9 @@
     
         // Build the UI for a new message and add to the DOM
         function addMessage(data) {
-            console.log('aqui');
             // Create element from template and set values
             var el = createMessageEl();
             el.find('.message-body').html(data.text);
-            
-            // Utility to build nicely formatted time
-            el.find('.timestamp').text(strftime('%H:%M:%S %P', new Date(data.timestamp)));
             
             var messages = $('#messages');
             messages.append(el)
