@@ -27,7 +27,7 @@
                                 <td>{{ $mensagem['residencia']->codigo }}</td>
                                 <td>{{ $mensagem['destinatario']->name }}</td>
                                 <td>
-                                    <a class="btn btn-small btn-info" href="{{ route('mensagensCompra', [$mensagem['destinatario']->id, $mensagem['residencia']->id]) }}">
+                                    <a class="btn btn-small btn-info" href="{{ route('conversa', [$mensagem['conversa']]) }}">
                                         <span class="fa fa-eye"></span>
                                     </a>
                                 </td>

@@ -15,6 +15,7 @@ class Conversa extends Migration
     {
         Schema::create('conversa', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('channel');
             $table->timestamps();
         });
 

@@ -67,7 +67,9 @@
                         <form method="POST" action="{{ action('MensagensController@enviar', $residencia->id) }}">
                             {{csrf_field()}}
                             <div class="form-group">
-                            <input type="email" name="email" class="form-control" placeholder="seunome@email.com" value="{{Auth::user()->email}}">
+                            @if(Auth::user())
+                                <input type="email" name="email" class="form-control" placeholder="seunome@email.com" value="{{Auth::user()->email}}" readonly>
+                            @endif
                             </div>
                             <div class="form-group">
                                 <textarea class="form-control" name="mensagem" placeholder="Sua mensagem"></textarea>

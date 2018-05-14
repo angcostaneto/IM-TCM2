@@ -27,7 +27,9 @@
                                 <td>{{ $mensagem['residencia']->codigo }}</td>
                                 <td>{{ $mensagem['remetente']->name }}</td>
                                 <td>
-                                    <a class="btn btn-small btn-info" href="#"><span class="fa fa-eye"></span></a>
+                                    <a class="btn btn-small btn-info" href="{{ route('conversa', [$mensagem['conversa']]) }}">
+                                        <span class="fa fa-eye"></span>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach

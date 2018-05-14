@@ -2,22 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use JavaScript;
 use App\Conversa;
 use App\Mensagens;
 use App\Residencias;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\App;
 
 class MensagensController extends Controller
 {
+
+    protected $pusher;
+    protected $chatChannel;
 
     /**
      * Construct.
      */
     public function __construct() {
         $this->middleware('auth');
+        $this->pusher = App::make('pusher');
+        $this->chatChannel = 'chat';
+    }
+
+    /**
+     * Set o canal de comunicação.
+     */
+    public function setChannel($chatChannel) {
+        $this->chatChannel = 'private-' . $chatChannel;
+    }
+
+    /**
+     * Retorna o canal de comunicação.
+     */
+    public function getChannel() {
+        return $this->chatChannel;
     }
 
     /**
@@ -56,7 +78,7 @@ class MensagensController extends Controller
         $existeConversa = $this->verificaSeExisteUmaConversa($id, $destinatario->user_id, $id_remetente);
 
         if (!$existeConversa) {
-            $conversa = Conversa::create()->id;
+            $conversa = Conversa::create(['channel' => hash('sha256', rand())])->id;
         }
         else {
             $conversa = $existeConversa->id_conversa;
@@ -66,7 +88,7 @@ class MensagensController extends Controller
             'id_residencia' => $id,
             'id_remetente' => $id_remetente,
             'id_destinatario' => $destinatario->user_id,
-            'mensagem' => $request->mensagem
+            'mensagem' => e($request->mensagem)
         ];
 
         $mensagens = Mensagens::create($data);
@@ -84,7 +106,7 @@ class MensagensController extends Controller
     public function verificaMensagensEnviadas(int $idRemetente) {
         $mensagens = DB::table('mensagens')
             ->distinct()
-            ->select('id_residencia', 'id_destinatario')
+            ->select('id_residencia', 'id_destinatario', 'id_conversa')
             ->where('id_remetente', '=', $idRemetente)
             ->get();
 
@@ -99,7 +121,8 @@ class MensagensController extends Controller
 
             $mensagensEnviadas[] = [
                 'destinatario' => $destinatario,
-                'residencia' => $residencia
+                'residencia' => $residencia,
+                'conversa' => $mensagem->id_conversa,
             ];
         }
         return view('mensagens.lista_enviadas', ['mensagens' => $mensagensEnviadas, 'tipo' => 'Enviadas']);
@@ -111,7 +134,7 @@ class MensagensController extends Controller
     public function verficaMensagensRecebidas(int $idDestinario) {
         $mensagens = DB::table('mensagens')
             ->distinct()
-            ->select('id_residencia', 'id_remetente')
+            ->select('id_residencia', 'id_remetente', 'id_conversa')
             ->where('id_destinatario', '=', $idDestinario)
             ->get();
 
@@ -126,7 +149,8 @@ class MensagensController extends Controller
 
             $mensagensRecebidas[] = [
                 'remetente' => $remetente,
-                'residencia' => $residencia
+                'residencia' => $residencia,
+                'conversa' => $mensagem->id_conversa,
             ];
         }
         
@@ -136,12 +160,19 @@ class MensagensController extends Controller
     /**
      * Carrega uma conversa.
      */
-    public function recuperaConversaEnviadas(int $idDestinatario, int $idResidencia) {
-        $mensagens = DB::table('mensagens')
-            ->select('id_residencia', 'id_destinatario', 'mensagem')
+    public function recuperaConversa(int $idConversa) {
+        $conversa = DB::table('conversa')
             ->where([
-                ['id_destinatario', '=', $idDestinatario],
-                ['id_residencia', '=', $idResidencia]
+                ['id', '=', $idConversa],
+            ])
+            ->get()
+            ->toArray();
+
+        $this->setChannel($conversa[0]->channel);
+
+        $mensagens = DB::table('mensagens')
+            ->where([
+                ['id_conversa', '=', $idConversa],
             ])
             ->orderBy('created_at', 'desc')
             ->get();
@@ -151,50 +182,38 @@ class MensagensController extends Controller
         $mensagensEnviadas = [];
 
         foreach ($mensagens as $mensagem) {
+            $remetente = User::find($mensagem->id_remetente);
+
             $destinatario = User::find($mensagem->id_destinatario);
             
             $residencia = Residencias::find($mensagem->id_residencia);
 
-            $mensagensEnviadas = [
+            $msgs[] = [
+                'remetente' => $remetente,
                 'destinatario' => $destinatario,
                 'residencia' => $residencia,
                 'mensagem' => $mensagem->mensagem,
             ];
         }
-        
-        return $mensagensEnviadas;
+
+        return view('mensagens.conversa', ['mensagens' => $msgs, 'chatChannel' => $this->getChannel()]) ;
+    }
+
+    public function enviaMensagem(Request $request)
+    {   
+        $mensagem = [
+            'text' => e($request->message),
+            'timestamp' => (time()*1000),
+        ];
+
+        $this->pusher->trigger($request->chat, 'nova-mensagem', $mensagem);
     }
 
     /**
-     * Carrega uma conversa.
+     * Autenticação para o chat.
      */
-    public function recuperaConversaRecebidas(int $idResidencia, int $idDestinario) {
-        $mensagens = DB::table('mensagens')
-            ->distinct()
-            ->select('id_residencia', 'id_remetente', 'mensagem')
-            ->where([
-                ['id_destinatario', '=', $idDestinario],
-                ['id_residencia', '=', $idResidencia]
-            ])
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        $mensagens = $mensagens->toArray();
-
-        $mensagensRecebidas = [];
-
-        foreach ($mensagens as $mensagem) {
-            $remetente = User::find($mensagem['id_remetente']);
-            
-            $residencia = Residencia::find($mensagem['id_residencia']);
-
-            $mensagensEnviadas = [
-                'remetente' => $remetente,
-                'residencia' => $residencia,
-                'mensagem' => $mensagens['mensagem']
-            ];
-        }
-        
-        return $mensagensRecebidas;
+    public function postAuth(Request $request)
+    {
+        return $this->pusher->socket_auth($request->channel_name, $request->socket_id);
     }
 }

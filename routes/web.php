@@ -27,5 +27,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::post('residencia/{id}/mensagem', 'MensagensController@enviar')->name('enviarMensagem');
 Route::get('/mensagens/recebidas/{user}', 'MensagensController@verficaMensagensRecebidas')->name('mensagensRecebidas');
 Route::get('/mensagens/enviadas/{user}', 'MensagensController@verificaMensagensEnviadas')->name('mensagensEnviadas');
-Route::get('/mensagens/enviadas/{user}/residencia/{residencia}', 'MensagensController@recuperaConversaEnviadas')->name('mensagensCompra');
-Route::get('/mensagens/recebidas/{user}/residencia/{residencia}', 'MensagensController@recuperaConversaRecebidas')->name('mensagensClientes');
+Route::get('/mensagens/{conversa}', 'MensagensController@recuperaConversa')->name('conversa');
+Route::post('/mensagens/chat', 'MensagensController@enviaMensagem')->name('enviaMensagemChat');
+Route::post('/mensagens/postauth', 'MensagensController@postAuth')->name('mensagemAuth');
