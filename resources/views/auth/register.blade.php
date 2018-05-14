@@ -53,19 +53,21 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Tipo de usuário</label>
-                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control col-md-7 col-xs-12" name="tipo">
-                                    <option>Selecione um tipo</option>
-                                    <option value="superadmin" @if(isset($user) && $user->tipo=='superadmin') selected @endif>Super Admin</option>
-                                    <option value="admin" @if(isset($user) && $user->tipo=='admin') selected @endif>Admin</option>
-                                    <option value="vistoriador" @if(isset($user) && $user->tipo=='vistoriador') selected @endif>Vistoriador</option>
-                                    <option value="corretor" @if(isset($user) && $user->tipo=='corretor') selected @endif>Corretor</option>
-                                    <option value="cliente" @if(isset($user) && $user->tipo=='cliente') selected @endif>Cliente</option>
-                                </select>
+                        @if(Auth::user()->tipo!='cliente')
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Tipo de usuário</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <select class="form-control col-md-7 col-xs-12" name="tipo">
+                                        <option>Selecione um tipo</option>
+                                        <option value="superadmin" @if(isset($user) && $user->tipo=='superadmin') selected @endif>Super Admin</option>
+                                        <option value="admin" @if(isset($user) && $user->tipo=='admin') selected @endif>Admin</option>
+                                        <option value="vistoriador" @if(isset($user) && $user->tipo=='vistoriador') selected @endif>Vistoriador</option>
+                                        <option value="corretor" @if(isset($user) && $user->tipo=='corretor') selected @endif>Corretor</option>
+                                        <option value="cliente" @if(isset($user) && $user->tipo=='cliente') selected @endif>Cliente</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+                        @endif
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Foto</label>

@@ -1,7 +1,7 @@
 $( document ).ready(function() {
     
     $(".tiponegocio").click(function(){
-        $("#tiponegocio").val($(this).val());
+        $("#tiponegocio").val($(this).text());
     });
     
 });

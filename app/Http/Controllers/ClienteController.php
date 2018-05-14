@@ -37,45 +37,68 @@ class ClienteController extends Controller
     
     public function procurar(Request $request){
 
+        $agent = new Agent();
+        $tipos = TipoResidencias::orderBy('nome')->get();
+
         $validator = Validator::make($request->all(), [
             'tiponegocio' => [
-                'required',
-                Rule::in(['Alugar', 'Comprar', 'Vender']),
+                'nullable',
+                Rule::in(['Alugar', 'Comprar']),
             ],
             'tipoimovel' => [
-                'required',
+                'nullable',
                 Rule::in(['Casa de Vila', 'Casa de Condomínio', 'Apartamento Padrão', 
                             'Cobertura', 'Kitnet', 'Chácara', 'Fazenda', 'Sitio']),
             ],
-            'cidade' => 'required|string|max:30',
+            'cidade' => 'nullable|string|max:30',
         ]);
 
         if ($validator->fails()) {
             return redirect()
-                        ->back()
-                        ->withErrors($validator)
-                        ->withInput();
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
         }else{
-            $residencias = Residencias::with('tipo', 'endereco')
-                    ->where('tipo_negociacao', $request->tiponegocio)
-                    ->orderBy('id')
-                    ->paginate(9);
-            /*
-            //dd($residencias);
-            foreach($residencias as $residencia){
-                if($residencia->tipo->nome != $request->tipoimovel
-                   || $residencia->endereco->cidade != $request->cidade){
 
-                    $residencias->forget($residencia->id);
-                    
+            $tiponegocio = null;
+            $tipoimovel = null;
+            $cidade = null;
+            
+            $residencias = Residencias::with('tipo', 'endereco')->where('ativo', true);
+
+            if(!empty($request->tiponegocio)){
+                if($request->tiponegocio == "Comprar"){
+                    $residencias->where('tipo_negociacao', 'Vender');
                 }
+                if($request->tiponegocio == "Alugar"){
+                    $residencias->where('tipo_negociacao', 'Alugar');
+                }
+                $tiponegocio = $request->tiponegocio;
             }
-            */
+            
+            if(!empty($request->tipoimovel)){
+                
+                $residencias->whereHas('tipo', function ($query) use ($request) {
+                    $query->where('nome', $request->tipoimovel);
+                });
+
+                $tipoimovel = $request->tipoimovel;
+            }
+
+            if(!empty($request->cidade)){
+
+                $residencias->whereHas('endereco', function ($query) use ($request) {
+                    $query->where('cidade', 'like', '%'.$request->cidade.'%');
+                });
+
+                $cidade = $request->cidade;
+            }
+            
+            $residencias = $residencias->paginate(9);
+
             $titulo = "Apperitivo Imóveis";
             
-            //dd($residencias);
-            
-            return view('cliente.cliente', compact('titulo','residencias'));
+            return view('cliente.cliente', compact('titulo','residencias','agent', 'tipos','tiponegocio', 'tipoimovel', 'cidade'));
         }
         
     }

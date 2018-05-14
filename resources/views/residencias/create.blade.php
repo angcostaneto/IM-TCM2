@@ -40,7 +40,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Tipo da residencia</label>
                              <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control col-md-7 col-xs-12" name="tipo_residencia">
+                                <select class="form-control col-md-7 col-xs-12" name="tipo_residencia" required>
                                     <option>Selecione um tipo</option>
                                     @foreach ($tipoResidencias as $key => $tipoResidencia)
                                         <optgroup label="{{$key}}">
@@ -63,7 +63,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Negociação</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control col-md-7 col-xs-12" name="tipo_negociacao">
+                                <select class="form-control col-md-7 col-xs-12" name="tipo_negociacao" required>
                                     <option>Selecione um tipo</option>
                                     <option value="Alugar" @if(old('tipo_negociacao')=="Alugar") selected @endif>Alugar</option>
                                     <option value="Vender" @if(old('tipo_negociacao')=="Vender") selected @endif>Vender</option>
