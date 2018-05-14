@@ -25,7 +25,6 @@ class MensagensController extends Controller
     public function __construct() {
         $this->middleware('auth');
         $this->pusher = App::make('pusher');
-        $this->chatChannel = 'chat';
     }
 
     /**
