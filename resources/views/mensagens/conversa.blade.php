@@ -9,7 +9,7 @@
         <div class="x_content">
             <ul class="list-unstyled timeline">
                 @foreach ($mensagens as $mensagem) 
-                    <li>
+                    <li class="mensagem-chat">
                         <div class="block">
                             <div class="tags">
                                 <a href="#" class="tag">
@@ -35,6 +35,21 @@
   </div>
 
     <script src="//js.pusher.com/3.0/pusher.min.js"></script>
+    
+    <script id="chat_message_template" type="text/template">
+        <li class="mensagem-chat">
+            <div class="block">
+                <div class="tags">
+                    <a href="#" class="tag">
+                        <span class="nome"></span>
+                    </a>
+                </div>
+                <div class="block_content">
+                    <p class="excerpt mensagem"></p>
+                </div>
+            </div>
+        </li>
+    </script>
   
     <script>
 
@@ -81,9 +96,10 @@
         function addMessage(data) {
             // Create element from template and set values
             var el = createMessageEl();
-            el.find('.message-body').html(data.text);
+            el.find('.mensagem').html(data.text);
+            el.find('.nome').html(data.nome);
             
-            var messages = $('#messages');
+            var messages = $('.mensagem-chat');
             messages.append(el)
             
             // Make sure the incoming message is shown

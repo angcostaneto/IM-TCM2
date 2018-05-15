@@ -18,6 +18,7 @@ class MensagensController extends Controller
 
     protected $pusher;
     protected $chatChannel;
+    protected $currentUser;
 
     /**
      * Construct.
@@ -202,7 +203,7 @@ class MensagensController extends Controller
     {   
         $mensagem = [
             'text' => e($request->message),
-            'timestamp' => (time()*1000),
+            'nome' => Auth::user()->name,
         ];
 
         $this->pusher->trigger($request->chat, 'nova-mensagem', $mensagem);
