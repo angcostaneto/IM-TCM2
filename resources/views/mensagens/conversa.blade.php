@@ -74,7 +74,7 @@
         // Handle the send button being clicked
         function sendMessage() {
             var messageText = $('.input-message').val();
-            if(messageText.length < 3) {
+            if(messageText.length < 1) {
                 return false;
             }
     
@@ -104,6 +104,9 @@
             
             // Make sure the incoming message is shown
             messages.scrollTop(messages[0].scrollHeight);
+            messages.removeClass('mensagem-chat');
+            messages.removeClass('nome');
+            messages.removeClass('mensagem');
         }
     
         // Creates an activity element from the template
