@@ -10,12 +10,18 @@
           </ul>
         </li>
         @if(Auth::user()->tipo=='superadmin')
-          <li><a><i class="fa fa-user"></i> Usuários <span class="fa fa-chevron-down"></span></a>
-            <ul class="nav child_menu">
-              <li><a href="{{ url('users') }}">Listar</a></li>
-              <li><a href="{{ route('register') }}">Cadastrar</a></li>
-            </ul>
-          </li>
+        <li><a><i class="fa fa-user"></i> Usuários <span class="fa fa-chevron-down"></span></a>
+          <ul class="nav child_menu">
+            <li><a href="{{ url('users') }}">Listar</a></li>
+            <li><a href="{{ route('register') }}">Cadastrar</a></li>
+          </ul>
+        </li>
+        @else
+        <li><a><i class="fa fa-user"></i> Conta <span class="fa fa-chevron-down"></span></a>
+          <ul class="nav child_menu">
+            <li><a href="{{ action('Auth\RegisterController@edit', Auth::user()->id) }}">Editar</a></li>
+          </ul>
+        </li>
         @endif
         <li><a><i class="fa fa-envelope"></i> Mensagens <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">
