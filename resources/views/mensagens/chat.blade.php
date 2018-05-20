@@ -111,7 +111,7 @@
     // Handle the send button being clicked
     function sendMessage() {
         var messageText = $('.input-message').val();
-        if(messageText.length < 3) {
+        if(messageText.length < 1) {
             return false;
         }
 
