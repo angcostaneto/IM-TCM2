@@ -18,7 +18,7 @@ class RelacaoResidenciasUsers extends Migration
             $table->integer('residencia_id')->nullable()->unsigned();
             $table->foreign('residencia_id')->references('id')->on('residencias')->onDelete('set null');;
             $table->integer('user_id')->nullable()->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');;
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->timestamps();
         });
     }
