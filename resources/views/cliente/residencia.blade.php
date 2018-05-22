@@ -2,6 +2,12 @@
 
 @section('content')
 <br/>
+@if (\Session::has('success'))
+    <div class="alert alert-success">
+        <p>{{ \Session::get('success') }}</p>
+    </div>
+    <br />
+@endif
 <div class="card">
     <div class="card-body">
 
@@ -55,22 +61,20 @@
                 <div class="card bg-light">
                     <div class="card-body">
                     
-                        <p class="card-text"><strong>Nome do usuário</strong>
+                    <p class="card-text"><strong>{{ $residenciaDono }}</strong>
                         <br/>
-                        (19) 99999-9999</p>
-                        <hr/>
-                        <h4>Entre em contato com o proprietário:</h4>
-                        <form>
+                    <h4>Entre em contato com {{ $residenciaDono }}:</h4>
+                        <form method="POST" action="{{ action('MensagensController@enviar', $residencia->id) }}">
+                            {{csrf_field()}}
                             <div class="form-group">
-                                <input type="email" class="form-control" placeholder="seunome@email.com">
+                            @if(Auth::user())
+                                <input type="email" name="email" class="form-control" placeholder="seunome@email.com" value="{{Auth::user()->email}}" readonly>
+                            @endif
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="(19) 99999-9999">
+                                <textarea class="form-control" name="mensagem" placeholder="Sua mensagem"></textarea>
                             </div>
-                            <div class="form-group">
-                                <textarea class="form-control" placeholder="Sua mensagem"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Enviar</button>
+                            <input type="submit" class="btn btn-primary" value="Enviar">
                         </form>
 
                     </div>

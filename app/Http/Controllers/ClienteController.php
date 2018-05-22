@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Validator;
 use Illuminate\Validation\Rule;
 use Jenssegers\Agent\Agent;
+use Illuminate\Support\Facades\DB;
+use App\User;
 
 class ClienteController extends Controller
 {
@@ -27,8 +29,14 @@ class ClienteController extends Controller
         $residencia = Residencias::find($id);
         $titulo = $residencia->header_anuncio." | Apperitivo Imóveis";
 
+        $residenciaDonoId = DB::table('relacaoresidenciasusers')
+            ->where('residencia_id', '=', $id)
+            ->first();
+
+        $residenciaDono = User::find($residenciaDonoId->user_id)->name;
+
         if(!empty($residencia)){
-            return view('cliente.residencia', compact('titulo','residencia', 'agent'));
+            return view('cliente.residencia', compact('titulo','residencia', 'agent', 'residenciaDono'));
         }else{
             return null;
         }

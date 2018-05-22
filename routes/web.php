@@ -22,3 +22,11 @@ Route::resource('users','Auth\RegisterController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// Rota para mensagens.
+Route::post('residencia/{id}/mensagem', 'MensagensController@enviar')->name('enviarMensagem');
+Route::get('/mensagens/recebidas/{user}', 'MensagensController@verficaMensagensRecebidas')->name('mensagensRecebidas');
+Route::get('/mensagens/enviadas/{user}', 'MensagensController@verificaMensagensEnviadas')->name('mensagensEnviadas');
+Route::get('/mensagens/{conversa}', 'MensagensController@recuperaConversa')->name('conversa');
+Route::post('/mensagens/chat', 'MensagensController@enviaMensagem')->name('enviaMensagemChat');
+Route::post('/mensagens/postauth', 'MensagensController@postAuth')->name('mensagemAuth');

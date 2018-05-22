@@ -177,6 +177,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Pusher\Laravel\PusherServiceProvider::class,
+        Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class
 
     ],
 
@@ -227,6 +229,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Agent' => Jenssegers\Agent\Facades\Agent::class,
+        'Pusher' => Pusher\Laravel\Facades\Pusher::class
 
     ],
 
