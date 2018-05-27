@@ -42,13 +42,14 @@
 <!-- Babel polyfill -->
 <script src="{{ asset('plugins/babel-polyfill/browser-polyfill.js') }}"></script>
 
-<script>
-    // Ensure CSRF token is sent with AJAX requests
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-</script>
+@if (Route::current()->getName() == 'conversa') 
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
+@endif
 
 @stack('scripts')
