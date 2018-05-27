@@ -173,9 +173,11 @@
                         <br>
                         @include('enderecos.form', ['endereco' => $residencia->endereco])
                     </div>
-                </div>
-                <span id="endereco" hidden>{{ $residencia->endereco->rua }}, {{ $residencia->endereco->numero }}, 
-                {{ $residencia->endereco->bairro }}, {{ $residencia->endereco->cidade }}</span>
+                </div>{{-- 
+                <span id="endereco" hidden>
+                    {{ $residencia->endereco->rua }}, {{ $residencia->endereco->numero }}, 
+                    {{ $residencia->endereco->bairro }}, {{ $residencia->endereco->cidade }}
+                </span> --}}
             </div>
 
             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -203,9 +205,11 @@
     </div>
 @endsection
 
-@push('scripts')
+@section('scripts')
+    @parent
     <script src="{{ asset('plugins/jquery-mask/jquery.mask.min.js') }}"></script>
     <script src="{{ asset('plugins/jquery-mask/priceMask.js') }}"></script>
     <script src="{{ asset('js/preview.js') }}"></script>
-    <script src="{{ asset('js/residencia.js') }}"></script>
-@endpush
+    <script src="{{ asset('js/cep.js') }}"></script>
+    <script src="{{ asset('js/geosearch.js') }}"></script>
+@endsection

@@ -146,6 +146,7 @@
     
 @stop
 
-@push('scripts')
+@section('scripts')
+    @parent
     <script src="{{ asset('js/residencia.js') }}"></script>
-@endpush
+@endsection
