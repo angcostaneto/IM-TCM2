@@ -3,7 +3,7 @@
 @section('content')
     <div class="x_panel">
         <div class="x_title">
-            <h2>Daily active users <small>Sessions</small></h2>
+            <h2>Residencia: {{$mensagens[0]['residencia']->codigo}}</h2>
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
@@ -62,6 +62,10 @@
             // send button click handling
             $('.send-message').click(sendMessage);
             $('.input-message').keypress(checkSend);
+            var messages = $('.mensagem-chat:not(:last-child)');
+            messages.removeClass('mensagem-chat');
+            messages.removeClass('nome');
+            messages.removeClass('mensagem');
         }
     
         // Send on enter/return key
@@ -79,7 +83,15 @@
             }
     
             // Build POST data and make AJAX request
-            var param = {message: messageText, chat: '{{ $chatChannel }}'};
+            var param = {
+                message: messageText, 
+                chat: '{{ $chatChannel }}',
+                residencia: "{{ $mensagens[0]['residencia']->id }}",
+                user1: "{{ $mensagens[0]['remetente']->id }}",
+                user2: "{{ $mensagens[0]['destinatario']->id }}",
+                conversa: "{{ $mensagens[0]['conversa'] }}",
+            };
+
             $.post("{{route('enviaMensagemChat')}}", param).success(sendMessageSuccess);
     
             // Ensure the normal browser event doesn't take place

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use JavaScript;
 use App\Conversa;
 use App\Mensagens;
 use App\Residencias;
@@ -19,6 +18,7 @@ class MensagensController extends Controller
     protected $pusher;
     protected $chatChannel;
     protected $currentUser;
+    protected $residencia;
 
     /**
      * Construct.
@@ -174,7 +174,7 @@ class MensagensController extends Controller
             ->where([
                 ['id_conversa', '=', $idConversa],
             ])
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'asc')
             ->get();
 
         $mensagens = $mensagens->toArray();
@@ -185,7 +185,7 @@ class MensagensController extends Controller
             $remetente = User::find($mensagem->id_remetente);
 
             $destinatario = User::find($mensagem->id_destinatario);
-            
+
             $residencia = Residencias::find($mensagem->id_residencia);
 
             $msgs[] = [
@@ -193,6 +193,7 @@ class MensagensController extends Controller
                 'destinatario' => $destinatario,
                 'residencia' => $residencia,
                 'mensagem' => $mensagem->mensagem,
+                'conversa' => $idConversa,
             ];
         }
 
@@ -201,12 +202,33 @@ class MensagensController extends Controller
 
     public function enviaMensagem(Request $request)
     {   
+
+        $currentUser = Auth::user();
+
         $mensagem = [
             'text' => e($request->message),
-            'nome' => Auth::user()->name,
+            'nome' => $currentUser->name,
         ];
 
         $this->pusher->trigger($request->chat, 'nova-mensagem', $mensagem);
+
+        if ($currentUser->id == $request->user1) {
+            $destinatario = $request->user2;
+        }
+
+        else {
+            $destinatario = $request->user1;           
+        }
+
+        $data = [
+            'id_residencia' => $request->residencia,
+            'id_remetente' => $currentUser->id,
+            'id_destinatario' => $destinatario,
+            'mensagem' => e($request->message),
+            'id_conversa' => $request->conversa,
+        ];
+
+        Mensagens::create($data);
     }
 
     /**

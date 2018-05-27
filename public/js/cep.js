@@ -1,4 +1,4 @@
-let address;
+var address;
 
 $('#cep').on('change', function () {
     var cep = $('#cep').val();
