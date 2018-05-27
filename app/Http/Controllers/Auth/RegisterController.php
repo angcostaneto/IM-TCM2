@@ -64,7 +64,6 @@ class RegisterController extends Controller
             'password' => 'required|string|min:6|confirmed',
             'cep' => 'required',
             'numero' => 'required|numeric',
-            'foto' => 'mimes:jpeg,bmp,png,jpg',
         ]);
     }
 
@@ -96,19 +95,11 @@ class RegisterController extends Controller
     {
 
         $endereco = EnderecosController::verificaEndereco($data['numero'], $data['cep']);
-        
-        if (!empty($data['foto'])) {
-            $foto = SalvaImagens::salvaImagens($data['foto'], $data['cpf'], "user");
-        }
-        else {
-            $foto = '';
-        }
 
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'tipo' => $data['tipo'],
-            'foto' => $foto,
             'rg' => $data['rg'],
             'cpf' => $data['cpf'],
             'user_endereco' => $endereco->id,
@@ -153,7 +144,6 @@ class RegisterController extends Controller
             $user->name = $request->input('name');
             $user->email = $request->input('email');
             $user->tipo = $request->input('tipo') ?? $user->tipo;
-            $user->foto = SalvaImagens::salvaImagens($request->foto, $request->input('cpf'), "user");
             $user->rg = $request->input('rg');
             $user->cpf = $request->input('cpf');
             $user->user_endereco = $endereco->id;
