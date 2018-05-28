@@ -189,8 +189,12 @@
     </div>
 @endsection
 
-@push('scripts')
+@section('scripts')
+    @parent
     <script src="{{ asset('plugins/jquery-mask/jquery.mask.min.js') }}"></script>
     <script src="{{ asset('plugins/jquery-mask/priceMask.js') }}"></script>
     <script src="{{ asset('js/preview.js') }}"></script>
-@endpush
+    <script src="{{ asset('js/cep.js') }}"></script>
+    <script src="{{ asset('js/initMap.js') }}"></script>
+    <script src="{{ asset('js/geosearch.js') }}"></script>
+@endsection

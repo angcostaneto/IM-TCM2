@@ -39,7 +39,3 @@
         <input class="form-control col-md-7 col-xs-12" type="text" name="estado" id="estado" readonly placeholder="Estado" value="{{ !empty($endereco) ? $endereco->estado : old('estado') }}" required>
     </div>
 </div>
-
-@push('scripts')
-    <script src="{{ asset('js/cep.js') }}"></script>
-@endpush

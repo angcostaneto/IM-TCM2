@@ -52,4 +52,4 @@
     </script>
 @endif
 
-@stack('scripts')
+@yield('scripts')
