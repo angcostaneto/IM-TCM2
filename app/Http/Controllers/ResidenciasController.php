@@ -83,7 +83,9 @@ class ResidenciasController extends Controller
     public function index()
     {
         if(Auth::user()->tipo == "superadmin"){
-            $residencias = Residencias::with(['endereco', 'tipo'])->paginate(20);
+            $residencias = Residencias::with(['endereco', 'tipo'])
+                ->where('residencias.ativo', true)
+                ->paginate(20);
         }else{      
             $residencias = Residencias::with(['endereco', 'tipo'])
                     ->join('relacaoresidenciasusers', 'residencias.id', '=', 'relacaoresidenciasusers.residencia_id')
