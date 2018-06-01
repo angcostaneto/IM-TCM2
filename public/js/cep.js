@@ -11,7 +11,7 @@ $('#cep').on('change', function () {
     });
 });
 
-$('#numero').on('keyup', function () {
+$('#numero').on('change', function () {
     if (typeof geosearch === 'function') {
         var numero = $('#numero').val();
         var address = getAddress();

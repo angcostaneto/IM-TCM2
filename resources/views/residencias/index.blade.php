@@ -13,7 +13,7 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <table class="table table-hover">
+                <table class="table table-hover" align="center">
                     <thead>
                         <tr>
                             <th>Codigo</th>
@@ -22,19 +22,12 @@
                             <th>Descrição</th>
                             <th>Tipo</th>
                             <th>Preço</th>
-                            <th>Quartos</th>
-                            <th>Toilet</th>
-                            <th>Banheiro</th>
-                            <th>Suite</th>
-                            <th>Garagem</th>
-                            <th>Área (m²)</th>
                             <th>Cidade / CEP</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         @if(count($residencias)>0)
-                        
                             @foreach ($residencias as $residencia)
                             <tr @if(!$residencia->ativo) style="background-color:#f5c6cb;" @endif>
                                 <td>{{ $residencia->codigo }}</td>
@@ -43,12 +36,6 @@
                                 <td>{{ $residencia->descricao }}</td>
                                 <td>@if(!empty($residencia->tipo->nome)) {{ $residencia->tipo->nome }} @endif</td>
                                 <td>{{ $residencia->preco }}</td>
-                                <td>{{ $residencia->quartos }}</td>
-                                <td>{{ $residencia->toilets }}</td>
-                                <td>{{ $residencia->banheiros }}</td>
-                                <td>{{ $residencia->suites }}</td>
-                                <td>{{ $residencia->garagens }}</td>
-                                <td>{{ $residencia->area }}</td>
                                 <td>
                                     @if(!empty($residencia->endereco->cidade) && !empty($residencia->endereco->cep)) 
                                         {{ $residencia->endereco->cidade }} - {{ $residencia->endereco->cep }} 
@@ -61,15 +48,13 @@
                                         <form action="{{ action('ResidenciasController@destroy', $residencia) }}" method="POST">
                                             {{csrf_field()}}
                                             <input name="_method" type="hidden" value="DELETE">
-                                            <button class="btn btn-danger" type="submit" data-toggle="tooltip" title="Deletar"><i class="fa fa-trash"></i></button>
+                                            <button class="btn btn-danger" type="submit" daadicionar um orderta-toggle="tooltip" title="Deletar"><i class="fa fa-trash"></i></button>
                                         </form>
                                     </div>
                                 </td>
                             </tr>
                             @endforeach
-                        
                         @endif
-                        
                     </tbody>
                 </table>
             </div>
