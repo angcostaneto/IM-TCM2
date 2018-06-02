@@ -14,6 +14,7 @@ class Mensagens extends Model
         'id_destinatario',
         'id_residencia',
         'id_conversa',
+        'lido',
     ];
 
     public function conversa() {
