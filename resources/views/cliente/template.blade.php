@@ -23,6 +23,9 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo03">
                 <ul class="navbar-nav">
                     <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#">Contato</a>
                     </li>
                     <li class="nav-item">

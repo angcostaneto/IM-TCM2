@@ -23,7 +23,7 @@
                     </thead>
                     <tbody>
                         @foreach ($mensagens as $mensagem)
-                            <tr>
+                            <tr @if(!$mensagem['lido']) style="font-weight:bold" @endif>
                                 <td>{{ $mensagem['residencia']->codigo }}</td>
                                 <td>{{ $mensagem['remetente']->name }}</td>
                                 <td>

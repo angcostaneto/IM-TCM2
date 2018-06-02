@@ -77,34 +77,34 @@
                 <div class="card">
                     <a href="residencia/{{$residencia->id}}">
                         @if (!empty($residencia->imagem))
-                            <img class="card-img-top img-thumbnail rounded" src="{{json_decode($residencia->imagem)[0]->link}}" alt="Foto da residência">
+                            <img class="card-img-top img-thumbnail rounded" src="{{json_decode($residencia->imagem)[0]->link ?? null}}" alt="Foto da residência">
                         @else  
                             <img class="card-img-top img-thumbnail rounded" src="http://support.yumpu.com/en/wp-content/themes/qaengine/img/default-thumbnail.jpg" alt="Foto da residência">
                         @endif
                     </a>
                     <div class="card-body">
                         <h5 class="card-title">
-                            {{$residencia->header_anuncio}} 
-                            <span style="font-size:0.6em;" class="badge badge-success">{{$residencia->tipo->nome}}</span>
-                            <span style="font-size:0.6em;" class="badge badge-primary">{{$residencia->tipo_negociacao}}</span>
+                            {{$residencia->header_anuncio ?? null}} 
+                            <span style="font-size:0.6em;" class="badge badge-success">{{$residencia->tipo->nome ?? null}}</span>
+                            <span style="font-size:0.6em;" class="badge badge-primary">{{$residencia->tipo_negociacao ?? null}}</span>
                         </h5>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><strong>Valor:&nbsp;</strong>R${{$residencia->preco}}</li>
+                            <li class="list-group-item"><strong>Valor:&nbsp;</strong>R${{$residencia->preco ?? null}}</li>
                             <li class="list-group-item small text-left">
-                                <strong>Área:&nbsp;</strong>{{$residencia->area}} m² | 
-                                <strong>&nbsp;Quartos:&nbsp;</strong>{{$residencia->quartos}} | 
-                                <strong>&nbsp;Banheiros:&nbsp;</strong>{{$residencia->banheiros}} | 
+                                <strong>Área:&nbsp;</strong>{{$residencia->area ?? null}} m² | 
+                                <strong>&nbsp;Quartos:&nbsp;</strong>{{$residencia->quartos ?? null}} | 
+                                <strong>&nbsp;Banheiros:&nbsp;</strong>{{$residencia->banheiros ?? null}} | 
                                 <strong>&nbsp;Suites:&nbsp;</strong>
                                     @if(!empty($residencia->suites))
-                                        {{$residencia->suites}}
+                                        {{$residencia->suites ?? null}}
                                     @else 
                                         0
                                     @endif | 
-                                <strong>&nbsp;Garagem:&nbsp;</strong>{{$residencia->garagens}}
+                                <strong>&nbsp;Garagem:&nbsp;</strong>{{$residencia->garagens ?? null}}
                             </li>
                             <li class="list-group-item"><strong>Endereço:&nbsp;</strong>
-                                {{ $residencia->endereco->rua }}, {{ $residencia->endereco->numero }}, 
-                                {{ $residencia->endereco->bairro }}, {{ $residencia->endereco->cidade }}.
+                                {{ $residencia->endereco->rua ?? null }}, {{ $residencia->endereco->numero ?? null }}, 
+                                {{ $residencia->endereco->bairro ?? null }}, {{ $residencia->endereco->cidade ?? null }}.
                             </li>
                         </ul>
                         <br/>

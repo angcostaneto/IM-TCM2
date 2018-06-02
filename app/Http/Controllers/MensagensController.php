@@ -72,8 +72,8 @@ class MensagensController extends Controller
         $id_remetente = Auth::user()->id;
 
         $destinatario = DB::table('relacaoresidenciasusers')
-        ->where('residencia_id', '=', $id)
-        ->first();
+            ->where('residencia_id', '=', $id)
+            ->first();
         
         $existeConversa = $this->verificaSeExisteUmaConversa($id, $destinatario->user_id, $id_remetente);
 
@@ -88,7 +88,8 @@ class MensagensController extends Controller
             'id_residencia' => $id,
             'id_remetente' => $id_remetente,
             'id_destinatario' => $destinatario->user_id,
-            'mensagem' => e($request->mensagem)
+            'mensagem' => e($request->mensagem),
+            'lido' => false
         ];
 
         $mensagens = Mensagens::create($data);
@@ -96,7 +97,7 @@ class MensagensController extends Controller
         $mensagens->conversa()->associate($conversa);
 
         $mensagens->save();
-
+        
         return back()->with('success', 'Mensagem foi enviada');
     }
     
@@ -134,8 +135,14 @@ class MensagensController extends Controller
     public function verficaMensagensRecebidas(int $idDestinario) {
         $mensagens = DB::table('mensagens')
             ->distinct()
-            ->select('id_residencia', 'id_remetente', 'id_conversa')
+            ->select('id', 'id_residencia', 'id_remetente', 'id_conversa')
             ->where('id_destinatario', '=', $idDestinario)
+            ->get();
+
+        $naoLidas = DB::table('mensagens')
+            ->select('id', 'lido')
+            ->where('id_destinatario', '=', $idDestinario)
+            ->where('lido', false)
             ->get();
 
         $mensagens = $mensagens->toArray();
@@ -147,10 +154,23 @@ class MensagensController extends Controller
             
             $residencia = Residencias::find($mensagem->id_residencia);
 
+            if(count($naoLidas)>0){
+                foreach ($naoLidas as $naoLida){
+                    if($mensagem->id == $naoLida->id){
+                        $lido = false;
+                    }else{
+                        $lido = true;
+                    }
+                }
+            }else{
+                $lido = true;
+            }
+            
             $mensagensRecebidas[] = [
                 'remetente' => $remetente,
                 'residencia' => $residencia,
                 'conversa' => $mensagem->id_conversa,
+                'lido' => $lido,
             ];
         }
         
@@ -195,6 +215,10 @@ class MensagensController extends Controller
                 'mensagem' => $mensagem->mensagem,
                 'conversa' => $idConversa,
             ];
+
+            DB::table('mensagens')
+                ->where('id', $mensagem->id)
+                ->update(['lido' => true]);
         }
 
         return view('mensagens.conversa', ['mensagens' => $msgs, 'chatChannel' => $this->getChannel()]) ;
