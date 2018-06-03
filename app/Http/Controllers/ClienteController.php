@@ -36,6 +36,7 @@ class ClienteController extends Controller
         $residenciaDono = User::find($residenciaDonoId->user_id)->name;
 
         if(!empty($residencia)){
+            DB::table('residencias')->whereId($residencia->id)->increment('visitas');
             return view('cliente.residencia', compact('titulo','residencia', 'agent', 'residenciaDono'));
         }else{
             return null;

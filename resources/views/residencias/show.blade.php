@@ -5,6 +5,8 @@
 <div class="col-md-6">
     <div class="card">
 
+        <h3 class="card-title">{{$residencia->header_anuncio}}</h3>
+
         @if(!empty($residencia->imagem) && count(json_decode($residencia->imagem))>0)
             <img class="img-thumbnail rounded"  alt="Foto da residência" src="{{json_decode($residencia->imagem)[0]->link}}">
         @else  
@@ -12,10 +14,9 @@
         @endif
 
         <div class="card-body">
-            <h3 class="card-title">{{$residencia->header_anuncio}}</h3>
             <span class="badge badge-success">{{$residencia->tipo->nome}}</span>
             <br>
-            <h4 class="card-text">{{$residencia->descricao}}</h4>
+            <h4 class="card-text">{{$residencia->descricao}} <span class="right">Visitas: {{$residencia->visitas}}</span></h4>           
             <ul class="list-group list-group-flush">
                 <li class="list-group-item"><strong>Valor:&nbsp;</strong>R${{$residencia->preco}}</li>
                 <li class="list-group-item small text-left">
