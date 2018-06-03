@@ -250,6 +250,7 @@ class MensagensController extends Controller
             'id_destinatario' => $destinatario,
             'mensagem' => e($request->message),
             'id_conversa' => $request->conversa,
+            'lido' => false,
         ];
 
         Mensagens::create($data);

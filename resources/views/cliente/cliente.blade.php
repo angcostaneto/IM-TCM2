@@ -77,9 +77,9 @@
                 <div class="card">
                     <a href="residencia/{{$residencia->id}}">
                         @if (!empty($residencia->imagem))
-                            <img class="card-img-top img-thumbnail rounded" src="{{json_decode($residencia->imagem)[0]->link ?? null}}" alt="Foto da residência">
+                            <img class="img-thumbnail rounded img-thumbnail mx-auto d-block" style="max-height:250px;" src="{{json_decode($residencia->imagem)[0]->link ?? null}}" alt="Foto da residência">
                         @else  
-                            <img class="card-img-top img-thumbnail rounded" src="http://support.yumpu.com/en/wp-content/themes/qaengine/img/default-thumbnail.jpg" alt="Foto da residência">
+                            <img class="img-thumbnail rounded img-thumbnail mx-auto d-block" style="max-height:250px;" src="http://support.yumpu.com/en/wp-content/themes/qaengine/img/default-thumbnail.jpg" alt="Foto da residência">
                         @endif
                     </a>
                     <div class="card-body">

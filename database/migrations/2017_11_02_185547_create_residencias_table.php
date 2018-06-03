@@ -35,6 +35,7 @@ class CreateResidenciasTable extends Migration
             $table->string('outros')->nullable();
             $table->boolean('ativo')->default(1);
             $table->string('motivo')->nullable();
+            $table->integer('visitas')->default(0);
             $table->index(['codigo', 'header_anuncio', 'data_negociacao']);
             $table->timestamps();
         });
