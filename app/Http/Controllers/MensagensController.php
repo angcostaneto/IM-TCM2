@@ -11,6 +11,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\App;
+use Illuminate\Session;
 
 class MensagensController extends Controller
 {
@@ -24,7 +25,7 @@ class MensagensController extends Controller
      * Construct.
      */
     public function __construct() {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['enviar']]);
         $this->pusher = App::make('pusher');
     }
 
@@ -67,7 +68,12 @@ class MensagensController extends Controller
      *   Id da residencia que está sendo enviada.
      */
     public function enviar(Request $request, $id)
-    {
+    {   
+        if (!Auth::check()) {
+            $request->session()->put('url.intended', 'residencia/' . $id);
+
+            return redirect()->route('login');
+        }
         
         $id_remetente = Auth::user()->id;
 
