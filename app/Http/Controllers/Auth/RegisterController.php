@@ -55,10 +55,10 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:users,email',
             'tipo' => 'required',
-            'rg' => 'required',
-            'cpf' => 'required|unique:users',
+            'rg' => 'required|unique:users,rg',
+            'cpf' => 'required|unique:users,cpf',
             'cep' => 'required',
             'numero' => 'required|numeric',
             'password' => 'required|string|min:6|confirmed',
@@ -125,8 +125,8 @@ class RegisterController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
-            'rg' => 'required',
-            'cpf' => 'required',
+            'rg' => 'required|unique:users,rg',
+            'cpf' => 'required|unique:users,cpf',
             'cep' => 'required',
             'numero' => 'required|numeric',
         ]);
@@ -178,7 +178,7 @@ class RegisterController extends Controller
     public function cadastraUsuarioLogin(Request $request) {
         $data = $this->validate(request(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
         ]);
 
