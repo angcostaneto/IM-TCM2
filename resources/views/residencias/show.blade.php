@@ -49,9 +49,9 @@
     </div>
 </div>
 
-@push('scripts')
-    <script src="{{ asset('js/avaliacaoBairro.js') }}"></script>
-    <script src="{{ asset('js/residencia.js') }}"></script>
-@endpush
+@endsection
 
+@section('scripts')
+    @parent
+    <script src="{{ asset('js/residencia.js') }}"></script>
 @endsection
