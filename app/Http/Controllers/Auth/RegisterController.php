@@ -124,7 +124,7 @@ class RegisterController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255,unique:users,mail,' . $user->id . ',id',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id . ',id',
             'rg' => 'required|unique:users,rg,' . $user->id . ',id',
             'cpf' => 'required|unique:users,cpf,' . $user->id . ',id',
             'cep' => 'required',
