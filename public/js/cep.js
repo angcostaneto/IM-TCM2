@@ -1,13 +1,19 @@
+$('#numero').attr('disabled', true);
+
 $('#cep').on('change', function () {
     var cep = $('#cep').val();
     $.get("//api.postmon.com.br/v1/cep/" + cep, function (data) {
         if (data) {
+            $('#cep').parent().closest('div').removeClass('has-error has-feedback');
+            $('#numero').attr('disabled', false);
             $('#logradouro').val(data.logradouro);
             $('#rua').val(data.logradouro);
             $('#bairro').val(data.bairro);
             $('#cidade').val(data.cidade);
             $('#estado').val(data.estado);
         }
+    }).fail(function () {
+        $('#cep').parent().closest('div').addClass('has-error has-feedback');
     });
 });
 
