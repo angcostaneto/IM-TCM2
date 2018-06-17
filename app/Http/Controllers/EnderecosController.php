@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enderecos;
 use Illuminate\Http\Request;
 use App\Helper\ConsultaApi;
+use Illuminate\Validation\ValidationException;
 
 class EnderecosController extends Controller
 {
@@ -39,6 +40,12 @@ class EnderecosController extends Controller
                 $endereco = Enderecos::create($dataEndereco);
 
                 return $endereco;
+            }
+
+            else {
+                throw ValidationException::withMessages([
+                    'cep' => ['CEP doesnt exists'],
+                ]);
             }
         }
         else {
