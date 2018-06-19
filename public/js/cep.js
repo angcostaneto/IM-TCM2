@@ -1,4 +1,6 @@
-$('#numero').attr('disabled', true);
+if (!$('#cep').val()) {
+    $('#numero').attr('disabled', true);
+}
 
 $('#cep').on('change', function () {
     var cep = $('#cep').val();
