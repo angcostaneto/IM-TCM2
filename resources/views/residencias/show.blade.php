@@ -8,9 +8,9 @@
         <h3 class="card-title">{{$residencia->header_anuncio}}</h3>
 
         @if(!empty($residencia->imagem) && count(json_decode($residencia->imagem))>0)
-            <img class="img-thumbnail rounded"  alt="Foto da residência" src="{{json_decode($residencia->imagem)[0]->link}}">
+            <img class="img-thumbnail rounded"  alt="Foto da residência" src="{{json_decode($residencia->imagem)[0]->link}}" style="max-height:400px;">
         @else  
-            <img class="img-thumbnail rounded" src="http://support.yumpu.com/en/wp-content/themes/qaengine/img/default-thumbnail.jpg" alt="Foto da residência">
+            <img class="img-thumbnail rounded" src="http://support.yumpu.com/en/wp-content/themes/qaengine/img/default-thumbnail.jpg" alt="Foto da residência" style="max-height:400px;">
         @endif
 
         <div class="card-body">
