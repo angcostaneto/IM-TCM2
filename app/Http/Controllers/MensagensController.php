@@ -141,7 +141,7 @@ class MensagensController extends Controller
     public function verficaMensagensRecebidas(int $idDestinario) {
         $mensagens = DB::table('mensagens')
             ->distinct()
-            ->select('id', 'id_residencia', 'id_remetente', 'id_conversa')
+            ->select('id_residencia', 'id_remetente', 'id_conversa')
             ->where('id_destinatario', '=', $idDestinario)
             ->get();
 
@@ -160,7 +160,7 @@ class MensagensController extends Controller
             
             $residencia = Residencias::find($mensagem->id_residencia);
 
-            if(count($naoLidas)>0){
+            /* if(count($naoLidas)>0){
                 foreach ($naoLidas as $naoLida){
                     if($mensagem->id == $naoLida->id){
                         $lido = false;
@@ -170,13 +170,14 @@ class MensagensController extends Controller
                 }
             }else{
                 $lido = true;
-            }
+            } */
             
             $mensagensRecebidas[] = [
                 'remetente' => $remetente,
                 'residencia' => $residencia,
                 'conversa' => $mensagem->id_conversa,
-                'lido' => $lido,
+                //'lido' => $lido,
+                'lido' => TRUE,
             ];
         }
         
