@@ -48,7 +48,7 @@
                                             <form action="{{ action('ResidenciasController@destroy', $residencia->id) }}" method="POST" style="display: inline;">
                                                 {{csrf_field()}}
                                                 <input name="_method" type="hidden" value="DELETE">
-                                                <button class="btn btn-danger inline" type="submit" daadicionar um orderta-toggle="tooltip" title="Deletar"><i class="fa fa-trash"></i></button>
+                                                <button class="btn btn-danger inline" type="submit" data-toggle="tooltip" title="Deletar"><i class="fa fa-trash"></i></button>
                                             </form>
                                         </td>
                                     </tr>
