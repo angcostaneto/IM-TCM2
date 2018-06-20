@@ -46,8 +46,8 @@
                                     @foreach ($tipoResidencias as $key => $tipoResidencia)
                                         <optgroup label="{{$key}}">
                                             @foreach ($tipoResidencia as $rT)
-                                                @if ($rT['id'] == $residencia->tipo->id) {
-                                                    <option value="{{$rT['id']}}" selected>{{$rT['nome']}}</option>
+                                                @if (!empty($residencia->tipo->id))
+                                                    <option value="{{$rT['id']}}" @if($rT['id'] == $residencia->tipo->id) selected @endif>{{$rT['nome']}}</option>
                                                 @else
                                                     <option value="{{$rT['id']}}">{{$rT['nome']}}</option>
                                                 @endif

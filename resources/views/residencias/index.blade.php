@@ -45,7 +45,7 @@
                                     <div class="inline">
                                         <a class="btn btn-info" href="{{ action('ResidenciasController@edit', $residencia) }}" data-toggle="tooltip" title="Editar"><i class="fa fa-edit"></i></a>
                                         <a class="btn btn-success" href="{{ action('ResidenciasController@show', $residencia) }}" data-toggle="tooltip" title="Visualizar"><i class="fa fa-eye"></i></a>
-                                        <form action="{{ action('ResidenciasController@destroy', $residencia) }}" method="POST">
+                                        <form action="{{ action('ResidenciasController@destroy', $residencia) }}" method="POST" style="display: inline;">
                                             {{csrf_field()}}
                                             <input name="_method" type="hidden" value="DELETE">
                                             <button class="btn btn-danger" type="submit" daadicionar um orderta-toggle="tooltip" title="Deletar"><i class="fa fa-trash"></i></button>
